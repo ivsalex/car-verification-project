@@ -1,21 +1,22 @@
 const express = require('express');
+const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 
 const CarsController = require('../controllers/cars');
 
 //Get all Cars Route
-router.get('/', CarsController.getAllCars);
+router.get('/', checkAuth, CarsController.getAllCars);
 
 //Get Car by Id Route
-router.get('/:carId', CarsController.getAllCars);
+router.get('/:carId', checkAuth, CarsController.getAllCars);
 
 //Create Car Route
-router.post('/', CarsController.carCreate);
+router.post('/', checkAuth, CarsController.carCreate);
 
 //Delete Car Route
-router.delete('/:carId', CarsController.carDelete);
+router.delete('/:carId', checkAuth, CarsController.carDelete);
 
 //Modify Car Route
-router.patch('/:carId', CarsController.carModify);
+router.patch('/:carId', checkAuth, CarsController.carModify);
 
 module.exports = router;
