@@ -8,7 +8,7 @@ const CarsController = require('../controllers/cars');
 router.get('/', checkAuth, CarsController.getAllCars);
 
 //Get Car by Id Route
-router.get('/:carId', checkAuth, CarsController.getAllCars);
+router.get('/:carId', checkAuth, CarsController.getCarById);
 
 //Create Car Route
 router.post('/', checkAuth, CarsController.carCreate);
