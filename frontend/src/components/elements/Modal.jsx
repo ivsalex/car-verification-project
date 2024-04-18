@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Modal = ({ title, onConfirm }) => {
+const Modal = ({ title, onConfirm, onCancel }) => {
     const [showModal, setShowModal] = useState(true);
 
     const handleConfirm = () => {
@@ -10,6 +10,7 @@ const Modal = ({ title, onConfirm }) => {
 
     const handleCancel = () => {
         setShowModal(false);
+        onCancel();
     };
 
     return (

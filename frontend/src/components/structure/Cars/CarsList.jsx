@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TrashIcon, PencilIcon } from '@heroicons/react/outline';
+import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
 import SearchInput from "../../elements/Search";
 import Modal from "../../elements/Modal";
@@ -8,6 +9,7 @@ function CarsList({ cars, deleteCar }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCarId, setSelectedCarId] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleSearch = (term) => {
         setSearchTerm(term);
@@ -18,13 +20,23 @@ function CarsList({ cars, deleteCar }) {
         setIsDeleteModalOpen(false);
     }
 
+    function formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        const day = date.getUTCDate().toString().padStart(2, '0');
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+        const year = (date.getUTCFullYear()).toString().padStart(2, '0');
+
+        return `${day}.${month}.${year}`;
+    }
+
     const filteredCars = cars.filter(car => {
         return car.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            car.plateNumber.toLowerCase().includes(searchTerm.toLowerCase());
+            car.plateNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            car.carVin.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
     return (
-        <div className="flex flex-col justify-center align-center p-4 text-center max-h-screen space-y-4">
+        <div className="flex flex-col justify-center align-center p-4 text-center h-100 space-y-4 mx-auto w-fit">
             <SearchInput onSearch={handleSearch} />
             <div className="overflow-y-auto flex justify-center">
                 <table>
@@ -43,10 +55,14 @@ function CarsList({ cars, deleteCar }) {
                                 <td className="border px-4 py-2">{car?.carVin}</td>
                                 <td className="border px-4 py-2">{car?.owner}</td>
                                 <td className="border px-4 py-2">{car?.plateNumber}</td>
-                                <td className="border px-4 py-2">{car?.expirationDate}</td>
+                                <td className="border px-4 py-2">{formatTimestamp(car?.expirationDate)}</td>
                                 <td className="border px-4 py-2">
                                     <div className="space-x-2">
-                                        <Button variant="blue"><PencilIcon className="h-5 w-5" /></Button>
+                                        <Button variant="blue"
+                                            onClick={() => {
+                                                navigate(`/cars/${car._id}`);
+                                            }}
+                                        ><PencilIcon className="h-5 w-5" /></Button>
                                         <Button variant="red"
                                             onClick={() => {
                                                 setIsDeleteModalOpen(true)

@@ -7,6 +7,17 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['ClashDisplay-Regular', ...defaultTheme.fontFamily.sans],
+            },
+            height: {
+                '100': '36rem',
+                '120': '50rem',
+            },
+            screens: {
+                'sm': '640px',
+                'md': '768px',
+                'lg': '1024px',
+                'xl': '1280px',
+                '2xl': '1536px',
             }
         },
     },
