@@ -25,6 +25,27 @@ const Cars = () => {
             console.error('Error fetching data:', error);
         }
     }
+
+    const deleteCar = async (carId) => {
+        try {
+            const response = await fetch(`http://localhost:3001/cars/${carId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("token")
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
         const token = Cookies.get('token');
         if (!token) {
@@ -35,7 +56,7 @@ const Cars = () => {
 
     return (
         <div>
-            <CarsList cars={cars} />
+            <CarsList cars={cars} deleteCar={deleteCar} />
         </div>
     );
 };
