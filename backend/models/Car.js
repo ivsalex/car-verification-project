@@ -5,8 +5,8 @@ const carSchema = new mongoose.Schema({
     carVin: { type: String, required: true },
     owner: { type: String, required: true },
     plateNumber: { type: String, required: true },
-    startDate: { type: Date, required: true },
-    expirationDate: { type: Date, required: true }
+    vignetteExpirationDate: { type: Date, required: true },
+    checkUpExpirationDate: { type: Date, required: true }
 });
 
 const Car = mongoose.model('Car', carSchema);
