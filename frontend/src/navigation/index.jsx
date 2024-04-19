@@ -3,6 +3,7 @@ import Cars from "../components/views/Cars";
 import Car from "../components/views/Car";
 import { Navbar } from "../components/elements/Navbar";
 import { Login } from "../components/views/Login";
+import { Dashboard } from "../components/views/Dashboard";
 
 const Navigation = () => {
     return (
@@ -13,6 +14,7 @@ const Navigation = () => {
                 <Route path="/cars" element={<Cars />} />
                 <Route path="/cars/:carId" element={<Car />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
         </BrowserRouter>
     );
