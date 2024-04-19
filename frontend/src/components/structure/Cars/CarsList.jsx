@@ -54,7 +54,11 @@ function CarsList({ cars, deleteCar }) {
             )}
             {!loading && (
                 <>
-                    <SearchInput onSearch={handleSearch} />
+                    <div className="flex align-center justify-between">
+                        <Button variant="gray" onClick={() => navigate("/")}>Înapoi</Button>
+                        <SearchInput onSearch={handleSearch} />
+                        <Button variant="green" onClick={() => navigate("/adauga")}>Adaugă</Button>
+                    </div>
                     <div className="overflow-y-auto flex justify-center">
                         <table>
                             <thead className="bg-blue-500">
@@ -63,6 +67,7 @@ function CarsList({ cars, deleteCar }) {
                                     <th className="px-4 py-2">Proprietar</th>
                                     <th className="px-4 py-2">Număr înmatriculare</th>
                                     <th className="px-4 py-2">Dată expirare ITP</th>
+                                    <th className="px-4 py-2">Dată expirare Rovnietă</th>
                                     <th className="px-4 py-2">Acțiuni</th>
                                 </tr>
                             </thead>
@@ -72,7 +77,8 @@ function CarsList({ cars, deleteCar }) {
                                         <td className="border px-4 py-2">{car?.carVin}</td>
                                         <td className="border px-4 py-2">{car?.owner}</td>
                                         <td className="border px-4 py-2">{car?.plateNumber}</td>
-                                        <td className="border px-4 py-2">{formatTimestamp(car?.expirationDate)}</td>
+                                        <td className="border px-4 py-2">{formatTimestamp(car?.vignetteExpirationDate)}</td>
+                                        <td className="border px-4 py-2">{formatTimestamp(car?.checkUpExpirationDate)}</td>
                                         <td className="border px-4 py-2">
                                             <div className="space-x-2">
                                                 <Button variant="blue"

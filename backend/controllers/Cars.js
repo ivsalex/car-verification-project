@@ -17,13 +17,14 @@ exports.carCreate = async (req, res, next) => {
             carVin: req.body.carVin,
             owner: req.body.owner,
             plateNumber: req.body.plateNumber,
-            startDate: req.body.startDate,
-            expirationDate: req.body.expirationDate
+            checkUpExpirationDate: req.body.checkUpExpirationDate,
+            vignetteExpirationDate: req.body.vignetteExpirationDate
         });
+
+        console.log(car.carVin)
 
         const result = await car.save();
 
-        console.log(result);
         res.status(201).json({
             message: 'Car created!',
             car: result
@@ -39,15 +40,15 @@ exports.carCreate = async (req, res, next) => {
 exports.getAllCars = async (req, res, next) => {
     try {
         const docs = await Car.find()
-            .select('_id carVin owner plateNumber startDate expirationDate');
+            .select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate');
 
         const cars = docs.map(doc => ({
             _id: doc._id,
             carVin: doc.carVin,
             owner: doc.owner,
             plateNumber: doc.plateNumber,
-            startDate: doc.startDate,
-            expirationDate: doc.expirationDate
+            vignetteExpirationDate: doc.vignetteExpirationDate,
+            checkUpExpirationDate: doc.checkUpExpirationDate
         }));
 
         res.status(200).json({

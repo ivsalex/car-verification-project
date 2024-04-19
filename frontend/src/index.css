@@ -10,4 +10,39 @@
         font-display: swap;
         font-style: normal;
     }
+
+    @keyframes shake {
+        0% {
+            transform: translateX(0);
+        }
+
+        10%,
+        90% {
+            transform: translateX(-2px);
+        }
+
+        20%,
+        80% {
+            transform: translateX(2px);
+        }
+
+        30%,
+        50%,
+        70% {
+            transform: translateX(-1px);
+        }
+
+        40%,
+        60% {
+            transform: translateX(1px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .animate-shake {
+        animation: shake 0.5s ease;
+    }
 }
