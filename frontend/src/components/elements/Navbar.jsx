@@ -1,6 +1,6 @@
 export const Navbar = () => {
     return (
-        <div className="border-b bg-blue-700 p-4">
+        <div className="border-b bg-blue-700 p-4 w-full">
             <div className="flex justify-center p-4">
                 <div>
                     <ul className="hidden sm:flex space-x-6 text-base text-white">

@@ -12,6 +12,13 @@ exports.carCreate = async (req, res, next) => {
             })
         }
 
+        const checkedCarsPlate = await Car.find({ plateNumber: req.body.plateNumber });
+        if (checkedCarsPlate.length >= 1) {
+            return res.status(500).json({
+                message: 'This Plate Number is already in use!'
+            });
+        }
+
         const car = new Car({
             _id: new mongoose.Types.ObjectId(),
             carVin: req.body.carVin,
@@ -20,8 +27,6 @@ exports.carCreate = async (req, res, next) => {
             checkUpExpirationDate: req.body.checkUpExpirationDate,
             vignetteExpirationDate: req.body.vignetteExpirationDate
         });
-
-        console.log(car.carVin)
 
         const result = await car.save();
 
