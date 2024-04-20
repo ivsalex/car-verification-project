@@ -39,7 +39,8 @@ function SingleCar({ car }) {
                             <h1><span className="font-bold">Serie șasiu: </span>{car?.carVin}</h1>
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
                             <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber}</p>
-                            <p><span className="font-bold">Dată expirare ITP:</span> {formatTimestamp(car?.expirationDate)}</p>
+                            <p><span className="font-bold">Dată expirare ITP:</span> {formatTimestamp(car?.checkUpExpirationDate)}</p>
+                            <p><span className="font-bold">Dată expirare Rovinietă:</span> {formatTimestamp(car?.vignetteExpirationDate)}</p>
                             <div className="space-x-2 flex justify-center">
                                 <Button variant="gray" onClick={() => navigate("/cars")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
                                 <Button variant="blue"><PencilIcon className="h-7 w-7" /></Button>

@@ -17,7 +17,9 @@ const CarAdd = () => {
             case '{"message":"This VIN is already in use!"}':
                 setErrorMessage('Această serie de șasiu există deja!');
                 break;
-            // Add more cases as needed for different error messages
+            case '{"message":"This Plate Number is already in use!"}':
+                setErrorMessage('Acest număr de înmatriculare există deja!');
+                break;
             default:
                 setErrorMessage('A apărut o eroare!');
                 break;
