@@ -7,6 +7,9 @@ const CarsController = require('../controllers/cars');
 //Get all Cars Route
 router.get('/', checkAuth, CarsController.getAllCars);
 
+//Get all Cars Route
+router.get('/expiring', checkAuth, CarsController.getAllExpiringCars);
+
 //Get Car by Id Route
 router.get('/:carId', checkAuth, CarsController.getCarById);
 
