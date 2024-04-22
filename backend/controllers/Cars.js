@@ -67,6 +67,67 @@ exports.getAllCars = async (req, res, next) => {
     }
 };
 
+exports.getAllExpiringCars = async (req, res, next) => {
+    try {
+        let { range, type } = req.query;
+
+        if (!['week', '2weeks', 'month'].includes(range)) {
+            range = 'week';
+        }
+
+        if (!['checkup', 'vignette'].includes(type)) {
+            type = 'checkup';
+        }
+
+        let startOfRange = new Date();
+        let endOfRange = new Date();
+
+        if (range === 'week') {
+            startOfRange.setHours(0, 0, 0, 0);
+            endOfRange.setDate(endOfRange.getDate() + (7 - endOfRange.getDay()));
+            endOfRange.setHours(23, 59, 59, 999);
+        } else if (range === '2weeks') {
+            startOfRange.setHours(0, 0, 0, 0);
+            endOfRange.setDate(endOfRange.getDate() + (14 - endOfRange.getDay()));
+            endOfRange.setHours(23, 59, 59, 999);
+        } else if (range === 'month') {
+            startOfRange.setHours(0, 0, 0, 0);
+            endOfRange.setMonth(endOfRange.getMonth() + 1);
+            endOfRange.setDate(0);
+            endOfRange.setHours(23, 59, 59, 999);
+        }
+
+        let docs;
+        if (type === 'checkup') {
+            docs = await Car.find({
+                checkUpExpirationDate: { $gte: startOfRange, $lte: endOfRange }
+            }).select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate');
+        } else if (type === 'vignette') {
+            docs = await Car.find({
+                vignetteExpirationDate: { $gte: startOfRange, $lte: endOfRange }
+            }).select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate');
+        }
+
+        const dueCars = docs.map(doc => ({
+            _id: doc._id,
+            carVin: doc.carVin,
+            owner: doc.owner,
+            plateNumber: doc.plateNumber,
+            vignetteExpirationDate: doc.vignetteExpirationDate,
+            checkUpExpirationDate: doc.checkUpExpirationDate
+        }));
+
+        res.status(200).json({
+            count: dueCars.length,
+            dueCars: dueCars
+        });
+    } catch (err) {
+        res.status(500).json({
+            error: err
+        });
+    }
+}
+
 exports.getCarById = async (req, res, next) => {
     try {
         const id = req.params.carId;
