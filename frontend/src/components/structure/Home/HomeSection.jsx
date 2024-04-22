@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "../../elements/Spinner";
+import Button from "../../elements/Button";
+import { useNavigate } from "react-router-dom";
+import { DotsHorizontalIcon } from '@heroicons/react/outline';
 
 function HomeSection({ dueCars, fetchCarsData }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
+    const navigate = useNavigate();
 
     const handleTypeChange = (e) => {
         setSelectedType(e.target.value);
@@ -45,6 +49,20 @@ function HomeSection({ dueCars, fetchCarsData }) {
         return `${day}.${month}.${year}`;
     }
 
+    function countRemainingDays(expirationDate) {
+        const expiration = new Date(expirationDate);
+        const today = new Date();
+
+        const differenceMs = expiration - today;
+
+        const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+
+        return daysRemaining;
+    }
+
+    dueCars.sort((a, b) => new Date(a.checkUpExpirationDate) - new Date(b.checkUpExpirationDate));
+
+
     useEffect(() => {
         if (selectedType && selectedDuration) {
             fetchCarsData(selectedDuration, selectedType);
@@ -58,48 +76,51 @@ function HomeSection({ dueCars, fetchCarsData }) {
     }, [selectedType, selectedDuration]);
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 overflow-hidden">
             <h1 className="text-3xl font-bold mb-4 text-center">Bază de date ITP / Rovinietă</h1>
             <div className="bg-gray-100 p-4 rounded-lg shadow-md mb-6 w-1/2 mx-auto">
-                <h2 className="text-xl font-bold mb-4">Alegeți tipul verificării și perioada:</h2>
-                <div className="mb-4">
-                    <label htmlFor="typeSelect" className="block text-sm font-medium text-gray-700">
-                        Tipul verificării:
-                    </label>
-                    <select
-                        id="typeSelect"
-                        name="typeSelect"
-                        value={selectedType}
-                        onChange={handleTypeChange}
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    >
-                        <option value="" className="text-gray-400">Alegeți tipul</option>
-                        <option value="checkup">ITP</option>
-                        <option value="vignette">Rovinietă</option>
-                    </select>
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="durationSelect" className="block text-sm font-medium text-gray-700">
-                        Perioadă:
-                    </label>
-                    <select
-                        id="durationSelect"
-                        name="durationSelect"
-                        value={selectedDuration}
-                        onChange={handleDurationChange}
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    >
-                        <option value="" className="text-gray-400">Alegeți perioada</option>
-                        <option value="1week">7 zile</option>
-                        <option value="2weeks">14 zile</option>
-                        <option value="month">30 zile</option>
-                    </select>
+                <h2 className="text-xl font-semibold mb-4 text-center">Alegeți tipul verificării și perioada:</h2>
+                <div className="flex justify-center space-x-2">
+                    <div className="mb-4">
+                        <label htmlFor="typeSelect" className="block text-sm font-medium text-gray-700">
+                            Tipul verificării:
+                        </label>
+                        <select
+                            id="typeSelect"
+                            name="typeSelect"
+                            value={selectedType}
+                            onChange={handleTypeChange}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                            <option value="" className="text-gray-400">Alegeți tipul</option>
+                            <option value="checkup">ITP</option>
+                            <option value="vignette">Rovinietă</option>
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="durationSelect" className="block text-sm font-medium text-gray-700">
+                            Perioadă:
+                        </label>
+                        <select
+                            id="durationSelect"
+                            name="durationSelect"
+                            value={selectedDuration}
+                            onChange={handleDurationChange}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                            <option value="" className="text-gray-400">Alegeți perioada</option>
+                            <option value="1week">7 zile</option>
+                            <option value="2weeks">14 zile</option>
+                            <option value="month">30 zile</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div className="bg-gray-100 p-6 rounded-lg shadow-md">
                 {selectedDuration && selectedType &&
-                    <h2 className="text-xl font-semibold mb-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor mașini expiră în <span className="text-red-600 font-bold">{renderDurationText()}</span></h2>
+                    <h2 className="text-xl font-semibold mb-4 text-center">
+                        <span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor {dueCars.length} mașini expiră în <span className="text-red-600 font-bold">{renderDurationText()}</span>
+                    </h2>
                 }
                 {loading && (
                     <div role="status">
@@ -108,26 +129,34 @@ function HomeSection({ dueCars, fetchCarsData }) {
                 )}
                 {!loading && (
                     <>
-                        <table className="min-w-full divide-y divide-gray-200 text-center">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-sm text-gray-500 uppercase text-center">Serie șasiu</th>
-                                    <th className="px-6 py-3 text-sm text-gray-500 uppercase text-center">Proprietar</th>
-                                    <th className="px-6 py-3 text-sm text-gray-500 uppercase text-center">Număr Înmatriculare</th>
-                                    <th className="px-6 py-3 text-sm text-gray-500 uppercase text-center">Dată expirare</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {dueCars?.map((car, index) => (
-                                    <tr key={index}>
-                                        <td className="px-6 py-4 whitespace-nowrap">{car.carVin}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{car.owner}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{car.plateNumber}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{formatTimestamp(car.checkUpExpirationDate)}</td>
+                        <div className="table-wrapper overflow-y-auto h-60">
+                            <table className="min-w-full divide-y divide-gray-200 text-center">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Serie șasiu</th>
+                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Proprietar</th>
+                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Număr Înmatriculare</th>
+                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Dată expirare</th>
+                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Acțiuni</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {dueCars?.map((car, index) => (
+                                        <tr key={index}>
+                                            <td className="py-4 whitespace-nowrap">{car.carVin}</td>
+                                            <td className="py-4 whitespace-nowrap">{car.owner}</td>
+                                            <td className="py-4 whitespace-nowrap">{car.plateNumber}</td>
+                                            <td className="py-4 whitespace-nowrap">{formatTimestamp(car.checkUpExpirationDate)} <span className="text-gray-400">({countRemainingDays(car.checkUpExpirationDate)} zile)</span></td>
+                                            <td className="py-4 whitespace-nowrap">
+                                                <Button variant="blue" className="tiny" onClick={() => navigate(`/cars/${car._id}`)}>
+                                                    <DotsHorizontalIcon className="h-4 w-4" />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </>
                 )}
             </div>

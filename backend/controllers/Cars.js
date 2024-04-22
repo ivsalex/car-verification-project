@@ -71,30 +71,25 @@ exports.getAllExpiringCars = async (req, res, next) => {
     try {
         let { range, type } = req.query;
 
-        if (!['week', '2weeks', 'month'].includes(range)) {
+        if (range !== 'week' && range !== '2weeks' && range !== 'month') {
             range = 'week';
         }
 
-        if (!['checkup', 'vignette'].includes(type)) {
+        if (type !== 'checkup' && type !== 'vignette') {
             type = 'checkup';
         }
+
+        console.log(range + type);
 
         let startOfRange = new Date();
         let endOfRange = new Date();
 
         if (range === 'week') {
-            startOfRange.setHours(0, 0, 0, 0);
-            endOfRange.setDate(endOfRange.getDate() + (7 - endOfRange.getDay()));
-            endOfRange.setHours(23, 59, 59, 999);
+            endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
         } else if (range === '2weeks') {
-            startOfRange.setHours(0, 0, 0, 0);
             endOfRange.setDate(endOfRange.getDate() + (14 - endOfRange.getDay()));
-            endOfRange.setHours(23, 59, 59, 999);
         } else if (range === 'month') {
-            startOfRange.setHours(0, 0, 0, 0);
             endOfRange.setMonth(endOfRange.getMonth() + 1);
-            endOfRange.setDate(0);
-            endOfRange.setHours(23, 59, 59, 999);
         }
 
         let docs;
