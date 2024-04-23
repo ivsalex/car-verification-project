@@ -4,7 +4,7 @@ import SingleCar from "../structure/Cars/SingleCar";
 import Cookies from 'js-cookie';
 
 const Car = () => {
-    const [car, setCar] = useState([]);
+    const [car, setCar] = useState({});
     const { carId } = useParams();
 
     const fetchCarData = async () => {
@@ -28,6 +28,47 @@ const Car = () => {
         }
     }
 
+    const deleteCar = async (carId) => {
+        try {
+            const response = await fetch(`http://localhost:3001/cars/${carId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("token")
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const modifyCar = async (carId, updatedCar) => {
+        try {
+            const response = await fetch(`http://localhost:3001/cars/${carId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + Cookies.get("token")
+                },
+                body: JSON.stringify(updatedCar),
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error modifying car:', response.status);
+            }
+        } catch (error) {
+            console.error('Error modifying car:', error);
+        }
+    };
+
     useEffect(() => {
         const token = Cookies.get('token');
         if (!token) {
@@ -38,7 +79,7 @@ const Car = () => {
 
     return (
         <div>
-            <SingleCar car={car} />
+            <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} />
         </div>
     );
 };

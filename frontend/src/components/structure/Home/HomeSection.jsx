@@ -60,6 +60,14 @@ function HomeSection({ dueCars, fetchCarsData }) {
         return daysRemaining;
     }
 
+    function formatLicensePlate(plateNumber) {
+        if (!plateNumber) return '';
+
+        plateNumber = plateNumber.replace(/\s/g, '');
+
+        return plateNumber.replace(/([A-Z]+)([0-9]+)/g, '$1 $2 ');
+    }
+
     dueCars.sort((a, b) => new Date(a.checkUpExpirationDate) - new Date(b.checkUpExpirationDate));
 
 
@@ -116,7 +124,54 @@ function HomeSection({ dueCars, fetchCarsData }) {
                     </div>
                 </div>
             </div>
-            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+            {
+                dueCars.length >= 1 &&
+                <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+                    {selectedDuration && selectedType &&
+                        <h2 className="text-xl font-semibold mb-4 text-center">
+                            <span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră în <span className="text-red-600 font-bold">{renderDurationText()}</span>
+                        </h2>
+                    }
+                    {loading && (
+                        <div role="status">
+                            <Spinner />
+                        </div>
+                    )}
+                    {!loading && (
+                        <>
+                            <div className="table-wrapper overflow-y-auto h-60">
+                                <table className="min-w-full divide-y divide-blue-200 text-center">
+                                    <thead className="bg-blue-500 sticky top-0">
+                                        <tr>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Serie șasiu</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Proprietar</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr Înmatriculare</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Dată expirare</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Acțiuni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        {dueCars?.map((car, index) => (
+                                            <tr key={index}>
+                                                <td className="py-4 whitespace-nowrap">{car.carVin}</td>
+                                                <td className="py-4 whitespace-nowrap">{car.owner}</td>
+                                                <td className="py-4 whitespace-nowrap">{formatLicensePlate(car.plateNumber)}</td>
+                                                <td className="py-4 whitespace-nowrap">{formatTimestamp(car.checkUpExpirationDate)} <span className="text-gray-400">({countRemainingDays(car.checkUpExpirationDate)} zile)</span></td>
+                                                <td className="py-4 whitespace-nowrap">
+                                                    <Button variant="blue" className="tiny" onClick={() => navigate(`/cars/${car._id}`)}>
+                                                        <DotsHorizontalIcon className="h-4 w-4" />
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    )}
+                </div>
+            }
+            {/* <div className="bg-gray-100 p-6 rounded-lg shadow-md">
                 {selectedDuration && selectedType &&
                     <h2 className="text-xl font-semibold mb-4 text-center">
                         <span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor {dueCars.length} mașini expiră în <span className="text-red-600 font-bold">{renderDurationText()}</span>
@@ -130,14 +185,14 @@ function HomeSection({ dueCars, fetchCarsData }) {
                 {!loading && (
                     <>
                         <div className="table-wrapper overflow-y-auto h-60">
-                            <table className="min-w-full divide-y divide-gray-200 text-center">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full divide-y divide-blue-200 text-center">
+                                <thead className="bg-blue-500">
                                     <tr>
-                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Serie șasiu</th>
-                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Proprietar</th>
-                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Număr Înmatriculare</th>
-                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Dată expirare</th>
-                                        <th className="py-3 text-sm text-gray-500 uppercase text-center">Acțiuni</th>
+                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Serie șasiu</th>
+                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Proprietar</th>
+                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr Înmatriculare</th>
+                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Dată expirare</th>
+                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Acțiuni</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -159,7 +214,7 @@ function HomeSection({ dueCars, fetchCarsData }) {
                         </div>
                     </>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 }
