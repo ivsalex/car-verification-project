@@ -33,6 +33,14 @@ function CarsList({ cars, deleteCar }) {
         return `${day}.${month}.${year}`;
     }
 
+    function formatLicensePlate(plateNumber) {
+        if (!plateNumber) return '';
+
+        plateNumber = plateNumber.replace(/\s/g, '');
+
+        return plateNumber.replace(/([A-Z]+)([0-9]+)/g, `$1 $2 `);
+    }
+
     const filteredCars = cars.filter(car => {
         return car.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
             car.plateNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -54,70 +62,6 @@ function CarsList({ cars, deleteCar }) {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        // <div className="flex flex-col justify-center align-center p-4 text-center h-100 space-y-4 mx-auto w-fit">
-        //     {loading && (
-        //         <div role="status">
-        //             <Spinner />
-        //         </div>
-        //     )}
-        //     {!loading && (
-        //         <>
-        //             <div className="flex align-center justify-between">
-        //                 <Button variant="gray" onClick={() => navigate("/")}>Înapoi</Button>
-        //                 <SearchInput onSearch={handleSearch} />
-        //                 <Button variant="green" onClick={() => navigate("/adauga")}>Adaugă</Button>
-        //             </div>
-        //             <div className="overflow-y-auto flex justify-center">
-        //                 <table>
-        //                     <thead className="bg-blue-500">
-        //                         <tr>
-        //                             <th className="px-4 py-2">Serie șasiu</th>
-        //                             <th className="px-4 py-2">Proprietar</th>
-        //                             <th className="px-4 py-2">Număr înmatriculare</th>
-        //                             <th className="px-4 py-2">Dată expirare ITP</th>
-        //                             <th className="px-4 py-2">Dată expirare Rovnietă</th>
-        //                             <th className="px-4 py-2">Acțiuni</th>
-        //                         </tr>
-        //                     </thead>
-        //                     <tbody>
-        //                         {filteredCars.map((car) => (
-        //                             <tr key={car?._id}>
-        //                                 <td className="border px-4 py-2">{car?.carVin}</td>
-        //                                 <td className="border px-4 py-2">{car?.owner}</td>
-        //                                 <td className="border px-4 py-2">{car?.plateNumber}</td>
-        //                                 <td className="border px-4 py-2">{formatTimestamp(car?.vignetteExpirationDate)}</td>
-        //                                 <td className="border px-4 py-2">{formatTimestamp(car?.checkUpExpirationDate)}</td>
-        //                                 <td className="border px-4 py-2">
-        //                                     <div className="space-x-2">
-        //                                         <Button variant="blue"
-        //                                             onClick={() => {
-        //                                                 navigate(`/cars/${car._id}`);
-        //                                             }}
-        //                                         ><DotsHorizontalIcon className="h-5 w-5" /></Button>
-        //                                         <Button variant="red"
-        //                                             onClick={() => {
-        //                                                 setIsDeleteModalOpen(true)
-        //                                                 setSelectedCarId(car?._id)
-        //                                             }}
-        //                                         ><TrashIcon className="h-5 w-5" /></Button>
-        //                                     </div>
-        //                                 </td>
-        //                             </tr>
-        //                         ))}
-        //                     </tbody>
-        //                 </table>
-
-        //                 {isDeleteModalOpen && (
-        //                     <Modal
-        //                         title="Dorești să ștergi autovehiculul?"
-        //                         onConfirm={handleDelete}
-        //                         onCancel={() => setIsDeleteModalOpen(false)}
-        //                     />
-        //                 )}
-        //             </div>
-        //         </>
-        //     )}
-        // </div>
         <div className="flex flex-col justify-center align-center p-4 text-center space-y-4 mx-auto w-fit h-100">
             {loading && (
                 <div role="status">
@@ -133,7 +77,7 @@ function CarsList({ cars, deleteCar }) {
                     </div>
                     <div className="overflow-y-auto justify-center flex-grow">
                         <table>
-                            <thead className="bg-blue-500">
+                            <thead className="bg-blue-500 sticky top-0">
                                 <tr>
                                     <th className="px-4 py-2">Serie șasiu</th>
                                     <th className="px-4 py-2">Proprietar</th>
@@ -146,12 +90,12 @@ function CarsList({ cars, deleteCar }) {
                             <tbody>
                                 {currentCars.map((car) => (
                                     <tr key={car?._id}>
-                                        <td className="border px-4 py-2">{car?.carVin}</td>
-                                        <td className="border px-4 py-2">{car?.owner}</td>
-                                        <td className="border px-4 py-2">{car?.plateNumber}</td>
-                                        <td className="border px-4 py-2">{formatTimestamp(car?.vignetteExpirationDate)}</td>
-                                        <td className="border px-4 py-2">{formatTimestamp(car?.checkUpExpirationDate)}</td>
-                                        <td className="border px-4 py-2">
+                                        <td className="border px-4 py-1">{car?.carVin}</td>
+                                        <td className="border px-4 py-1">{car?.owner}</td>
+                                        <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber)}</td>
+                                        <td className="border px-4 py-1">{formatTimestamp(car?.vignetteExpirationDate)}</td>
+                                        <td className="border px-4 py-1">{formatTimestamp(car?.checkUpExpirationDate)}</td>
+                                        <td className="border px-4 py-1">
                                             <div className="space-x-2">
                                                 <Button variant="blue"
                                                     onClick={() => {
@@ -177,7 +121,6 @@ function CarsList({ cars, deleteCar }) {
                                     onClick={() => paginate(i + 1)}
                                     size="tiny"
                                     variant={`${currentPage === i + 1 ? 'blue' : 'gray'}`}
-                                // className={`mx-1 px-3 py-1 rounded-lg ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600'}`}
                                 >
                                     {i + 1}
                                 </Button>

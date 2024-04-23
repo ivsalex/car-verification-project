@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 function getClassName({ className }) {
     return clsx(
-        'text-black text-lg font-bold transition-duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-opacity-50 rounded',
+        'text-black text-lg font-bold transition-duration-300 cursor-pointer rounded',
         className
     )
 }
@@ -18,7 +18,7 @@ const variants = {
     red: 'bg-red-500 text-gray-100 hover:bg-red-600',
     blue: 'bg-blue-500 text-gray-100 hover:bg-blue-600',
     gray: 'bg-gray-200 text-gray-500 hover:bg-gray-300',
-    green: 'bg-green-500 text-white hover:bg-green-600',
+    green: 'bg-green-500 text-white hover:bg-green-600 focus:bg-green-600',
 }
 
 const Button = ({

@@ -15,14 +15,10 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     };
 
     const handleCheckUpDateChange = (date) => {
-        // const options = { timeZone: 'Europe/Bucharest' };
-        // const adjustedDate = date.toLocaleString('en-GB', options);
         setCarData({ ...carData, checkUpExpirationDate: date });
     };
 
     const handleVignetteDateChange = (date) => {
-        // const options = { timeZone: 'Europe/Bucharest' };
-        // const adjustedDate = date.toLocaleString('en-GB', options);
         setCarData({ ...carData, vignetteExpirationDate: date });
     };
 
@@ -55,6 +51,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 pattern="[A-HJ-NPR-Z0-9]{17}"
                                 className="border border-gray-400 p-2 rounded-lg"
                                 title="Verificați formatul seriei de șasiu (17 caractere)"
+                                autoComplete="off"
                                 required
                             />
                             <input
@@ -64,6 +61,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 onChange={handleChange}
                                 placeholder="Proprietar (ex: Popescu Ion)"
                                 className="border border-gray-400 p-2 rounded-lg"
+                                autoComplete="off"
                                 required
                             />
                             <input
@@ -75,6 +73,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 pattern="^(B(0\d{1,2}|[1-9]\d{1,2}|1000)[A-Z]{3}|(?:AB|AR|AG|BC|BH|BN|BR|BT|BV|BZ|CS|CL|CJ|CT|CV|DB|DJ|GL|GR|GJ|HR|HD|IL|IS|IF|MM|MH|MS|NT|OT|PH|SM|SJ|SB|SV|TR|TM|TL|VS|VL|VN|XX)(0[1-9]|[1-9][0-9])[A-Z]{2,3})$"
                                 className="border border-gray-400 p-2 rounded-lg"
                                 title="Număr incorect! Verficați formatul acestuia."
+                                autoComplete="off"
                                 required
                             />
                             <div className="flex justify-center space-x-2 text-center">
