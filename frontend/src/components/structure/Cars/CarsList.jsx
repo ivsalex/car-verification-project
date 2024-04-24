@@ -83,7 +83,7 @@ function CarsList({ cars, deleteCar }) {
                                     <th className="px-4 py-2">Proprietar</th>
                                     <th className="px-4 py-2">Număr înmatriculare</th>
                                     <th className="px-4 py-2">Dată expirare ITP</th>
-                                    <th className="px-4 py-2">Dată expirare Rovnietă</th>
+                                    <th className="px-4 py-2">Dată expirare Rovinietă</th>
                                     <th className="px-4 py-2">Acțiuni</th>
                                 </tr>
                             </thead>
