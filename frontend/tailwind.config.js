@@ -9,6 +9,7 @@ module.exports = {
                 sans: ['ClashDisplay-Regular', ...defaultTheme.fontFamily.sans],
             },
             height: {
+                '70': '16em',
                 '98': '32em',
                 '100': '36rem',
                 '120': '50rem',

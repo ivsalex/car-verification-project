@@ -32,6 +32,7 @@ const ModifyModal = ({ car, modifyCar }) => {
 
     const handleCancel = () => {
         setShowModal(false);
+        window.location.reload();
     }
 
     const handleSubmit = async (e) => {
