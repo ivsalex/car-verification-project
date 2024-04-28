@@ -6,6 +6,7 @@ import { Navbar } from "../components/elements/Navbar";
 import { Login } from "../components/views/Login";
 import { Dashboard } from "../components/views/Dashboard";
 import CarAdd from "../components/views/CarAdd";
+import DueCarsPage from "../components/views/DueCars";
 
 const Navigation = () => {
     return (
@@ -14,6 +15,7 @@ const Navigation = () => {
             <Routes>
                 <Route path="*" element={<Navigate to="/" replace />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/expirari" element={<DueCarsPage />} />
                 <Route path="/cars" element={<Cars />} />
                 <Route path="/cars/:carId" element={<Car />} />
                 <Route path="/login" element={<Login />} />

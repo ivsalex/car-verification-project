@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //Routes
 const carsRoutes = require('./routes/cars');
