@@ -8,7 +8,7 @@ const cors = require('cors');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //Routes
-const carsRoutes = require('./routes/cars.js');
+const carsRoutes = require('./routes/cars');
 const usersRoutes = require('./routes/users');
 
 //MongoDB Connection
