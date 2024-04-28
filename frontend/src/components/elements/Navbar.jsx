@@ -1,6 +1,6 @@
 export const Navbar = () => {
     return (
-        <div className="border-b bg-blue-700 p-4 w-full">
+        <div className="bg-blue-700 p-4 w-full">
             <div className="flex justify-center p-4">
                 <div>
                     <ul className="hidden sm:flex space-x-6 text-base text-white">
@@ -9,6 +9,10 @@ export const Navbar = () => {
                                 href="/">
                                 ACASĂ
                             </a>
+                        </li>
+                        <li className="font-bold transition duration-300 ease-in-out">
+                            <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2"
+                                href="/expirari">EXPIRĂRI</a>
                         </li>
                         <li className="font-bold transition duration-300 ease-in-out">
                             <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2"
