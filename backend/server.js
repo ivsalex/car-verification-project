@@ -12,6 +12,13 @@ const usersRoutes = require('./routes/Users');
 
 //MongoDB Connection
 require('dotenv').config();
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch((error) => {
+        console.error('MongoDB connection error:', error);
+    });
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,8 +32,7 @@ app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
         return res.status(200).json({});
-    }
-    ;
+    };
     next();
 })
 
