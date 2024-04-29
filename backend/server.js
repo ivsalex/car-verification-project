@@ -5,11 +5,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //Routes
-// const carsRoutes = require('./routes/cars');
-// const usersRoutes = require('./routes/users');
+const carsRoutes = require('/routes/cars');
+const usersRoutes = require('/routes/users');
 
 //MongoDB Connection
 require('dotenv').config();
@@ -32,10 +31,8 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use(require('./routes/cars'));
-app.use(require('./routes/users'));
-// app.use('/cars', carsRoutes);
-// app.use('/users', usersRoutes);
+app.use('/cars', carsRoutes);
+app.use('/users', usersRoutes);
 
 app.use(cors({
     origin: 'http://localhost:3000/',
