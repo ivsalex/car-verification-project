@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://itp-rca.netlify.app/');
+    res.header('Access-Control-Allow-Origin', 'https://itp-rca.netlify.app');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
@@ -40,7 +40,7 @@ app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
 app.use(cors({
-    origin: 'https://itp-rca.netlify.app/',
+    origin: 'https://itp-rca.netlify.app',
     credentials: true,
 }));
 
