@@ -7,7 +7,7 @@ const Cars = () => {
 
     const fetchCarsData = async () => {
         try {
-            const response = await fetch('http://localhost:3001/cars/', {
+            const response = await fetch('https://itp-rca.onrender.com/cars/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + Cookies.get("token")
@@ -28,7 +28,7 @@ const Cars = () => {
 
     const deleteCar = async (carId) => {
         try {
-            const response = await fetch(`http://localhost:3001/cars/${carId}`, {
+            const response = await fetch(`https://itp-rca.onrender.com/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + Cookies.get("token")

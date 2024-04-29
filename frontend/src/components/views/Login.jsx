@@ -8,7 +8,7 @@ export const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const loginUser = async (credentials) => {
-        const response = await fetch('http://localhost:3001/users/login', {
+        const response = await fetch('https://itp-rca.onrender.com/users/login', {
             method: 'POST',
             mode: 'cors',
             credentials: "include",
@@ -55,7 +55,7 @@ export const Login = () => {
             return;
         }
 
-        window.location.href = '/cars'
+        // window.location.href = '/cars'
         setErrorMessage('');
     };
 
