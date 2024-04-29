@@ -2,7 +2,7 @@ const express = require('express');
 const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 
-const CarsController = require('../controllers/cars');
+const CarsController = require('../controllers/Cars');
 
 //Get all Cars Route
 router.get('/', checkAuth, CarsController.getAllCars);

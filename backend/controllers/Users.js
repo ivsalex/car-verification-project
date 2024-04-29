@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
-const User = require('../models/user');
+const User = require('../models/User');
 
 exports.getAllUsers = async (req, res, next) => {
     try {
