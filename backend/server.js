@@ -7,8 +7,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 //Routes
-const carsRoutes = require('/routes/cars');
-const usersRoutes = require('/routes/users');
+const carsRoutes = require('./routes/cars');
+const usersRoutes = require('./routes/users');
 
 //MongoDB Connection
 require('dotenv').config();
