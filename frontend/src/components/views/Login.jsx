@@ -13,8 +13,7 @@ export const Login = () => {
             mode: 'cors',
             credentials: "include",
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(credentials),
         });
