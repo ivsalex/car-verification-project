@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'https://itp-rca.onrender.com');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
@@ -31,13 +31,16 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use('/cars', cors({ origin: 'https://itp-rca.onrender.com', credentials: true }));
+app.use('/users', cors({ origin: 'https://itp-rca.onrender.com', credentials: true }));
+
 app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
-app.use(cors({
-    origin: 'https://itp-rca.onrender.com/',
-    credentials: true,
-}));
+// app.use(cors({
+//     origin: 'https://itp-rca.onrender.com/',
+//     credentials: true,
+// }));
 
 app.use((req, res, next) => {
     const error = new Error('Not found!');
