@@ -12,7 +12,7 @@ const usersRoutes = require('./routes/Users');
 
 //MongoDB Connection
 require('dotenv').config();
-mongoose.connect(process.env.MONGODB_URI);
+// mongoose.connect(process.env.MONGODB_URI);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Origin', 'https://itp-rca.onrender.com/');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
@@ -35,7 +35,7 @@ app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
 app.use(cors({
-    origin: 'http://localhost:3000/',
+    origin: 'https://itp-rca.onrender.com/',
     credentials: true,
 }));
 

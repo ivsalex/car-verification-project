@@ -79,7 +79,7 @@ exports.login = async (req, res, next) => {
                 userId: checkedUsers[0]._id,
                 name: checkedUsers[0].name,
                 role: checkedUsers[0].role
-            }, process.env.SECRET_KEY,
+            }, process.env.secretOrPrivateKey,
                 {
                     expiresIn: '24h'
                 });
