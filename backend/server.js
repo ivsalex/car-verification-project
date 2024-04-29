@@ -12,7 +12,6 @@ const usersRoutes = require('./routes/Users');
 
 //MongoDB Connection
 require('dotenv').config();
-mongoose.connect(process.env.MONGODB_URI);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
