@@ -2,5 +2,6 @@
 /shelf/
 /workspace.xml
 /package-lock.json
+/node_modules
 # Editor-based HTTP Client requests
 /httpRequests/
