@@ -8,7 +8,7 @@ function LoginCard({ handleSubmit, errorMessage, setEmail, setPassword }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 500);
+        }, 1500);
 
         return () => clearTimeout(timer);
     }, []);
