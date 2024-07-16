@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://itprca.onrender.com');
+    res.header('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
@@ -40,7 +40,7 @@ app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
 app.use(cors({
-    origin: 'https://itprca.onrender.com',
+    origin: 'https://www.ivaiondan.ro',
     credentials: true,
 }));
 

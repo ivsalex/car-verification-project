@@ -28,7 +28,7 @@ const CarAdd = () => {
 
     const createCar = async (carData) => {
         try {
-            const response = await fetch(`https://itp-rca.onrender.com/cars/`, {
+            const response = await fetch(`https://api.ivaiondan.ro/cars/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

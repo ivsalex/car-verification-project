@@ -9,7 +9,7 @@ const Car = () => {
 
     const fetchCarData = async () => {
         try {
-            const response = await fetch(`https://itp-rca.onrender.com/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + Cookies.get("token")
@@ -30,7 +30,7 @@ const Car = () => {
 
     const deleteCar = async (carId) => {
         try {
-            const response = await fetch(`https://itp-rca.onrender.com/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + Cookies.get("token")
@@ -50,7 +50,7 @@ const Car = () => {
 
     const modifyCar = async (carId, updatedCar) => {
         try {
-            const response = await fetch(`https://itp-rca.onrender.com/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
