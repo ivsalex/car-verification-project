@@ -87,8 +87,8 @@ exports.login = async (req, res, next) => {
             res.cookie('token', token, {
                 domain: '.ivaiondan.ro',
                 httpOnly: true,
-                sameSite: 'Strict',
-                path: '/'
+                sameSite: 'strict',
+                // path: '/'
             });
 
             return res.status(200).json({
