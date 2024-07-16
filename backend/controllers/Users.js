@@ -81,10 +81,11 @@ exports.login = async (req, res, next) => {
                 role: checkedUsers[0].role
             }, process.env.SECRET_KEY,
                 {
-                    expiresIn: '24h'
+                    expiresIn: '1h'
                 });
 
             res.cookie('token', token, {
+                domain: '.ivaiondan.ro',
                 httpOnly: true,
                 sameSite: 'Strict',
                 path: '/'
