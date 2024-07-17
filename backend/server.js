@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
+const { ClerkExpressRequiresAuth } = require('@clerk/clerk-sdk-node');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use(ClerkExpressWithAuth({ secretKey: process.env.CLERK_SECRET_KEY }));
+app.use(ClerkExpressRequiresAuth({ secretKey: process.env.CLERK_SECRET_KEY }));
 
 app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
