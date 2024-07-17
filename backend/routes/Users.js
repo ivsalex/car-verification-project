@@ -10,7 +10,4 @@ router.get('/', checkAuth, UsersController.getAllUsers);
 //Create User Route
 router.post('/', checkAuth, UsersController.createUser);
 
-//Login Route
-router.post('/login', UsersController.login);
-
 module.exports = router;
