@@ -12,6 +12,9 @@ const Car = () => {
         try {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
 
             if (!response.ok) {
