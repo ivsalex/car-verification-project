@@ -8,18 +8,18 @@ const CarsController = require('../controllers/Cars');
 router.get('/', ClerkExpressRequireAuth, CarsController.getAllCars);
 
 //Get all Cars Route
-router.get('/expiring', ClerkExpressRequireAuth(), CarsController.getAllExpiringCars);
+router.get('/expiring', ClerkExpressRequireAuth, CarsController.getAllExpiringCars);
 
 //Get Car by Id Route
-router.get('/:carId', requireAuth, CarsController.getCarById);
+router.get('/:carId', ClerkExpressRequireAuth, CarsController.getCarById);
 
 //Create Car Route
-router.post('/', requireAuth, CarsController.carCreate);
+router.post('/', ClerkExpressRequireAuth, CarsController.carCreate);
 
 //Delete Car Route
-router.delete('/:carId', requireAuth, CarsController.carDelete);
+router.delete('/:carId', ClerkExpressRequireAuth(), CarsController.carDelete);
 
 //Modify Car Route
-router.patch('/:carId', requireAuth, CarsController.carModify);
+router.patch('/:carId', ClerkExpressRequireAuth, CarsController.carModify);
 
 module.exports = router;
