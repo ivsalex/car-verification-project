@@ -6,7 +6,7 @@ const { requireAuth } = require('@clerk/clerk-sdk-node');
 const CarsController = require('../controllers/Cars');
 
 //Get all Cars Route
-router.get('/', requireAuth, CarsController.getAllCars);
+router.get('/', requireAuth(), CarsController.getAllCars);
 
 //Get all Cars Route
 router.get('/expiring', requireAuth, CarsController.getAllExpiringCars);
