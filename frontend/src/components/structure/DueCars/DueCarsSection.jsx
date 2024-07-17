@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "../../elements/Spinner";
 import Button from "../../elements/Button";
-import { useAuth } from "../../../contexts/AuthProvider";
+import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
 
@@ -9,7 +9,7 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
-    const { auth } = useAuth();
+    const { user } = useUser();
     const navigate = useNavigate();
 
     const handleTypeChange = (e) => {
@@ -98,7 +98,7 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
     }, [dueCars]);
 
     return (
-        (auth &&
+        (user &&
             <>
                 <div className="container mx-auto p-4 overflow-hidden">
                     <h1 className="text-3xl font-bold mb-2 text-center">Bază de date ITP / Rovinietă</h1>

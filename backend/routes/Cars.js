@@ -1,25 +1,26 @@
 const express = require('express');
-const checkAuth = require('../middleware/check-auth');
+// const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
+const { requireAuth } = require('@clerk/clerk-sdk-node');
 
 const CarsController = require('../controllers/Cars');
 
 //Get all Cars Route
-router.get('/', checkAuth, CarsController.getAllCars);
+router.get('/', CarsController.getAllCars);
 
 //Get all Cars Route
-router.get('/expiring', checkAuth, CarsController.getAllExpiringCars);
+router.get('/expiring', requireAuth(), CarsController.getAllExpiringCars);
 
 //Get Car by Id Route
-router.get('/:carId', checkAuth, CarsController.getCarById);
+router.get('/:carId', requireAuth(), CarsController.getCarById);
 
 //Create Car Route
-router.post('/', checkAuth, CarsController.carCreate);
+router.post('/', requireAuth(), CarsController.carCreate);
 
 //Delete Car Route
-router.delete('/:carId', checkAuth, CarsController.carDelete);
+router.delete('/:carId', requireAuth(), CarsController.carDelete);
 
 //Modify Car Route
-router.patch('/:carId', checkAuth, CarsController.carModify);
+router.patch('/:carId', requireAuth(), CarsController.carModify);
 
 module.exports = router;

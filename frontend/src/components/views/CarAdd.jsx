@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import CarAddCard from "../structure/Cars/CarAddCard";
-import Cookies from 'js-cookie';
+import { useUser } from '@clerk/clerk-react';
 
 const CarAdd = () => {
     const [errorMessage, setErrorMessage] = useState('');
+    const { user } = useUser();
     const [carData, setCarData] = useState({
         carVin: '',
         owner: '',
@@ -33,7 +34,6 @@ const CarAdd = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + Cookies.get("token")
                 },
                 body: JSON.stringify(carData),
             });
@@ -61,8 +61,7 @@ const CarAdd = () => {
     };
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        if (!token) {
+        if (!user) {
             window.location.href = '/login'
         }
     }, []);

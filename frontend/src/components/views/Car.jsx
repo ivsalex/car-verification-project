@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SingleCar from "../structure/Cars/SingleCar";
-import Cookies from 'js-cookie';
+import { useUser } from '@clerk/clerk-react';
 
 const Car = () => {
     const [car, setCar] = useState({});
     const { carId } = useParams();
+    const { user } = useUser();
 
     const fetchCarData = async () => {
         try {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + Cookies.get("token")
-                }
             });
 
             if (!response.ok) {
@@ -32,9 +30,6 @@ const Car = () => {
         try {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': 'Bearer ' + Cookies.get("token")
-                }
             });
 
             if (!response.ok) {
@@ -53,8 +48,7 @@ const Car = () => {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + Cookies.get("token")
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(updatedCar),
             });
@@ -70,9 +64,8 @@ const Car = () => {
     };
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        if (!token) {
-            window.location.href = '/login'
+        if (!user) {
+            window.location.href = '/sign-in'
         }
         fetchCarData();
     }, []);

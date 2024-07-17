@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DueCarsSection from "../structure/DueCars/DueCarsSection";
-import Cookies from "js-cookie";
+import { useUser } from '@clerk/clerk-react';
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
+    const { user } = useUser();
 
     const fetchCarsData = async (range, type) => {
         try {
             const response = await fetch(`https://api.ivaiondan.ro/cars/expiring?range=${range}&type=${type}`, {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + Cookies.get("token")
-                }
             });
 
             if (!response.ok) {
@@ -27,8 +25,7 @@ const DueCarsPage = () => {
     }
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        if (!token) {
+        if (!user) {
             window.location.href = '/login'
         }
         fetchCarsData();

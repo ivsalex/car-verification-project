@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CarsList from '../structure/Cars/CarsList';
 import Cookies from 'js-cookie';
+import { useUser } from '@clerk/clerk-react';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
+    const { user } = useUser();
 
     const fetchCarsData = async () => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + Cookies.get("token")
-                }
             });
 
             if (!response.ok) {
@@ -47,9 +46,8 @@ const Cars = () => {
     };
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        if (!token) {
-            window.location.href = '/login'
+        if (!user) {
+            window.location.href = '/sign-in'
         }
         fetchCarsData();
     }, []);
