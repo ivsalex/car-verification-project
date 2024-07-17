@@ -11,6 +11,7 @@ const Cars = () => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'GET',
+                credentials: 'include'
             });
 
             if (!response.ok) {
