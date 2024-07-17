@@ -42,7 +42,7 @@ app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
 app.use(cors({
-    origin: 'https://www.ivaiondan.ro',
+    origin: 'https://www.ivaiondan.ro/',
     credentials: true,
 }));
 
