@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import CarsList from '../structure/Cars/CarsList';
-import Cookies from 'js-cookie';
 import { useUser } from '@clerk/clerk-react';
 
 const Cars = () => {
