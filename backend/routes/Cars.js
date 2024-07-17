@@ -6,21 +6,21 @@ const { requireAuth } = require('@clerk/clerk-sdk-node');
 const CarsController = require('../controllers/Cars');
 
 //Get all Cars Route
-router.get('/', requireAuth, CarsController.getAllCars);
+router.get('/', CarsController.getAllCars);
 
 //Get all Cars Route
-router.get('/expiring', requireAuth, CarsController.getAllExpiringCars);
+router.get('/expiring', CarsController.getAllExpiringCars);
 
 //Get Car by Id Route
-router.get('/:carId', requireAuth, CarsController.getCarById);
+router.get('/:carId', CarsController.getCarById);
 
 //Create Car Route
-router.post('/', requireAuth, CarsController.carCreate);
+router.post('/', CarsController.carCreate);
 
 //Delete Car Route
-router.delete('/:carId', requireAuth, CarsController.carDelete);
+router.delete('/:carId', CarsController.carDelete);
 
 //Modify Car Route
-router.patch('/:carId', requireAuth, CarsController.carModify);
+router.patch('/:carId', CarsController.carModify);
 
 module.exports = router;
