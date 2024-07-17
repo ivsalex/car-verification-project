@@ -6,6 +6,7 @@ import { useUser } from '@clerk/clerk-react';
 const Cars = () => {
     const [cars, setCars] = useState([]);
     const { user } = useUser();
+    const { getToken } = useAuth();
 
     const fetchCarsData = async () => {
         try {
@@ -13,6 +14,7 @@ const Cars = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
                 },
             });
 
@@ -33,7 +35,7 @@ const Cars = () => {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': 'Bearer ' + Cookies.get("token")
+                    'Authorization': `Bearer ${await getToken()}`
                 }
             });
 
