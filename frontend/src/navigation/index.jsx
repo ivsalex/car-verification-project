@@ -6,6 +6,7 @@ import { Navbar } from "../components/elements/Navbar";
 import { Dashboard } from "../components/views/Dashboard";
 import CarAdd from "../components/views/CarAdd";
 import DueCarsPage from "../components/views/DueCars";
+import LoginPage from "../components/views/Login";
 
 const Navigation = () => {
     return (
@@ -19,6 +20,7 @@ const Navigation = () => {
                 <Route path="/cars/:carId" element={<Car />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/adauga" element={<CarAdd />} />
+                <Route path="/sign-in" element={<LoginPage />} />
             </Routes>
         </BrowserRouter>
     );

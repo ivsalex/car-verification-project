@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node');
+const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
@@ -25,11 +25,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(ClerkExpressRequireAuth({ secretKey: process.env.CLERK_SECRET_KEY }));
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    // res.header('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
+    res.header('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
@@ -38,6 +36,8 @@ app.use((req, res, next) => {
     };
     next();
 })
+
+app.use(ClerkExpressWithAuth({ secretKey: process.env.CLERK_SECRET_KEY }));
 
 app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
