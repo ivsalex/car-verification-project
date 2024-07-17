@@ -7,6 +7,8 @@ import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from '@clerk/cle
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+const PUBLISHABLE_KEY = 'pk_test_bW9yYWwtYnJlYW0tMzkuY2xlcmsuYWNjb3VudHMuZGV2JA'
+
 if (!PUBLISHABLE_KEY) {
     throw new Error("Missing Publishable Key")
 }
