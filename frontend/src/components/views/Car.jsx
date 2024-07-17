@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SingleCar from "../structure/Cars/SingleCar";
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 
 const Car = () => {
     const [car, setCar] = useState({});
     const { carId } = useParams();
     const { user } = useUser();
+    const { getToken } = useAuth();
 
     const fetchCarData = async () => {
         try {
@@ -14,6 +15,7 @@ const Car = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
                 },
             });
 
@@ -33,6 +35,10 @@ const Car = () => {
         try {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
+                },
             });
 
             if (!response.ok) {
@@ -51,7 +57,8 @@ const Car = () => {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
                 },
                 body: JSON.stringify(updatedCar),
             });

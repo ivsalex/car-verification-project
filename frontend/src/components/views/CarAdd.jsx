@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CarAddCard from "../structure/Cars/CarAddCard";
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 
 const CarAdd = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const { user } = useUser();
+    const { getToken } = useAuth();
     const [carData, setCarData] = useState({
         carVin: '',
         owner: '',
@@ -34,6 +35,7 @@ const CarAdd = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
                 },
                 body: JSON.stringify(carData),
             });

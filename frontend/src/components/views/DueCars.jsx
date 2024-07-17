@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import DueCarsSection from "../structure/DueCars/DueCarsSection";
+import { useAuth } from '@clerk/clerk-react';
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
-    const { user } = useUser();
+    const { getToken } = useAuth();
 
     const fetchCarsData = async (range, type) => {
         try {
@@ -11,6 +12,8 @@ const DueCarsPage = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
+
                 },
             });
 
@@ -26,11 +29,11 @@ const DueCarsPage = () => {
         }
     }
 
-    useEffect(() => {
-        if (!user) {
-            window.location.href = '/sign-in'
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!user) {
+    //         window.location.href = '/sign-in'
+    //     }
+    // }, []);
 
     return (
         <div>
