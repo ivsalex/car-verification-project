@@ -44,12 +44,12 @@ const Cars = () => {
         }
     };
 
-    useEffect(() => {
-        if (!user) {
-            window.location.href = '/sign-in'
-        }
-        fetchCarsData();
-    }, []);
+    // useEffect(() => {
+    //     if (!user) {
+    //         window.location.href = '/sign-in'
+    //     }
+    //     fetchCarsData();
+    // }, []);
 
     return (
         <div>
