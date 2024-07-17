@@ -49,7 +49,7 @@ const Cars = () => {
             window.location.href = '/sign-in'
         }
         fetchCarsData();
-    }, [user]);
+    }, []);
 
     return (
         <div>
