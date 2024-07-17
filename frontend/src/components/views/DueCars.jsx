@@ -3,6 +3,7 @@ import DueCarsSection from "../structure/DueCars/DueCarsSection";
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
+    const { user } = useUser();
 
     const fetchCarsData = async (range, type) => {
         try {
@@ -24,6 +25,12 @@ const DueCarsPage = () => {
             console.error('Error fetching data:', error);
         }
     }
+
+    useEffect(() => {
+        if (!user) {
+            window.location.href = '/sign-in'
+        }
+    }, []);
 
     return (
         <div>
