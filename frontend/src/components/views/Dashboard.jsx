@@ -1,45 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../elements/Button";
-import { useAuth } from "../../contexts/AuthProvider";
 import Spinner from "../elements/Spinner";
-import Cookies from 'js-cookie';
+import { useUser, useClerk } from "@clerk/clerk-react";
 
 export const Dashboard = () => {
     const navigate = useNavigate();
-    const { setAuth } = useAuth();
-    const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
+    const { user } = useUser();
+    const { signOut } = useClerk();
 
-    const getUser = () => {
-        const token = Cookies.get('token');
-        if (token) {
-            try {
-                console.log(token)
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                setUser(payload);
-                setAuth(payload);
-            } catch (error) {
-                console.error('Error decoding token:', error);
-            }
+    const handleLogout = async () => {
+        try {
+            await signOut();
+            navigate('/');
+        } catch (error) {
+            console.error('Error logging out:', error);
         }
-        return null;
-    }
-
-    const logout = () => {
-        Cookies.remove('token');
-        setAuth(null);
-
-        window.location.href = '/';
     };
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        getUser();
-        if (!token) {
-            navigate('/login');
-        }
-
         const timer = setTimeout(() => {
             setLoading(false);
         }, 1500);
@@ -61,20 +41,16 @@ export const Dashboard = () => {
                         <div className="p-8 space-y-4">
                             <div>
                                 <span className="text-gray-600 font-bold">Email:</span>
-                                <span className="ml-2">{user?.email}</span>
+                                <span className="ml-2">{user.primaryEmailAddress.emailAddress}</span>
                             </div>
                             <div>
                                 <span className="text-gray-600 font-bold">Nume:</span>
-                                <span className="ml-2">{user?.name}</span>
-                            </div>
-                            <div>
-                                <span className="text-gray-600 font-bold">Rol:</span>
-                                <span className="ml-2">{user?.role}</span>
+                                <span className="ml-2">{user.username}</span>
                             </div>
                         </div>
                     </div>
                     <Button
-                        onClick={() => logout()}
+                        onClick={handleLogout}
                         className="text-black focus:outline-none"
                         variant="blue"
                     >

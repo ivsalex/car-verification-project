@@ -18,7 +18,6 @@ const Navigation = () => {
                 <Route path="/expirari" element={<DueCarsPage />} />
                 <Route path="/cars" element={<Cars />} />
                 <Route path="/cars/:carId" element={<Car />} />
-                <Route path="/login" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/adauga" element={<CarAdd />} />
             </Routes>
