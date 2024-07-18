@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import CarsList from '../structure/Cars/CarsList';
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
     const { user } = useUser();
+    const { getToken } = useAuth();
 
     const fetchCarsData = async () => {
         try {
