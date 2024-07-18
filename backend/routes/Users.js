@@ -1,13 +1,13 @@
 const express = require('express');
-const checkAuth = require('../middleware/check-auth');
+const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node')
 const router = express.Router();
 
 const UsersController = require('../controllers/Users');
 
 //Get All Users Route
-router.get('/', checkAuth, UsersController.getAllUsers);
+router.get('/', ClerkExpressRequireAuth(), UsersController.getAllUsers);
 
 //Create User Route
-router.post('/', checkAuth, UsersController.createUser);
+router.post('/', ClerkExpressRequireAuth(), UsersController.createUser);
 
 module.exports = router;
