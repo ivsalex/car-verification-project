@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node');
+const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node')
 
 const CarsController = require('../controllers/Cars');
 
@@ -8,18 +8,18 @@ const CarsController = require('../controllers/Cars');
 router.get('/', ClerkExpressRequireAuth(), CarsController.getAllCars);
 
 //Get all Cars Route
-router.get('/expiring', ClerkExpressRequireAuth, CarsController.getAllExpiringCars);
+router.get('/expiring', ClerkExpressRequireAuth(), CarsController.getAllExpiringCars);
 
 //Get Car by Id Route
-router.get('/:carId', ClerkExpressRequireAuth, CarsController.getCarById);
+router.get('/:carId', ClerkExpressRequireAuth(), ClerkExpressRequireAuth, CarsController.getCarById);
 
 //Create Car Route
-router.post('/', ClerkExpressRequireAuth, CarsController.carCreate);
+router.post('/', ClerkExpressRequireAuth(), ClerkExpressRequireAuth, CarsController.carCreate);
 
 //Delete Car Route
-router.delete('/:carId', ClerkExpressRequireAuth(), CarsController.carDelete);
+router.delete('/:carId', ClerkExpressRequireAuth(), ClerkExpressRequireAuth, CarsController.carDelete);
 
 //Modify Car Route
-router.patch('/:carId', ClerkExpressRequireAuth, CarsController.carModify);
+router.patch('/:carId', ClerkExpressRequireAuth(), ClerkExpressRequireAuth, CarsController.carModify);
 
 module.exports = router;
