@@ -29,12 +29,6 @@ const DueCarsPage = () => {
         }
     }
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         window.location.href = '/sign-in'
-    //     }
-    // }, []);
-
     return (
         <div>
             <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} />
