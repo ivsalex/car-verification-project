@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CarsList from '../structure/Cars/CarsList';
-import { useUser, useAuth } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
     const { user } = useUser();
-    const { getToken } = useAuth();
 
     const fetchCarsData = async () => {
         try {
-            const response = await fetch('http://localhost:3001/cars/', {
+            const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${await getToken()}`
@@ -33,7 +32,7 @@ const Cars = () => {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer`
+                    'Authorization': `Bearer ${await getToken()}`
                 }
             });
 

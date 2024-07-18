@@ -81,8 +81,6 @@ exports.getAllExpiringCars = async (req, res, next) => {
             type = 'checkup';
         }
 
-        console.log(range + type);
-
         let startOfRange = new Date();
         let endOfRange = new Date();
 
