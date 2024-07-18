@@ -47,6 +47,7 @@ app.use('/users', usersRoutes);
 
 app.use(cors({
     origin: 'https://www.ivaiondan.ro',
+    methods: ['GET', 'POST'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
     credentials: true,
 }));
