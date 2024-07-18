@@ -13,8 +13,8 @@ const DueCarsPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${await getToken()}`
-
                 },
+                mode: 'cors'
             });
 
             if (!response.ok) {
