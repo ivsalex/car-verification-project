@@ -14,6 +14,7 @@ const Cars = () => {
                 headers: {
                     'Authorization': `Bearer ${await getToken()}`
                 },
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -33,7 +34,8 @@ const Cars = () => {
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${await getToken()}`
+                    'Authorization': `Bearer ${await getToken()}`,
+                    credentials: 'include',
                 }
             });
 
