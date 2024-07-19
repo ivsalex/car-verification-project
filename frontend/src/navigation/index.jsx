@@ -13,7 +13,7 @@ const Navigation = () => {
         <BrowserRouter>
             <Navbar />
             <Routes>
-                <Route path="*" element={<Navigate to="/" replace />} />
+                {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
                 <Route path="/" element={<Home />} />
                 <Route path="/expirari" element={<DueCarsPage />} />
                 <Route path="/cars" element={<Cars />} />
