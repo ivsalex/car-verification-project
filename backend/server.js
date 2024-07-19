@@ -22,22 +22,22 @@ mongoose.connect(process.env.MONGODB_URI)
     });
 
 app.use(cors({
-    origin: ["https://ivaiondan.ro", "https://www.ivaiondan.ro"],
+    origin: ["https://www.ivaiondan.ro"],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
     credentials: true,
 }));
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    if (req.method === 'OPTIONS') {
-        res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
-        return res.status(200).json({});
-    };
-    next();
-})
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
+//     res.setHeader('Access-Control-Allow-Credentials', true)
+//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//     if (req.method === 'OPTIONS') {
+//         res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
+//         return res.status(200).json({});
+//     };
+//     next();
+// })
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
