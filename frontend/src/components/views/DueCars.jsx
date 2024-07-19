@@ -8,7 +8,7 @@ const DueCarsPage = () => {
 
     const fetchCarsData = async (range, type) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/cars/expiring?range=${range}&type=${type}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/masini/expiring?range=${range}&type=${type}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

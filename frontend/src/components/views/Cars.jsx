@@ -9,7 +9,7 @@ const Cars = () => {
 
     const fetchCarsData = async () => {
         try {
-            const response = await fetch('https://api.ivaiondan.ro/cars/', {
+            const response = await fetch('https://api.ivaiondan.ro/masini/', {
                 method: 'GET',
                 headers: new Headers({
                     'Authorization': `Bearer ${await getToken()}`
@@ -31,7 +31,7 @@ const Cars = () => {
 
     const deleteCar = async (carId) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/masini/${carId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${await getToken()}`,

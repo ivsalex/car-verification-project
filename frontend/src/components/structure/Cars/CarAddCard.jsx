@@ -102,7 +102,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                             </div>
                             {errorMessage && <p className="text-red-500 text-lg font-bold text-center animate-shake">{errorMessage}</p>}
                             <div className="space-x-2 flex justify-center">
-                                <Button variant="red" onClick={() => navigate('/cars')}>
+                                <Button variant="red" onClick={() => navigate('/masini')}>
                                     Anulează
                                 </Button>
                                 <Button type="submit" variant="green">

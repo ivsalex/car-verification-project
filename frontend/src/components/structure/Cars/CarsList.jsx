@@ -99,7 +99,7 @@ function CarsList({ cars, deleteCar }) {
                                             <div className="space-x-2">
                                                 <Button variant="blue"
                                                     onClick={() => {
-                                                        navigate(`/cars/${car._id}`);
+                                                        navigate(`/masini/${car._id}`);
                                                     }}
                                                 ><DotsHorizontalIcon className="h-5 w-5" /></Button>
                                                 <Button variant="red"

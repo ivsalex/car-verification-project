@@ -8,7 +8,7 @@ const cors = require('cors');
 const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
 
 //Routes
-const carsRoutes = require('./routes/Cars');
+const carsRoutes = require('./routes/masini');
 const usersRoutes = require('./routes/Users');
 
 //MongoDB Connection
@@ -51,7 +51,7 @@ app.use(ClerkExpressWithAuth({
     secretKey: process.env.CLERK_SECRET_KEY,
 }));
 
-app.use('/cars', carsRoutes);
+app.use('/masini', carsRoutes);
 app.use('/users', usersRoutes);
 
 app.use((req, res, next) => {

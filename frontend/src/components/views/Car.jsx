@@ -11,7 +11,7 @@ const Car = () => {
 
     const fetchCarData = async () => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/masini/${carId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const Car = () => {
 
     const deleteCar = async (carId) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/masini/${carId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const Car = () => {
 
     const modifyCar = async (carId, updatedCar) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/masini/${carId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
