@@ -12,7 +12,7 @@ const Cars = () => {
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${await getToken()}`
+                    Authorization: `Bearer ${await getToken()}`
                 },
                 credentials: 'include',
             });
