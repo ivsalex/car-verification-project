@@ -16,6 +16,7 @@ const Cars = () => {
                     'Authorization': `Bearer ${await getToken()}`
                 },
                 credentials: 'include',
+                mode: 'same-origin'
             });
 
             if (!response.ok) {
