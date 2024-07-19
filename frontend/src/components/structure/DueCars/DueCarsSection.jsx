@@ -177,7 +177,7 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
                                                                     <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
                                                                 </td>
                                                                 <td className="py-2 whitespace-nowrap">
-                                                                    <Button variant="blue" className="tiny" onClick={() => navigate(`/cars/${car._id}`)}>
+                                                                    <Button variant="blue" className="tiny" onClick={() => navigate(`/masini/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
                                                                 </td>
