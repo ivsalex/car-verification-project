@@ -25,7 +25,7 @@ function SingleCar({ car, deleteCar, modifyCar }) {
     const handleDelete = () => {
         deleteCar(selectedCarId);
         setIsDeleteModalOpen(false);
-        navigate("/masini");
+        navigate("/cars");
     }
 
     const handleModify = () => {
@@ -70,7 +70,7 @@ function SingleCar({ car, deleteCar, modifyCar }) {
                             <p><span className="font-bold">Dată expirare ITP:</span> {formatTimestamp(car?.checkUpExpirationDate)}</p>
                             <p><span className="font-bold">Dată expirare Rovinietă:</span> {formatTimestamp(car?.vignetteExpirationDate)}</p>
                             <div className="space-x-2 flex justify-center">
-                                <Button variant="gray" onClick={() => navigate("/masini")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
+                                <Button variant="gray" onClick={() => navigate("/cars")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
                                 <Button variant="blue" onClick={handleModify}><PencilIcon className="h-7 w-7" /></Button>
                                 <Button variant="red" onClick={() => {
                                     setSelectedCarId(car?._id)

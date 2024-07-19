@@ -21,26 +21,21 @@ mongoose.connect(process.env.MONGODB_URI)
         console.error('MongoDB connection error:', error);
     });
 
-app.use(cors({
-    origin: ["https://www.ivaiondan.ro"],
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-    credentials: true,
-}));
-
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Expose-Headers', 'Authorization');
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
-        res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
+        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
         return res.status(200).json({});
     };
     next();
 })
 
-app.options("*", cors())
+app.use(cors({
+    origin: ["https://www.ivaiondan.ro"],
+    credentials: true,
+}));
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,7 +46,7 @@ app.use(ClerkExpressWithAuth({
     secretKey: process.env.CLERK_SECRET_KEY,
 }));
 
-app.use('/masini', carsRoutes);
+app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
 app.use((req, res, next) => {

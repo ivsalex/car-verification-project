@@ -16,7 +16,7 @@ export const Navbar = () => {
                         </li>
                         <li className="font-bold transition duration-300 ease-in-out">
                             <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2"
-                                href="/masini">MAȘINI</a>
+                                href="/cars">MAȘINI</a>
                         </li>
                         <li className="font-bold transition duration-300 ease-in-out">
                             <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2"
