@@ -11,9 +11,9 @@ const Cars = () => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${await getToken()}`
-                },
+                headers: new Headers({
+                    'Authorization': `Bearer ${await getToken()}`
+                }),
                 credentials: 'include',
             });
 
