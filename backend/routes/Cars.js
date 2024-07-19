@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var cors = require('cors');
 const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node')
 
 const CarsController = require('../controllers/Cars');
