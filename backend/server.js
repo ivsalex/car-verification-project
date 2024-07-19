@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URI)
     });
 
 app.use(cors({
-    origin: 'https://www.ivaiondan.ro',
+    origin: ["https://ivaiondan.ro", "https://www.ivaiondan.ro"],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
     credentials: true,
@@ -33,7 +33,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Expose-Headers', 'Authorization');
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
         return res.status(200).json({});
