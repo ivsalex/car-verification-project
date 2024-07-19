@@ -46,18 +46,11 @@ app.use((req, res, next) => {
 app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
-// app.use(cors({
-//     origin: 'https://www.ivaiondan.ro',
-//     methods: ['GET', 'POST'],
-//     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-//     credentials: true,
-// }));
-
 app.use(cors({
-    'allowedHeaders': ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-    'origin': 'https://www.ivaiondan.ro',
-    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    'preflightContinue': false
+    origin: 'https://www.ivaiondan.ro',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+    credentials: true,
 }));
 
 app.use((req, res, next) => {
