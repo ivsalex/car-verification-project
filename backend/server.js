@@ -40,6 +40,8 @@ app.use((req, res, next) => {
     next();
 })
 
+app.options("*", cors())
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
