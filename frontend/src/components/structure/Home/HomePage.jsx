@@ -12,7 +12,7 @@ function HomePage() {
                 <p className="text-lg sm:text-xl md:text-2xl mb-8">Administrează ușor datele de ITP și Rovinietă!</p>
                 <div className="flex justify-center space-x-2">
                     <Button variant="blue" size="small"><a href="/expirari">EXPIRĂRI</a></Button>
-                    <Button variant="blue" size="small"><a href="/masini">MAȘINI</a></Button>
+                    <Button variant="blue" size="small"><a href="/cars">MAȘINI</a></Button>
                 </div>
             </div>
         </div >

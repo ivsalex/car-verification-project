@@ -9,11 +9,12 @@ const Cars = () => {
 
     const fetchCarsData = async () => {
         try {
-            const response = await fetch('https://api.ivaiondan.ro/masini/', {
+            const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'GET',
-                headers: new Headers({
+                headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${await getToken()}`
-                }),
+                },
                 credentials: 'include',
             });
 
@@ -31,12 +32,13 @@ const Cars = () => {
 
     const deleteCar = async (carId) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/masini/${carId}`, {
+            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${await getToken()}`,
-                    credentials: 'include',
-                }
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
+                },
+                credentials: 'include',
             });
 
             if (!response.ok) {

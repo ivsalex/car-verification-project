@@ -30,7 +30,7 @@ const CarAdd = () => {
 
     const createCar = async (carData) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/masini/`, {
+            const response = await fetch(`https://api.ivaiondan.ro/cars/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const CarAdd = () => {
             const data = await response.json();
             setCarData(data);
             setErrorMessage('');
-            window.location.href = '/masini'
+            window.location.href = '/cars'
 
         } catch (error) {
             console.error('Error fetching data:', error);
