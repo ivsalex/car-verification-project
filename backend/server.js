@@ -22,13 +22,11 @@ mongoose.connect(process.env.MONGODB_URI)
         console.error('MongoDB connection error:', error);
     });
 
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-
-app.use(ClerkExpressWithAuth({
-    secretKey: process.env.CLERK_SECRET_KEY,
+app.use(cors({
+    origin: 'https://www.ivaiondan.ro',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+    credentials: true,
 }));
 
 app.use((req, res, next) => {
@@ -43,15 +41,17 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.use(ClerkExpressWithAuth({
+    secretKey: process.env.CLERK_SECRET_KEY,
+}));
+
 app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
-
-app.use(cors({
-    origin: 'https://www.ivaiondan.ro',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-    credentials: true,
-}));
 
 app.use((req, res, next) => {
     const error = new Error('Not found!');
