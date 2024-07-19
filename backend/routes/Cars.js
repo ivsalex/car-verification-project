@@ -5,7 +5,7 @@ const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node')
 const CarsController = require('../controllers/Cars');
 
 //Get all Cars Route
-router.get('/', ClerkExpressRequireAuth(), CarsController.getAllCars);
+router.get('/', cors({ credentials: true, origin: 'https://www.ivaiondan.ro' }), ClerkExpressRequireAuth(), CarsController.getAllCars);
 
 //Get all Cars Route
 router.get('/expiring', ClerkExpressRequireAuth(), CarsController.getAllExpiringCars);
