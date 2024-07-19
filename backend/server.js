@@ -35,8 +35,9 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Expose-Headers', 'Authorization');
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
         return res.status(200).json({});
     };
     next();
@@ -45,11 +46,18 @@ app.use((req, res, next) => {
 app.use('/cars', carsRoutes);
 app.use('/users', usersRoutes);
 
+// app.use(cors({
+//     origin: 'https://www.ivaiondan.ro',
+//     methods: ['GET', 'POST'],
+//     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+//     credentials: true,
+// }));
+
 app.use(cors({
-    origin: 'https://www.ivaiondan.ro',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-    credentials: true,
+    'allowedHeaders': ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+    'origin': 'https://www.ivaiondan.ro',
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false
 }));
 
 app.use((req, res, next) => {
