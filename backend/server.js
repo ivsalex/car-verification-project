@@ -8,7 +8,7 @@ const cors = require('cors');
 const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
 
 //Routes
-const carsRoutes = require('./routes/masini');
+const carsRoutes = require('./routes/Cars');
 const usersRoutes = require('./routes/Users');
 
 //MongoDB Connection
