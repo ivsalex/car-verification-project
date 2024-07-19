@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
-const Cookies = require('js-cookie');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
@@ -30,11 +29,11 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
-    res.header('Access-Control-Allow-Credentials', true)
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Origin', 'https://www.ivaiondan.ro');
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
         return res.status(200).json({});
     };
     next();
