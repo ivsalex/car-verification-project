@@ -12,7 +12,7 @@ const Cars = () => {
     const fetchCarsData = async () => {
         const token = await getToken();
         try {
-            const response = await fetch('https://api.ivaiondan.ro/cars/', {
+            const response = await fetch('https://api.ivaiondan.ro/cars', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
