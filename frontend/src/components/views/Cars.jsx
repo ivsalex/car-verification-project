@@ -38,7 +38,12 @@ const Cars = () => {
             const response = await axios.get('https://api.ivaiondan.ro/cars/', {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'X-Custom-Header': 'CustomHeaderValue',
+                    'X-Debug-Header': 'DebugValue',
+                    'X-Test-Header': 'TestHeaderValue',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'User-Agent': 'Axios/0.21.1'
                 },
                 withCredentials: true,
             });
@@ -46,16 +51,6 @@ const Cars = () => {
             setCars(response.data?.cars);
         } catch (error) {
             console.error('Error fetching data:', error);
-        }
-
-        if (error.response) {
-            console.error('Response data:', error.response.data);
-            console.error('Response status:', error.response.status);
-            console.error('Response headers:', error.response.headers);
-        } else if (error.request) {
-            console.error('Request data:', error.request);
-        } else {
-            console.error('Error message:', error.message);
         }
     };
 
