@@ -44,7 +44,7 @@ const Cars = () => {
             //     withCredentials: true,
             // });
 
-            const response = await axios({ method: 'get', url: 'https://cors-anywhere.herokuapp.com/https://www.ivaiondan.ro/api/cars/', headers: { 'Authorization': 'Bearer ' + token } });
+            const response = await axios({ method: 'get', url: 'https://cors-anywhere.herokuapp.com/https://api.ivaiondan.ro/api/cars/', headers: { 'Authorization': 'Bearer ' + token } });
 
             setCars(response.data?.cars);
         } catch (error) {
