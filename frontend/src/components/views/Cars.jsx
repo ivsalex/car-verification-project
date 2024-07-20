@@ -38,12 +38,7 @@ const Cars = () => {
             const response = await axios.get('https://api.ivaiondan.ro/cars/', {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                    'X-Custom-Header': 'CustomHeaderValue',
-                    'X-Debug-Header': 'DebugValue',
-                    'X-Test-Header': 'TestHeaderValue',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                    'User-Agent': 'Axios/0.21.1'
+                    'Authorization': `Bearer ${token}`
                 },
                 withCredentials: true,
             });
