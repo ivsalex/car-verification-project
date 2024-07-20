@@ -17,7 +17,7 @@ const Cars = () => {
                     'Authorization': 'Bearer ' + { token }
                 },
                 credentials: 'include',
-                mode: 'same-origin'
+                mode: 'cors'
             });
 
             if (!response.ok) {
