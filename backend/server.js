@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI)
     });
 
 app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
+    if (req.method !== 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
         return res.status(200).json({});
     };
