@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CarsList from '../structure/Cars/CarsList';
 import { useUser, useAuth } from '@clerk/clerk-react';
-// import axios from 'axios';
-import axios from './axiosConfig.js';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
