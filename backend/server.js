@@ -39,12 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(ClerkExpressWithAuth({
-    secretKey: process.env.CLERK_SECRET_KEY,
-}));
-
-app.use('/cars', carsRoutes);
-app.use('/users', usersRoutes);
+app.use('/cars', ClerkExpressWithAuth(), carsRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found!');
