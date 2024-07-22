@@ -30,15 +30,6 @@ const CarAdd = () => {
 
     const createCar = async (carData) => {
         try {
-
-
-            const res = await fetch(`https://www.erovinieta.ro/vgncheck/api/findVignettes?plateNumber=BV94YDC&vin=VF1EM0J0H31170664`, {
-                method: 'GET',
-            });
-            console.log(res);
-
-
-
             const response = await fetch(`https://api.ivaiondan.ro/cars/`, {
                 method: 'POST',
                 headers: {
