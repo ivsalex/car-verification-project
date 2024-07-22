@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 
 console.log('Cron Job Activated!');
 
-cron.schedule('*/14 * * * *', function () {
+cron.schedule('*/10 * * * *', function () {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
