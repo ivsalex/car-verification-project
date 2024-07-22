@@ -34,15 +34,20 @@ app.use((req, res, next) => {
     next();
 });
 
-console.log('Cron Job Activated!');
+const fetchRandomData = async () => {
+    try {
+        await fetch('https://api.ivaiondan.ro/');
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        console.log(`Server restarted at: ${hours}:${minutes}:${seconds}`);
+    } catch (error) {
+        console.error('Error fetching random data:', error);
+    }
+};
 
-cron.schedule('*/10 * * * *', function () {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    console.log(`Server restarted at: ${hours}:${minutes}:${seconds}`);
-});
+cron.schedule('*/10 * * * *', fetchRandomData);
 
 app.use(cors({
     origin: ["https://www.ivaiondan.ro"],
