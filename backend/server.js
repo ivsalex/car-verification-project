@@ -36,14 +36,14 @@ app.use((req, res, next) => {
 
 const fetchRandomData = async () => {
     try {
-        await fetch('https://api.ivaiondan.ro/');
+        await fetch('https://api.ivaiondan.ro/test');
         const now = new Date();
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const seconds = now.getSeconds().toString().padStart(2, '0');
         console.log(`Server restarted at: ${hours}:${minutes}:${seconds}`);
     } catch (error) {
-        console.error('Error fetching random data:', error);
+        console.error('Error restarting server: ', error);
     }
 };
 
@@ -60,6 +60,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/cars', ClerkExpressWithAuth(), carsRoutes);
+
+app.get('/', (req, res) => {
+    res.json('There is nothing here :)');
+});
 
 app.use((req, res, next) => {
     const error = new Error('Not found!');
