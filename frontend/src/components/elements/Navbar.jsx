@@ -24,7 +24,7 @@ export const Navbar = () => {
                     </ul>
                 </div>
                 <div className="ml-auto border rounded-full p-1 border-white border-opacity-70 hover:border-opacity-100 cursor-pointer">
-                    <UserIcon className="h-7 w-7 text-white hover:font-bold" />
+                    <a href='https://accounts.ivaiondan.ro/user'><UserIcon className="h-7 w-7 text-white hover:font-bold" /></a>
                 </div>
             </div>
         </div>
