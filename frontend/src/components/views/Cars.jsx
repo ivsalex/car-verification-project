@@ -20,11 +20,11 @@ const Cars = () => {
                 mode: 'cors'
             });
 
+            console.log(response);
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
-            console.log('Headers: ' + headers)
 
             const data = await response.json();
             setCars(data?.cars);
