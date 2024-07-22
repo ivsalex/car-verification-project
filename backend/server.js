@@ -10,7 +10,6 @@ const job = require('./cron');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
-const usersRoutes = require('./routes/Users');
 
 //MongoDB Connection
 require('dotenv').config();
