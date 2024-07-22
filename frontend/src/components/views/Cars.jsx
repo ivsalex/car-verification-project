@@ -8,7 +8,6 @@ const Cars = () => {
     const { getToken } = useAuth();
 
     const fetchCarsData = async () => {
-        const token = await getToken();
         try {
             const response = await fetch('https://api.ivaiondan.ro/cars', {
                 method: 'GET',
@@ -56,9 +55,6 @@ const Cars = () => {
     };
 
     useEffect(() => {
-        if (!user) {
-            window.location.href = '/sign-in'
-        }
         fetchCarsData();
     }, []);
 
