@@ -7,49 +7,51 @@ const Cars = () => {
     const { user } = useUser();
     const { getToken } = useAuth();
 
-    // const fetchCarsData = async () => {
-    //     const token = await getToken();
-    //     try {
-    //         const response = await fetch('https://api.ivaiondan.ro/cars', {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': 'Bearer ' + { token }
-    //             },
-    //             credentials: 'include',
-    //             mode: 'cors'
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-
-    //         const data = await response.json();
-    //         setCars(data?.cars);
-
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // }
-
     const fetchCarsData = async () => {
+        const token = await getToken();
         try {
-            const token = await getToken();
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-            const response = await axios.get('https://api.ivaiondan.ro/cars', config, {
+            const response = await fetch('https://api.ivaiondan.ro/cars', {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'authorization': `Bearer ${token}`
+                    'Authorization': 'Bearer ' + { token }
                 },
+                credentials: 'include',
+                mode: 'cors'
             });
 
-            setCars(response.data?.cars);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            console.log('Headers: ' + headers)
+
+            const data = await response.json();
+            setCars(data?.cars);
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-    };
+    }
+
+    // const fetchCarsData = async () => {
+    //     try {
+    //         const token = await getToken();
+    //         const config = {
+    //             headers: { Authorization: `Bearer ${token}` }
+    //         };
+    //         const response = await axios.get('https://api.ivaiondan.ro/cars', config, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'authorization': `Bearer ${token}`
+    //             },
+    //         });
+
+    //         setCars(response.data?.cars);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
     const deleteCar = async (carId) => {
         try {
