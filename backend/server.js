@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
-const job = require('./cron').job;
+const job = require('./cron');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
