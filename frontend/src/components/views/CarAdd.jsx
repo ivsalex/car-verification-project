@@ -30,14 +30,25 @@ const CarAdd = () => {
 
     const createCar = async (carData) => {
         try {
-            const response = await fetch(`https://api.ivaiondan.ro/cars/`, {
+            const formatDateToUTC = (date) => {
+                const d = new Date(date);
+                return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            };
+
+            const formattedCarData = {
+                ...carData,
+                checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
+                vignetteExpirationDate: formatDateToUTC(carData.vignetteExpirationDate),
+            };
+
+            const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${await getToken()}`
                 },
-                body: JSON.stringify(carData),
+                body: JSON.stringify(formattedCarData),
             });
 
             if (!response.ok) {
@@ -49,7 +60,7 @@ const CarAdd = () => {
             const data = await response.json();
             setCarData(data);
             setErrorMessage('');
-            window.location.href = '/cars'
+            window.location.href = '/cars';
 
         } catch (error) {
             console.error('Error fetching data:', error);

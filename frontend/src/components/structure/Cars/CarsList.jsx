@@ -92,7 +92,7 @@ function CarsList({ cars, deleteCar }) {
                                     <tr key={car?._id}>
                                         <td className="border px-4 py-1">{car?.carVin}</td>
                                         <td className="border px-4 py-1">{car?.owner}</td>
-                                        <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber)}</td>
+                                        <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber.toUpperCase())}</td>
                                         <td className="border px-4 py-1">{formatTimestamp(car?.vignetteExpirationDate)}</td>
                                         <td className="border px-4 py-1">{formatTimestamp(car?.checkUpExpirationDate)}</td>
                                         <td className="border px-4 py-1">
