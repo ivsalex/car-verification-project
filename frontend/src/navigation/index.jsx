@@ -5,14 +5,12 @@ import Car from "../components/views/Car";
 import { Navbar } from "../components/elements/Navbar";
 import CarAdd from "../components/views/CarAdd";
 import DueCarsPage from "../components/views/DueCars";
-import LoginPage from "../components/views/Login";
 
 const Navigation = () => {
     return (
         <BrowserRouter>
             <Navbar />
             <Routes>
-                {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
                 <Route path="/" element={<Home />} />
                 <Route path="/expirari" element={<DueCarsPage />} />
                 <Route path="/cars" element={<Cars />} />
