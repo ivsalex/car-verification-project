@@ -74,10 +74,8 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
     const sortDueCars = () => {
         if (selectedType === "checkup") {
             dueCars.sort((a, b) => new Date(a.checkUpExpirationDate) - new Date(b.checkUpExpirationDate));
-            console.log(selectedType === "checkup");
         } else if (selectedType === "vignette") {
             dueCars.sort((a, b) => new Date(a.vignetteExpirationDate) - new Date(b.vignetteExpirationDate));
-            console.log(selectedType === "vignette");
         } else {
             return dueCars;
         }

@@ -56,8 +56,6 @@ exports.getAllCars = async (req, res, next) => {
             checkUpExpirationDate: doc.checkUpExpirationDate
         }));
 
-        console.log(req.auth)
-
         res.status(200).json({
             count: cars.length,
             cars: cars
