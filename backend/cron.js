@@ -1,8 +1,8 @@
-const cron = require('cron');
+const { CronJob } = require('cron');
 const https = require('https');
 
 const backendUrl = 'https://api.ivaiondan.ro';
-const job = new cron.CronJob('*/14 * * * *', function () {
+const job = new CronJob('*/14 * * * *', function () {
     console.log('Restarting server!');
 
     https.get(backendUrl, (res) => {
@@ -18,6 +18,4 @@ const job = new cron.CronJob('*/14 * * * *', function () {
     });
 });
 
-module.exports = {
-    job: job
-};
+module.exports = job
