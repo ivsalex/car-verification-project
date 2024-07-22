@@ -1,5 +1,7 @@
 const cron = require('node-cron');
 
+console.log('Cron Job Activated!');
+
 cron.schedule('*/14 * * * *', function () {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
