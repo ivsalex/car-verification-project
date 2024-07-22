@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../../elements/Modal";
 import { TrashIcon, PencilIcon, ArrowCircleLeftIcon } from '@heroicons/react/outline';
 import ModifyModal from '../../elements/ModifyModal';
-import moment from 'moment-timezone';
 
 function SingleCar({ car, deleteCar, modifyCar }) {
     const [loading, setLoading] = useState(true);
@@ -67,9 +66,9 @@ function SingleCar({ car, deleteCar, modifyCar }) {
                         <div className="flex flex-col text-xl space-y-4 p-6 text-center rounded-2xl w-auto">
                             <h1><span className="font-bold">Serie șasiu: </span>{car?.carVin}</h1>
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
-                            <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber}</p>
-                            <p><span className="font-bold">Dată expirare ITP:</span> {formatTimestamp(moment.utc(car?.checkUpExpirationDate).tz(moment.tz.guess()))}</p>
-                            <p><span className="font-bold">Dată expirare Rovinietă:</span> {formatTimestamp(moment.utc(car?.vignetteExpirationDate).tz(moment.tz.guess()))}</p>
+                            <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber.toUpperCase()}</p>
+                            <p><span className="font-bold">Dată expirare ITP:</span> {formatTimestamp(car?.checkUpExpirationDate)}</p>
+                            <p><span className="font-bold">Dată expirare Rovinietă:</span> {formatTimestamp(car?.vignetteExpirationDate)}</p>
                             <div className="space-x-2 flex justify-center">
                                 <Button variant="gray" onClick={() => navigate("/cars")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
                                 <Button variant="blue" onClick={handleModify}><PencilIcon className="h-7 w-7" /></Button>
