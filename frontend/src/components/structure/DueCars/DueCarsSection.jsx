@@ -9,6 +9,7 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
+    const [showError, setShowError] = useState(false);
     const { user } = useUser();
     const navigate = useNavigate();
 
@@ -86,6 +87,7 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
         if (selectedType && selectedDuration) {
             fetchCarsData(selectedDuration, selectedType);
             setLoading(true);
+            setShowError(true);
         }
         const timer = setTimeout(() => {
             setLoading(false);
@@ -189,7 +191,7 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
                                         </div>
                                     ) : (
                                         <>
-                                            {selectedDuration && selectedType && (
+                                            {showError && selectedDuration && selectedType && (
                                                 <div className="flex text-center justify-center text-lg text-red-500 font-bold">
                                                     <h1>În următoarele {renderDurationText()} nu expiră {renderTypeText() === 'ITP-ul' ? "niciun ITP!" : "nicio Rovinietă!"}</h1>
                                                 </div>
