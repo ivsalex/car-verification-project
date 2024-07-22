@@ -3,7 +3,6 @@ import Cars from "../components/views/Cars";
 import Home from "../components/views/Home";
 import Car from "../components/views/Car";
 import { Navbar } from "../components/elements/Navbar";
-import { Dashboard } from "../components/views/Dashboard";
 import CarAdd from "../components/views/CarAdd";
 import DueCarsPage from "../components/views/DueCars";
 import LoginPage from "../components/views/Login";
@@ -19,9 +18,8 @@ const Navigation = () => {
                 <Route path="/cars" element={<Cars />} />
                 <Route path="/api/cars" element={<Cars />} />
                 <Route path="/cars/:carId" element={<Car />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="https://accounts.ivaiondan.ro/user" />
                 <Route path="/adauga" element={<CarAdd />} />
-                <Route path="/sign-in" element={<LoginPage />} />
             </Routes>
         </BrowserRouter>
     );
