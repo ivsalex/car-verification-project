@@ -4,7 +4,6 @@ import { useUser, useAuth } from '@clerk/clerk-react';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
-    const { user } = useUser();
     const { getToken } = useAuth();
 
     const fetchCarsData = async () => {

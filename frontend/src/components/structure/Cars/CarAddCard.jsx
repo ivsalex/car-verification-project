@@ -66,6 +66,18 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                             />
                             <input
                                 type="text"
+                                name="ownerPhoneNumber"
+                                value={carData.ownerPhoneNumber}
+                                onChange={handleChange}
+                                placeholder="Număr de telefon: (ex: 0785346926)"
+                                className="border border-gray-400 p-2 rounded-lg"
+                                autoComplete="off"
+                                pattern="07\d{8}"
+                                title="Verificați formatul numărului de telefon!"
+                                required
+                            />
+                            <input
+                                type="text"
                                 name="plateNumber"
                                 value={carData.plateNumber ? carData.plateNumber.toUpperCase() : ""}
                                 onChange={handleChange}
