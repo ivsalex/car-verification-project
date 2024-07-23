@@ -34,6 +34,7 @@ const DueCarsPage = () => {
             const response = await fetch('https://smsalert.mobi/api/v2/message/send', {
                 method: 'POST',
                 headers: {
+                    "Content-Type": "application/json",
                     'Authorization': `Basic ${process.env.REACT_APP_USERNAME}:${process.env.REACT_APP_APIKEY}`
                 },
                 body: JSON.stringify({
