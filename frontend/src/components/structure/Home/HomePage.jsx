@@ -14,6 +14,7 @@ function HomePage() {
                     <Button variant="blue" size="small"><a href="/expirari">EXPIRĂRI</a></Button>
                     <Button variant="blue" size="small"><a href="/api/cars">MAȘINI</a></Button>
                 </div>
+                <p className="text-white text-opacity-40 mt-4">© 2024 IVAIONDAN SRL. Toate drepturile rezervate.</p>
             </div>
         </div >
     );
