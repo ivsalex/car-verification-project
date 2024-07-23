@@ -77,6 +77,7 @@ function SingleCar({ car, deleteCar, modifyCar }) {
                         <div className="flex flex-col text-xl space-y-4 p-6 text-center rounded-2xl w-auto">
                             <h1><span className="font-bold">Serie șasiu: </span>{car?.carVin}</h1>
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
+                            <p><span className="font-bold">Număr de telefon:</span> {car?.ownerPhoneNumber}</p>
                             <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber.toUpperCase()}</p>
                             <p><span className="font-bold">Dată expirare ITP:</span> {formatTimestamp(car?.checkUpExpirationDate)} <span className="text-gray-400">({countRemainingDays(car?.checkUpExpirationDate)} zile)</span></p>
                             <p><span className="font-bold">Dată expirare Rovinietă:</span> {formatTimestamp(car?.vignetteExpirationDate)} <span className="text-gray-400">({countRemainingDays(car?.vignetteExpirationDate)} zile)</span></p>

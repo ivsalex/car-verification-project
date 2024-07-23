@@ -29,9 +29,36 @@ const DueCarsPage = () => {
         }
     }
 
+    const sendSms = async (phoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
+        try {
+            const response = await fetch('https://smsalert.mobi/api/v2/message/send', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Basic ${process.env.REACT_APP_USERNAME}:${process.env.REACT_APP_APIKEY}`
+                },
+                body: JSON.stringify({
+                    phoneNumber: phoneNumber,
+                    message: `
+                    ${expirationType} dvs. la autovehiculul ${plateNumber} expiră la data de: ${expirationDate} (${daysRemaining} zile)
+                    Daniel Ivașcu!
+                    `,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     return (
         <div>
-            <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} />
+            <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} sendSms={sendSms} />
         </div>
     );
 };

@@ -9,6 +9,7 @@ const CarAdd = () => {
     const [carData, setCarData] = useState({
         carVin: '',
         owner: '',
+        ownerPhoneNumber: '',
         plateNumber: '',
         checkUpExpirationDate: null,
         vignetteExpirationDate: null,

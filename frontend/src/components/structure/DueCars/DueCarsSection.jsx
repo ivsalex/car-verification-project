@@ -4,8 +4,9 @@ import Button from "../../elements/Button";
 import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
+import { ChatIcon } from '@heroicons/react/outline';
 
-function DueCarsSection({ dueCars, fetchCarsData }) {
+function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
@@ -176,9 +177,23 @@ function DueCarsSection({ dueCars, fetchCarsData }) {
                                                                     {renderTypeText() === 'Rovinieta' ? formatTimestamp(car.vignetteExpirationDate) : formatTimestamp(car.checkUpExpirationDate)}
                                                                     <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
                                                                 </td>
-                                                                <td className="py-2 whitespace-nowrap">
-                                                                    <Button variant="blue" className="tiny" onClick={() => navigate(`/cars/${car._id}`)}>
+                                                                <td className="py-2 whitespace-nowrap space-x-1">
+                                                                    <Button variant="blue" className="tiny" onClick={
+                                                                        () => navigate(`/cars/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
+                                                                    </Button>
+                                                                    <Button variant="blue" className="tiny" onClick={
+                                                                        () => sendSms(
+                                                                            car.ownerPhoneNumber,
+                                                                            car.plateNumber,
+                                                                            renderTypeText(),
+                                                                            renderTypeText() === 'Rovinieta'
+                                                                                ? formatTimestamp(car.vignetteExpirationDate)
+                                                                                : formatTimestamp(car.checkUpExpirationDate),
+                                                                            renderTypeText() === 'Rovinieta'
+                                                                                ? countRemainingDays(car.vignetteExpirationDate)
+                                                                                : countRemainingDays(car.checkUpExpirationDate),)}>
+                                                                        <ChatIcon className="h-4 w-4" />
                                                                     </Button>
                                                                 </td>
                                                             </tr>

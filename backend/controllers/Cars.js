@@ -24,6 +24,7 @@ exports.carCreate = async (req, res, next) => {
             carVin: req.body.carVin,
             owner: req.body.owner,
             plateNumber: req.body.plateNumber,
+            ownerPhoneNumber: req.body.ownerPhoneNumber,
             checkUpExpirationDate: req.body.checkUpExpirationDate,
             vignetteExpirationDate: req.body.vignetteExpirationDate
         });
@@ -45,12 +46,13 @@ exports.carCreate = async (req, res, next) => {
 exports.getAllCars = async (req, res, next) => {
     try {
         const docs = await Car.find()
-            .select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate');
+            .select('_id carVin owner ownerPhoneNumber plateNumber vignetteExpirationDate checkUpExpirationDate');
 
         const cars = docs.map(doc => ({
             _id: doc._id,
             carVin: doc.carVin,
             owner: doc.owner,
+            ownerPhoneNumber: doc.ownerPhoneNumber,
             plateNumber: doc.plateNumber,
             vignetteExpirationDate: doc.vignetteExpirationDate,
             checkUpExpirationDate: doc.checkUpExpirationDate
@@ -154,9 +156,9 @@ exports.carDelete = async (req, res, next) => {
 exports.carModify = async (req, res, next) => {
     try {
         const { carId } = req.params;
-        const { carVin, owner, plateNumber, checkUpExpirationDate, vignetteExpirationDate } = req.body;
+        const { carVin, owner, plateNumber, ownerPhoneNumber, checkUpExpirationDate, vignetteExpirationDate } = req.body;
 
-        const result = await Car.updateOne({ _id: carId }, { carVin, owner, plateNumber, checkUpExpirationDate, vignetteExpirationDate });
+        const result = await Car.updateOne({ _id: carId }, { carVin, owner, plateNumber, checkUpExpirationDate, ownerPhoneNumber, vignetteExpirationDate });
 
         if (result.nModified === 0) {
             return res.status(404).json({ error: 'Car not found' });
