@@ -62,12 +62,15 @@ const DueCarsPage = () => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/send-sms', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
                     to: '+4' + ownerPhoneNumber,
                     sender: '4',
                     message: `
-                    ${expirationType} dvs. la autovehiculul ${plateNumber} expiră la data de: ${expirationDate} (${daysRemaining} zile)
-                    Daniel Ivașcu - Asigurări
+                    ${expirationType} dvs. la autovehiculul ${plateNumber} expira la data de: ${expirationDate} (${daysRemaining} zile)
+                    Daniel Ivascu - Asigurari
                     `,
                 }),
             });
