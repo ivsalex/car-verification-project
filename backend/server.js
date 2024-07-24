@@ -58,7 +58,7 @@ app.use(cors({
 app.use(
     '/api',
     createProxyMiddleware({
-        target: 'https://app.smso.ro/api/v1/',
+        target: 'https://app.smso.ro/api/v1/send',
         changeOrigin: true,
     })
 );
