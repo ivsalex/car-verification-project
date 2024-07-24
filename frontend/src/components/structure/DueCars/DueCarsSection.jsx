@@ -196,9 +196,9 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         () => navigate(`/cars/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
-                                                                    <Button variant="blue" className="tiny" onClick={
+                                                                    <Button variant={!disableButton(car.lastNotificationDate) ? "blue" : "disabled"} className="tiny" onClick={
                                                                         () => {
-                                                                            if (disableButton(car.lastNotificationDate)) {
+                                                                            if (!disableButton(car.lastNotificationDate)) {
                                                                                 sendSms(
                                                                                     car?._id,
                                                                                     car.ownerPhoneNumber,
