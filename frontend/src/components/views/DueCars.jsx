@@ -64,7 +64,7 @@ const DueCarsPage = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Authorization': process.env.SMS_APIKEY
+                    'X-Authorization': process.env.REACT_APP_SMS_APIKEY
                 },
                 body: JSON.stringify({
                     to: '+4' + ownerPhoneNumber,
