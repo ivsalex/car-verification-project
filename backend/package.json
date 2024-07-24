@@ -31,5 +31,6 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "webpack": "^5.91.0"
-  }
+  },
+  "proxy": "https://app.smso.ro"
 }
