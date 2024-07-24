@@ -45,7 +45,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                             <input
                                 type="text"
                                 name="carVin"
-                                value={carData.carVin}
+                                value={carData.carVin?.toUpperCase()}
                                 onChange={handleChange}
                                 placeholder="Serie șasiu (ex: VF1EM0J0H31170664)"
                                 pattern="[A-HJ-NPR-Z0-9]{17}"
@@ -53,6 +53,17 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 title="Verificați formatul seriei de șasiu (17 caractere)"
                                 autoComplete="off"
                                 required
+                            />
+                            <input
+                                type="text"
+                                name="carCiv"
+                                value={carData.carCiv?.toUpperCase()}
+                                onChange={handleChange}
+                                placeholder="Serie C.I.V (ex: C-123456)"
+                                pattern="^[A-Za-z]-\d{6}$"
+                                className="border border-gray-400 p-2 rounded-lg"
+                                title="Verificați formatul seriei C.I.V"
+                                autoComplete="off"
                             />
                             <input
                                 type="text"
@@ -74,7 +85,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 autoComplete="off"
                                 pattern="07\d{8}"
                                 title="Verificați formatul numărului de telefon!"
-                                required
                             />
                             <input
                                 type="text"
@@ -98,7 +108,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     dateFormat="dd-MM-yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
-                                    required
                                 />
                                 <DatePicker
                                     name="vignetteExpirationDate"
@@ -109,7 +118,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     dateFormat="dd-MM-yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
-                                    required
                                 />
                             </div>
                             {errorMessage && <p className="text-red-500 text-lg font-bold text-center animate-shake">{errorMessage}</p>}

@@ -92,9 +92,9 @@ function CarsList({ cars, deleteCar }) {
                                     <tr key={car?._id}>
                                         <td className="border px-4 py-1">{car?.carVin}</td>
                                         <td className="border px-4 py-1">{car?.owner}</td>
-                                        <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber.toUpperCase())}</td>
-                                        <td className="border px-4 py-1">{formatTimestamp(car?.checkUpExpirationDate)}</td>
-                                        <td className="border px-4 py-1">{formatTimestamp(car?.vignetteExpirationDate)}</td>
+                                        <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber).toUpperCase()}</td>
+                                        <td className="border px-4 py-1">{car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)}</td>
+                                        <td className="border px-4 py-1">{car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)}</td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">
                                                 <Button variant="blue"

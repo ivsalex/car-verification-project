@@ -70,6 +70,18 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         plateNumber = plateNumber.replace(/\s/g, '');
 
         return plateNumber.replace(/([A-Z]+)([0-9]+)/g, '$1 $2 ');
+    };
+
+    function disableButton(lastNotificationDate) {
+        const now = new Date();
+        const todayDate = now.toLocaleDateString();
+
+        const notif = new Date(lastNotificationDate);
+        const notifDate = notif.toLocaleDateString();
+
+        if (notifDate === todayDate) {
+            return true;
+        }
     }
 
     const sortDueCars = () => {
@@ -164,6 +176,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                             <th className="py-3 text-sm text-gray-800 uppercase text-center">Proprietar</th>
                                                             <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr Înmatriculare</th>
                                                             <th className="py-3 text-sm text-gray-800 uppercase text-center">Dată expirare</th>
+                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Ultima Notificare</th>
                                                             <th className="py-3 text-sm text-gray-800 uppercase text-center">Acțiuni</th>
                                                         </tr>
                                                     </thead>
@@ -172,27 +185,37 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                             <tr key={index}>
                                                                 <td className="py-2 whitespace-nowrap">{car.carVin}</td>
                                                                 <td className="py-2 whitespace-nowrap">{car.owner}</td>
-                                                                <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber)}</td>
+                                                                <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber.toUpperCase())}</td>
                                                                 <td className="py-2 whitespace-nowrap">
                                                                     {renderTypeText() === 'Rovinieta' ? formatTimestamp(car.vignetteExpirationDate) : formatTimestamp(car.checkUpExpirationDate)}
                                                                     <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
                                                                 </td>
+                                                                <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : formatTimestamp(car.lastNotificationDate)}</td>
                                                                 <td className="py-2 whitespace-nowrap space-x-1">
                                                                     <Button variant="blue" className="tiny" onClick={
                                                                         () => navigate(`/cars/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
                                                                     <Button variant="blue" className="tiny" onClick={
-                                                                        () => sendSms(
-                                                                            car.ownerPhoneNumber,
-                                                                            car.plateNumber,
-                                                                            renderTypeText(),
-                                                                            renderTypeText() === 'Rovinieta'
-                                                                                ? formatTimestamp(car.vignetteExpirationDate)
-                                                                                : formatTimestamp(car.checkUpExpirationDate),
-                                                                            renderTypeText() === 'Rovinieta'
-                                                                                ? countRemainingDays(car.vignetteExpirationDate)
-                                                                                : countRemainingDays(car.checkUpExpirationDate),)}>
+                                                                        () => {
+                                                                            if (!disableButton(car.lastNotificationDate)) {
+                                                                                sendSms(
+                                                                                    car?._id,
+                                                                                    car.ownerPhoneNumber,
+                                                                                    car.plateNumber,
+                                                                                    renderTypeText(),
+                                                                                    renderTypeText() === 'Rovinieta'
+                                                                                        ? formatTimestamp(car.vignetteExpirationDate)
+                                                                                        : formatTimestamp(car.checkUpExpirationDate),
+                                                                                    renderTypeText() === 'Rovinieta'
+                                                                                        ? countRemainingDays(car.vignetteExpirationDate)
+                                                                                        : countRemainingDays(car.checkUpExpirationDate),)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                        disabled={disableButton(car.lastNotificationDate)}
+                                                                        title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
+                                                                    >
                                                                         <ChatIcon className="h-4 w-4" />
                                                                     </Button>
                                                                 </td>
