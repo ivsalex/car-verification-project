@@ -11,8 +11,8 @@ const CarAdd = () => {
         owner: '',
         ownerPhoneNumber: '',
         plateNumber: '',
-        checkUpExpirationDate: null,
-        vignetteExpirationDate: null,
+        checkUpExpirationDate: '',
+        vignetteExpirationDate: '',
     });
 
     const handleErrorResponse = (responseText) => {

@@ -4,6 +4,7 @@ import { useAuth } from '@clerk/clerk-react';
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
+    const [notificationButton, setNotificationButton] = useState('disabled');
     const { getToken } = useAuth();
 
     const fetchCarsData = async (range, type) => {
@@ -29,36 +30,7 @@ const DueCarsPage = () => {
         }
     }
 
-    // const sendSms = async (ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
-    //     try {
-    //         const response = await fetch('https://api.ivaiondan.ro/api/v1/send', {
-    //             method: 'POST',
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'X-Authorization': process.env.REACT_APP_SMS_APIKEY
-    //             },
-    //             body: JSON.stringify({
-    //                 to: '+4' + ownerPhoneNumber,
-    //                 sender: '4',
-    //                 message: `
-    //                 ${expirationType} dvs. la autovehiculul ${plateNumber} expiră la data de: ${expirationDate} (${daysRemaining} zile)
-    //                 Daniel Ivașcu - Asigurări
-    //                 `,
-    //             }),
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-
-    //         window.location.reload();
-
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // };
-
-    const sendSms = async (ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
+    const sendSms = async (carId, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/send-sms', {
                 method: 'POST',
@@ -78,16 +50,54 @@ const DueCarsPage = () => {
                 throw new Error('Network response was not ok');
             }
 
-            window.location.reload();
+            if (response.status === 200) {
+                modifyNotifications(carId);
+            }
 
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
+    const modifyNotifications = async (carId) => {
+        try {
+            const now = new Date();
+            const todayDate = now.toLocaleDateString();
+
+            console.log(todayDate);
+
+            const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${await getToken()}`
+                },
+                body: JSON.stringify({
+                    lastNotificationDate: todayDate
+                }),
+            });
+
+            if (response.ok) {
+                console.log('Car notification status modified!');
+                setDueCars(prevCars =>
+                    prevCars.map(car =>
+                        car._id === carId
+                            ? { ...car, lastNotificationDate: todayDate }
+                            : car
+                    )
+                );
+                setNotificationButton('enabled');
+            } else {
+                console.error('Error modifying car:', response.status);
+            }
+        } catch (error) {
+            console.error('Error modifying car:', error);
+        }
+    };
+
     return (
         <div>
-            <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} sendSms={sendSms} />
+            <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} sendSms={sendSms} notificationButton={notificationButton} />
         </div>
     );
 };

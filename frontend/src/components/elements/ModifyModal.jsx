@@ -8,6 +8,7 @@ const ModifyModal = ({ car, modifyCar }) => {
 
     const [modifiedCar, setModifiedCar] = useState({
         carVin: car.carVin,
+        carCiv: car.carCiv,
         owner: car.owner,
         ownerPhoneNumber: car.ownerPhoneNumber,
         plateNumber: car.plateNumber,
@@ -66,6 +67,22 @@ const ModifyModal = ({ car, modifyCar }) => {
                                 />
                             </div>
                             <div className="mb-4">
+                                <label htmlFor="carVin" className="block text-sm font-medium text-gray-700">
+                                    Serie C.I.V
+                                </label>
+                                <input
+                                    type="text"
+                                    id="carCiv"
+                                    name="carCiv"
+                                    value={modifiedCar.carCiv}
+                                    onChange={handleChange}
+                                    pattern="^[A-Za-z]-\d{6}$"
+                                    title="Verificați formatul seriei C.I.V"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    autoComplete="off"
+                                />
+                            </div>
+                            <div className="mb-4">
                                 <label htmlFor="owner" className="block text-sm font-medium text-gray-700">
                                     Proprietar
                                 </label>
@@ -92,7 +109,6 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     pattern="07\d{8}"
                                     title="Verificați formatul numărului de telefon!"
-                                    required
                                 />
                             </div>
                             <div className="mb-4">
@@ -105,7 +121,7 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     name="plateNumber"
                                     pattern="^(B(0\d{1,2}|[1-9]\d{1,2}|1000)[A-Z]{3}|(?:AB|AR|AG|BC|BH|BN|BR|BT|BV|BZ|CS|CL|CJ|CT|CV|DB|DJ|GL|GR|GJ|HR|HD|IL|IS|IF|MM|MH|MS|NT|OT|PH|SM|SJ|SB|SV|TR|TM|TL|VS|VL|VN|XX)(0[1-9]|[1-9][0-9])[A-Z]{2,3})$"
                                     title="Număr incorect! Verficați formatul acestuia."
-                                    value={modifiedCar.plateNumber}
+                                    value={modifiedCar.plateNumber?.toUpperCase()}
                                     onChange={handleChange}
                                     className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required
@@ -124,7 +140,6 @@ const ModifyModal = ({ car, modifyCar }) => {
                                         dateFormat="dd.MM.yyyy"
                                         className="border border-gray-400 p-2 rounded w-full"
                                         autoComplete="off"
-                                        required
                                     />
                                 </div>
                                 <div>
@@ -138,7 +153,6 @@ const ModifyModal = ({ car, modifyCar }) => {
                                         dateFormat="dd.MM.yyyy"
                                         className="border border-gray-400 p-2 rounded w-full"
                                         autoComplete="off"
-                                        required
                                     />
                                 </div>
                             </div>
