@@ -35,13 +35,13 @@ const DueCarsPage = () => {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': `Basic ${process.env.REACT_APP_USERNAME}:${process.env.REACT_APP_APIKEY}`
+                    'Authorization': 'Basic ' + process.env.REACT_APP_SMS_APIKEY
                 },
                 body: JSON.stringify({
-                    phoneNumber: phoneNumber,
+                    phoneNumber: '4' + phoneNumber,
                     message: `
                     ${expirationType} dvs. la autovehiculul ${plateNumber} expiră la data de: ${expirationDate} (${daysRemaining} zile)
-                    Daniel Ivașcu!
+                    Daniel Ivașcu - Asigurări
                     `,
                 }),
             });
