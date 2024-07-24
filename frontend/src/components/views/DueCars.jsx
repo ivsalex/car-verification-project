@@ -4,7 +4,7 @@ import { useAuth } from '@clerk/clerk-react';
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
-    const [notificationButton, setNotificationButton] = useState('disabled');
+    const [notificationButton, setNotificationButton] = useState('enabled');
     const { getToken } = useAuth();
 
     const fetchCarsData = async (range, type) => {
@@ -64,8 +64,6 @@ const DueCarsPage = () => {
             const now = new Date();
             const todayDate = now.toLocaleDateString();
 
-            console.log(todayDate);
-
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'PATCH',
                 headers: {
@@ -86,7 +84,7 @@ const DueCarsPage = () => {
                             : car
                     )
                 );
-                setNotificationButton('enabled');
+                setNotificationButton('disabled');
             } else {
                 console.error('Error modifying car:', response.status);
             }

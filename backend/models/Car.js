@@ -8,7 +8,8 @@ const carSchema = new mongoose.Schema({
     plateNumber: { type: String, required: true },
     ownerPhoneNumber: { type: String },
     vignetteExpirationDate: { type: Date, default: null },
-    checkUpExpirationDate: { type: Date, default: null }
+    checkUpExpirationDate: { type: Date, default: null },
+    lastNotificationDate: { type: Date, default: null }
 });
 
 const Car = mongoose.model('Car', carSchema);
