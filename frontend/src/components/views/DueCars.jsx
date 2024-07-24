@@ -69,7 +69,7 @@ const DueCarsPage = () => {
                 body: JSON.stringify({
                     to: '+4' + ownerPhoneNumber,
                     sender: '4',
-                    message: `
+                    body: `
                     ${expirationType} dvs. la autovehiculul ${plateNumber} expira la data de: ${expirationDate} (${daysRemaining} zile)
                     Daniel Ivascu - Asigurari
                     `,
