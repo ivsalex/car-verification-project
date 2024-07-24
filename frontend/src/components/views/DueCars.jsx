@@ -29,14 +29,38 @@ const DueCarsPage = () => {
         }
     }
 
+    // const sendSms = async (ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
+    //     try {
+    //         const response = await fetch('https://api.ivaiondan.ro/api/v1/send', {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 'X-Authorization': process.env.REACT_APP_SMS_APIKEY
+    //             },
+    //             body: JSON.stringify({
+    //                 to: '+4' + ownerPhoneNumber,
+    //                 sender: '4',
+    //                 message: `
+    //                 ${expirationType} dvs. la autovehiculul ${plateNumber} expiră la data de: ${expirationDate} (${daysRemaining} zile)
+    //                 Daniel Ivașcu - Asigurări
+    //                 `,
+    //             }),
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+
+    //         window.location.reload();
+
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
+
     const sendSms = async (ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
         try {
-            const response = await fetch('https://api.ivaiondan.ro/api/v1/send', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    'X-Authorization': process.env.REACT_APP_SMS_APIKEY
-                },
+            const response = await fetch('https://api.ivaiondan.ro/send-sms', {
                 body: JSON.stringify({
                     to: '+4' + ownerPhoneNumber,
                     sender: '4',

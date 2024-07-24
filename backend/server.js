@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
 const cron = require('node-cron');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
@@ -55,20 +54,15 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(
-    '/api',
-    createProxyMiddleware({
-        target: 'https://app.smso.ro/api/v1/send',
-        changeOrigin: true,
-    })
-);
-
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/cars', ClerkExpressWithAuth(), carsRoutes);
+
+const smsController = require('./controllers/SendSms');
+app.post('/send-sms', smsController.sendSms);
 
 app.get('/', (req, res) => {
     res.json('There is nothing here :)');
