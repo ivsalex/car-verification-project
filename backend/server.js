@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { ClerkExpressWithAuth } = require('@clerk/clerk-sdk-node');
 const cron = require('node-cron');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //Routes
 const carsRoutes = require('./routes/Cars');
@@ -53,6 +54,14 @@ app.use(cors({
     origin: ["https://www.ivaiondan.ro"],
     credentials: true,
 }));
+
+app.use(
+    '/api',
+    createProxyMiddleware({
+        target: 'https://app.smso.ro/api/v1/',
+        changeOrigin: true,
+    })
+);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));

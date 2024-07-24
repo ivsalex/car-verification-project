@@ -31,7 +31,7 @@ const DueCarsPage = () => {
 
     const sendSms = async (ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
         try {
-            const response = await fetch('https://app.smso.ro/api/v1/', {
+            const response = await fetch('https://api.ivaiondan.ro/api/v1/', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
