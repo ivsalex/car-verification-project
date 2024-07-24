@@ -114,7 +114,8 @@ exports.getAllExpiringCars = async (req, res, next) => {
             ownerPhoneNumber: doc.ownerPhoneNumber,
             plateNumber: doc.plateNumber,
             vignetteExpirationDate: doc.vignetteExpirationDate,
-            checkUpExpirationDate: doc.checkUpExpirationDate
+            checkUpExpirationDate: doc.checkUpExpirationDate,
+            lastNotificationDate: doc.lastNotificationDate
         }));
 
         res.status(200).json({

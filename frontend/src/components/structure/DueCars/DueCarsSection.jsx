@@ -198,7 +198,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                     </Button>
                                                                     <Button variant="blue" className="tiny" onClick={
                                                                         () => {
-                                                                            if (!disableButton(car.lastNotificationDate)) {
+                                                                            if (disableButton(car.lastNotificationDate)) {
                                                                                 sendSms(
                                                                                     car?._id,
                                                                                     car.ownerPhoneNumber,
