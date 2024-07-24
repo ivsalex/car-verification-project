@@ -70,8 +70,7 @@ const DueCarsPage = () => {
                     to: '+4' + ownerPhoneNumber,
                     sender: '4',
                     body: `
-                    ${expirationType} dvs. la autovehiculul ${plateNumber} expira la data de: ${expirationDate} (${daysRemaining} zile). Daniel Ivascu - Asigurari
-                    `,
+                    ${expirationType} dvs. la autovehiculul ${plateNumber} expira la data de: ${expirationDate} (${daysRemaining} zile). Daniel Ivascu - Asigurari`,
                 }),
             });
 
