@@ -96,17 +96,18 @@ exports.getAllExpiringCars = async (req, res, next) => {
         if (type === 'checkup') {
             docs = await Car.find({
                 checkUpExpirationDate: { $gte: startOfRange, $lte: endOfRange }
-            }).select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate');
+            }).select('_id carVin owner ownerPhoneNumber plateNumber vignetteExpirationDate checkUpExpirationDate');
         } else if (type === 'vignette') {
             docs = await Car.find({
                 vignetteExpirationDate: { $gte: startOfRange, $lte: endOfRange }
-            }).select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate');
+            }).select('_id carVin owner ownerPhoneNumber plateNumber vignetteExpirationDate checkUpExpirationDate');
         }
 
         const dueCars = docs.map(doc => ({
             _id: doc._id,
             carVin: doc.carVin,
             owner: doc.owner,
+            ownerPhoneNumber: doc.ownerPhoneNumber,
             plateNumber: doc.plateNumber,
             vignetteExpirationDate: doc.vignetteExpirationDate,
             checkUpExpirationDate: doc.checkUpExpirationDate

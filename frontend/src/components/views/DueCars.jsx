@@ -29,7 +29,7 @@ const DueCarsPage = () => {
         }
     }
 
-    const sendSms = async (phoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
+    const sendSms = async (ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
         try {
             const response = await fetch('https://smsalert.mobi/api/v2/message/send', {
                 method: 'POST',
@@ -38,7 +38,7 @@ const DueCarsPage = () => {
                     'Authorization': 'Basic ' + process.env.REACT_APP_SMS_APIKEY
                 },
                 body: JSON.stringify({
-                    phoneNumber: '4' + phoneNumber,
+                    phoneNumber: '+4' + ownerPhoneNumber,
                     message: `
                     ${expirationType} dvs. la autovehiculul ${plateNumber} expiră la data de: ${expirationDate} (${daysRemaining} zile)
                     Daniel Ivașcu - Asigurări
