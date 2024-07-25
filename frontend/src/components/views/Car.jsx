@@ -76,7 +76,7 @@ const Car = () => {
             });
 
             if (response.ok) {
-                // window.location.reload();
+                window.location.reload();
             } else {
                 console.error('Error modifying car:', response.status);
             }
