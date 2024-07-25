@@ -23,12 +23,14 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
     };
 
     const renderDurationText = () => {
-        if (selectedDuration === '1week') {
-            return "7 zile";
+        if (selectedDuration === 'today') {
+            return "astăzi";
+        } else if (selectedDuration === '1week') {
+            return "în 7 zile";
         } else if (selectedDuration === '2weeks') {
-            return "14 zile";
+            return "în 14 zile";
         } else if (selectedDuration === 'month') {
-            return "30 zile";
+            return "în 30 zile";
         } else {
             return "";
         }
@@ -60,6 +62,10 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
         const differenceMs = expiration - today;
 
         const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+
+        if (daysRemaining === 0) {
+            return 'astazi';
+        }
 
         return daysRemaining;
     }
@@ -134,6 +140,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                     className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 >
                                     <option value="" className="text-gray-400">Alegeți perioada</option>
+
                                     <option value="1week">7 zile</option>
                                     <option value="2weeks">14 zile</option>
                                     <option value="month">30 zile</option>
@@ -153,7 +160,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                         <div className="bg-gray-100 p-6 rounded-lg shadow-md">
                                             {selectedDuration && selectedType &&
                                                 <h2 className="text-xl font-semibold mb-4 text-center">
-                                                    <span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră în <span className="text-red-600 font-bold">{renderDurationText()}</span>
+                                                    <span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră <span className="text-red-600 font-bold">{renderDurationText()}!</span>
                                                 </h2>
                                             }
                                             <div className="table-wrapper overflow-y-auto max-h-70 border-2">

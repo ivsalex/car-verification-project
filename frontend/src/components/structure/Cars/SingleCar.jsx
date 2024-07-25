@@ -79,7 +79,7 @@ function SingleCar({ car, deleteCar, modifyCar }) {
                             <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
                             <p><span className="font-bold">Număr de telefon:</span> {car?.ownerPhoneNumber || '-'}</p>
-                            <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber.toUpperCase()}</p>
+                            <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber?.toUpperCase()}</p>
                             <p><span className="font-bold">Dată expirare ITP:</span> {car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)} {car?.checkUpExpirationDate === 'null' && <span className="text-gray-400">({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>}</p>
                             <p><span className="font-bold">Dată expirare Rovinietă:</span> {car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)} {car?.vignetteExpirationDate === 'null' && <span className="text-gray-400">({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>}</p>
                             <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimestamp(car.lastNotificationDate)}</p>
