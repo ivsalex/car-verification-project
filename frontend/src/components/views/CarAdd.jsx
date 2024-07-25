@@ -76,7 +76,7 @@ const CarAdd = () => {
             setCarData(data);
             setErrorMessage('');
 
-            window.location.href = `cars/${data?.car._id}`;
+            // window.location.href = `cars/${data?.car._id}`;
 
         } catch (error) {
             console.error('Error fetching data:', error);
