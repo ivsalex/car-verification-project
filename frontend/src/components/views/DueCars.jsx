@@ -83,6 +83,7 @@ const DueCarsPage = () => {
                             : car
                     )
                 );
+                window.location.reload();
             } else {
                 console.error('Error modifying car:', response.status);
             }
