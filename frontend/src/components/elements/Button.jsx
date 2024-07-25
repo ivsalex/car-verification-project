@@ -37,7 +37,6 @@ const Button = ({
             variants[variant],
             getClassName({ className })
         )}
-            title={disabled ? "Notificare deja trimisă azi!" : "Trimite notificare SMS!"}
             {...rest}
         >
             {children}
