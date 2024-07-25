@@ -63,10 +63,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
 
         const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
 
-        if (daysRemaining === 0) {
-            return 'astazi';
-        }
-
         return daysRemaining;
     }
 
@@ -140,7 +136,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                     className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 >
                                     <option value="" className="text-gray-400">Alegeți perioada</option>
-
+                                    <option value="today">Astăzi</option>
                                     <option value="1week">7 zile</option>
                                     <option value="2weeks">14 zile</option>
                                     <option value="month">30 zile</option>
