@@ -99,7 +99,7 @@ const Car = () => {
 
             const data = await response.json();
             if (data.length > 0) {
-                setCar({ ...car, vignetteExpirationDate: data[0].dataStop.split(' ')[0] });
+                setCar({ ...car, vignetteExpirationDate: data[0].dataStop });
             } else {
                 console.log('Error rechecking Vignette! The car has no vignette or the car data are wrong!');
             }
