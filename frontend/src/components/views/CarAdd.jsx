@@ -47,7 +47,11 @@ const CarAdd = () => {
             }
 
             const responseData = await vignetteCheck.json();
-            const dataStop = responseData[0].dataStop.split(' ')[0];
+
+            let dataStop = null;
+            if (responseData.length > 0) {
+                dataStop = responseData[0].dataStop.split(' ')[0];
+            }
 
             const formattedCarData = {
                 ...carData,
