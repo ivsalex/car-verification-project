@@ -55,10 +55,11 @@ const Car = () => {
     const modifyCar = async (carId, updatedCar) => {
         try {
             const formatDateToUTC = (date) => {
-                const d = new Date(date);
-                if (date !== null) {
-                    return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                if (date === null) {
+                    return null;
                 }
+                const d = new Date(date);
+                return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
             };
 
             const formattedCarData = {
