@@ -19,7 +19,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     };
 
     const handleVignetteDateChange = (date) => {
-        setCarData({ ...carData, vignetteExpirationDate: date || null });
+        setCarData({ ...carData, vignetteExpirationDate: date });
     };
 
     useEffect(() => {
