@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
 import { ChatIcon } from '@heroicons/react/outline';
 
-function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
+function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
@@ -71,18 +71,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
 
         return plateNumber.replace(/([A-Z]+)([0-9]+)/g, '$1 $2 ');
     };
-
-    function disableButton(lastNotificationDate) {
-        const now = new Date();
-        const todayDate = now.toLocaleDateString();
-
-        const notif = new Date(lastNotificationDate);
-        const notifDate = notif.toLocaleDateString();
-
-        if (notifDate === todayDate) {
-            return true;
-        }
-    }
 
     const sortDueCars = () => {
         if (selectedType === "checkup") {
@@ -200,7 +188,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         () => {
                                                                             if (!disableButton(car.lastNotificationDate)) {
                                                                                 sendSms(
-                                                                                    car?._id,
+                                                                                    car._id,
                                                                                     car.ownerPhoneNumber,
                                                                                     car.plateNumber,
                                                                                     renderTypeText(),

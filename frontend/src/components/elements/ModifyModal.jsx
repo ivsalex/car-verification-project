@@ -60,8 +60,6 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     name="carVin"
                                     value={modifiedCar.carVin}
                                     onChange={handleChange}
-                                    pattern="[A-HJ-NPR-Z0-9]{17}"
-                                    title="Verificați formatul seriei de șasiu (17 caractere)"
                                     className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required
                                 />

@@ -48,7 +48,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 value={carData.carVin?.toUpperCase()}
                                 onChange={handleChange}
                                 placeholder="Serie șasiu (ex: VF1EM0J0H31170664)"
-                                pattern="[A-HJ-NPR-Z0-9]{17}"
                                 className="border border-gray-400 p-2 rounded-lg"
                                 title="Verificați formatul seriei de șasiu (17 caractere)"
                                 autoComplete="off"
