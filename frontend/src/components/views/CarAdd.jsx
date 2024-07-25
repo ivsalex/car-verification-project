@@ -38,6 +38,7 @@ const CarAdd = () => {
 
             const formattedCarData = {
                 ...carData,
+                plateNumber: carData.plateNumber.toUpperCase(),
                 checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
                 vignetteExpirationDate: formatDateToUTC(carData.vignetteExpirationDate),
             };

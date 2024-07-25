@@ -88,7 +88,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                             <input
                                 type="text"
                                 name="plateNumber"
-                                value={carData.plateNumber ? carData.plateNumber.toUpperCase() : ""}
+                                value={carData.plateNumber?.toUpperCase()}
                                 onChange={handleChange}
                                 placeholder="Număr înmatriculare (ex: BV01TST)"
                                 pattern="^(B(0\d{1,2}|[1-9]\d{1,2}|1000)[A-Z]{3}|(?:AB|AR|AG|BC|BH|BN|BR|BT|BV|BZ|CS|CL|CJ|CT|CV|DB|DJ|GL|GR|GJ|HR|HD|IL|IS|IF|MM|MH|MS|NT|OT|PH|SM|SJ|SB|SV|TR|TM|TL|VS|VL|VN|XX)(0[1-9]|[1-9][0-9])[A-Z]{2,3})$"
