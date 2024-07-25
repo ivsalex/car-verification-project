@@ -151,7 +151,6 @@ const ModifyModal = ({ car, modifyCar }) => {
                                         dateFormat="dd.MM.yyyy"
                                         className="border border-gray-400 p-2 rounded w-full"
                                         autoComplete="off"
-                                        disabled
                                     />
                                 </div>
                             </div>

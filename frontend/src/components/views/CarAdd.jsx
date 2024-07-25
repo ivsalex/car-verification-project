@@ -53,7 +53,7 @@ const CarAdd = () => {
                 ...carData,
                 plateNumber: carData.plateNumber.toUpperCase(),
                 checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
-                vignetteExpirationDate: dataStop
+                vignetteExpirationDate: dataStop || null
             };
 
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
@@ -76,7 +76,7 @@ const CarAdd = () => {
             setCarData(data);
             setErrorMessage('');
 
-            // window.location.href = `cars/${data?.car._id}`;
+            window.location.href = `cars/${data?.car._id}`;
 
         } catch (error) {
             console.error('Error fetching data:', error);
