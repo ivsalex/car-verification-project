@@ -3,10 +3,10 @@ import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../elements/Modal";
-import { TrashIcon, PencilIcon, ArrowCircleLeftIcon } from '@heroicons/react/outline';
+import { TrashIcon, PencilIcon, ArrowCircleLeftIcon, RefreshIcon } from '@heroicons/react/outline';
 import ModifyModal from '../../elements/ModifyModal';
 
-function SingleCar({ car, deleteCar, modifyCar }) {
+function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck }) {
     const [loading, setLoading] = useState(true);
     const [selectedCarId, setSelectedCarId] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -90,6 +90,7 @@ function SingleCar({ car, deleteCar, modifyCar }) {
                                     setSelectedCarId(car?._id)
                                     setIsDeleteModalOpen(true);
                                 }}><TrashIcon className="h-7 w-7" /></Button>
+                                <Button variant="green" onClick={vignetteRecheck}><RefreshIcon className="h-7 w-7" /></Button>
                             </div>
                         </div>
                     </div>

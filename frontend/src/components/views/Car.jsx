@@ -45,8 +45,6 @@ const Car = () => {
                 throw new Error('Network response was not ok');
             }
 
-            window.location.reload();
-
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -87,13 +85,38 @@ const Car = () => {
         }
     };
 
+    const vignetteRecheck = async () => {
+        try {
+            const response = await fetch(`https://api.ivaiondan.ro/api/vgnCheck?plateNumber=${car.plateNumber}&vin=${car.carVin}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${await getToken()}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            if (data.length > 0) {
+                setCar({ ...car, vignetteExpirationDate: data[0].dataStop.split(' ')[0] });
+            } else {
+                console.log('Error rechecking Vignette! The car has no vignette or the car data are wrong!');
+            }
+
+        } catch (error) {
+            console.error('Error modifying car:', error);
+        }
+    };
+
     useEffect(() => {
         fetchCarData();
     }, []);
 
     return (
         <div>
-            <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} />
+            <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} vignetteRecheck={vignetteRecheck} />
         </div>
     );
 };

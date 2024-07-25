@@ -29,7 +29,7 @@ const ModifyModal = ({ car, modifyCar }) => {
     };
 
     const handleVignetteDateChange = (date) => {
-        setModifiedCar({ ...car, vignetteExpirationDate: date || null });
+        setModifiedCar({ ...car, vignetteExpirationDate: date });
     };
 
     const handleCancel = () => {
@@ -131,7 +131,7 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     <DatePicker
                                         title="abc"
                                         name="checkUpExpirationDate"
-                                        placeholderText="Dată expirare ITP"
+                                        placeholderText="Expirare ITP"
                                         selected={modifiedCar.checkUpExpirationDate}
                                         onChange={handleCheckUpDateChange}
                                         minDate={new Date(Date.now() + 86400000)}
@@ -144,13 +144,14 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     <p>Rovinietă</p>
                                     <DatePicker
                                         name="vignetteExpirationDate"
-                                        placeholderText="Dată expirare Rovinietă"
+                                        placeholderText="Expirare Rovinietă"
                                         selected={modifiedCar.vignetteExpirationDate}
                                         onChange={handleVignetteDateChange}
                                         minDate={new Date(Date.now() + 86400000)}
                                         dateFormat="dd.MM.yyyy"
                                         className="border border-gray-400 p-2 rounded w-full"
                                         autoComplete="off"
+                                        disabled
                                     />
                                 </div>
                             </div>
