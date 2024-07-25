@@ -42,13 +42,12 @@ const CarAdd = () => {
                 },
             });
 
-            const responseData = await vignetteCheck.json();
-            const dataStop = !responseData === null ? responseData[0].dataStop.split(' ')[0] : '';
+            if (!vignetteCheck.ok) {
+                throw new Error(`HTTP error! status: ${vignetteCheck.status}`);
+            }
 
-            console.log('dataStop ' + dataStop);
-            console.log('dataStop simple' + responseData[0].dataStop);
-            console.log('formateUtc ' + formatDateToUTC(dataStop))
-            console.log('formateUtc simple' + formatDateToUTC(responseData[0].dataStop))
+            const responseData = await vignetteCheck.json();
+            const dataStop = responseData[0].dataStop.split(' ')[0];
 
             const formattedCarData = {
                 ...carData,
@@ -56,10 +55,6 @@ const CarAdd = () => {
                 checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
                 vignetteExpirationDate: dataStop
             };
-
-            if (!vignetteCheck.ok) {
-                throw new Error(`HTTP error! status: ${vignetteCheck.status}`);
-            }
 
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'POST',
