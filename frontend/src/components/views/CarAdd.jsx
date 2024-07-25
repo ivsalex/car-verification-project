@@ -43,13 +43,13 @@ const CarAdd = () => {
             });
 
             const responseData = await vignetteCheck.json();
-            const dataStop = !responseData === null ? responseData[0].dataStop : '';
+            const dataStop = !responseData === null ? responseData[0].dataStop.split(' ')[0] : '';
 
             const formattedCarData = {
                 ...carData,
                 plateNumber: carData.plateNumber.toUpperCase(),
                 checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
-                vignetteExpirationDate: formatDateToUTC(dataStop),
+                vignetteExpirationDate: dataStop
             };
 
             if (!vignetteCheck.ok) {
