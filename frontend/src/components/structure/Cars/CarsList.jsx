@@ -90,8 +90,8 @@ function CarsList({ cars, deleteCar }) {
                             <tbody>
                                 {currentCars.map((car) => (
                                     <tr key={car?._id}>
-                                        <td className="border px-4 py-1">{car?.carVin}</td>
-                                        <td className="border px-4 py-1">{car?.owner}</td>
+                                        <td className="border px-4 py-1 w-52">{car?.carVin}</td>
+                                        <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber).toUpperCase()}</td>
                                         <td className="border px-4 py-1">{car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)}</td>
                                         <td className="border px-4 py-1">{car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)}</td>
@@ -114,18 +114,6 @@ function CarsList({ cars, deleteCar }) {
                                 ))}
                             </tbody>
                         </table>
-                        <div className="flex justify-center my-4 space-x-1">
-                            {Array.from({ length: Math.ceil(filteredCars.length / carsPerPage) }, (_, i) => (
-                                <Button
-                                    key={i}
-                                    onClick={() => paginate(i + 1)}
-                                    size="tiny"
-                                    variant={`${currentPage === i + 1 ? 'blue' : 'gray'}`}
-                                >
-                                    {i + 1}
-                                </Button>
-                            ))}
-                        </div>
                         {isDeleteModalOpen && (
                             <Modal
                                 title="Dorești să ștergi autovehiculul?"
@@ -133,6 +121,18 @@ function CarsList({ cars, deleteCar }) {
                                 onCancel={() => setIsDeleteModalOpen(false)}
                             />
                         )}
+                    </div>
+                    <div className="flex justify-center my-4 space-x-1">
+                        {Array.from({ length: Math.ceil(filteredCars.length / carsPerPage) }, (_, i) => (
+                            <Button
+                                key={i}
+                                onClick={() => paginate(i + 1)}
+                                size="tiny"
+                                variant={`${currentPage === i + 1 ? 'blue' : 'gray'}`}
+                            >
+                                {i + 1}
+                            </Button>
+                        ))}
                     </div>
                 </>
             )}

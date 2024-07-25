@@ -25,11 +25,11 @@ const ModifyModal = ({ car, modifyCar }) => {
     };
 
     const handleCheckUpDateChange = (date) => {
-        setModifiedCar({ ...car, checkUpExpirationDate: date });
+        setModifiedCar({ ...car, checkUpExpirationDate: date || null });
     };
 
     const handleVignetteDateChange = (date) => {
-        setModifiedCar({ ...car, vignetteExpirationDate: date });
+        setModifiedCar({ ...car, vignetteExpirationDate: date || null });
     };
 
     const handleCancel = () => {
