@@ -1,9 +1,8 @@
 const axios = require('axios');
 
-const sendSms = async (req, res) => {
+exports.sendSms = async (req, res) => {
   try {
     const { to, body, sender } = req.body;
-
     const response = await axios.post('https://app.smso.ro/api/v1/send', {
       to: to,
       body: body,
@@ -13,7 +12,6 @@ const sendSms = async (req, res) => {
         'X-Authorization': process.env.SMS_APIKEY,
       },
     });
-
     res.status(response.status).json(response.data);
   } catch (error) {
     console.error('Error sending SMS:', error.message);
@@ -21,6 +19,19 @@ const sendSms = async (req, res) => {
   }
 };
 
-module.exports = {
-  sendSms,
+exports.vignetteCheck = async (req, res, next) => {
+  const { plateNumber, vin } = req.query;
+
+  if (!plateNumber || !vin) {
+    return res.status(400).send('Missing plateNumber or VIN');
+  }
+
+  const url = `https://www.erovinieta.ro/vgncheck/api/findVignettes?plateNumber=${plateNumber}&vin=${vin}`;
+
+  try {
+    const response = await axios.get(url);
+    res.status(response.status).send(response.data);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };

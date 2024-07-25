@@ -4,7 +4,6 @@ import { useUser, useAuth } from '@clerk/clerk-react';
 
 const CarAdd = () => {
     const [errorMessage, setErrorMessage] = useState('');
-    const { user } = useUser();
     const { getToken } = useAuth();
     const [carData, setCarData] = useState({
         carVin: '',
@@ -36,12 +35,26 @@ const CarAdd = () => {
                 return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
             };
 
+            const vignetteCheck = await fetch(`https://api.ivaiondan.ro/api/vgnCheck?plateNumber=${carData.plateNumber}&vin=${carData.carVin}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${await getToken()}`
+                },
+            });
+
+            const responseData = await vignetteCheck.json();
+            const dataStop = !responseData === null ? responseData[0].dataStop.split(' ')[0] : '';
+
             const formattedCarData = {
                 ...carData,
                 plateNumber: carData.plateNumber.toUpperCase(),
                 checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
-                vignetteExpirationDate: formatDateToUTC(carData.vignetteExpirationDate),
+                vignetteExpirationDate: dataStop,
             };
+
+            if (!vignetteCheck.ok) {
+                throw new Error(`HTTP error! status: ${vignetteCheck.status}`);
+            }
 
             const response = await fetch('https://api.ivaiondan.ro/cars/', {
                 method: 'POST',
@@ -62,7 +75,8 @@ const CarAdd = () => {
             const data = await response.json();
             setCarData(data);
             setErrorMessage('');
-            window.location.href = '/cars';
+
+            window.location.href = `cars/${data?.car._id}`;
 
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -74,12 +88,6 @@ const CarAdd = () => {
 
         await createCar(carData);
     };
-
-    useEffect(() => {
-        if (!user) {
-            window.location.href = '/login'
-        }
-    }, []);
 
     return (
         <div>
