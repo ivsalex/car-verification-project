@@ -62,7 +62,8 @@ const Car = () => {
 
             const formattedCarData = {
                 ...updatedCar,
-                checkUpExpirationDate: formatDateToUTC(updatedCar.checkUpExpirationDate)
+                checkUpExpirationDate: formatDateToUTC(updatedCar.checkUpExpirationDate),
+                vignetteExpirationDate: updatedCar.vignetteExpirationDate
             };
 
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
