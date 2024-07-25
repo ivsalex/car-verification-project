@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
 import { ChatIcon } from '@heroicons/react/outline';
 
-function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
+function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
@@ -71,18 +71,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
 
         return plateNumber.replace(/([A-Z]+)([0-9]+)/g, '$1 $2 ');
     };
-
-    function disableButton(lastNotificationDate) {
-        const now = new Date();
-        const todayDate = now.toLocaleDateString();
-
-        const notif = new Date(lastNotificationDate);
-        const notifDate = notif.toLocaleDateString();
-
-        if (notifDate === todayDate) {
-            return true;
-        }
-    }
 
     const sortDueCars = () => {
         if (selectedType === "checkup") {
@@ -196,11 +184,11 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         () => navigate(`/cars/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
-                                                                    <Button variant="blue" className="tiny" onClick={
+                                                                    <Button variant={!disableButton(car.lastNotificationDate) ? "blue" : "disabled"} className="tiny" onClick={
                                                                         () => {
-                                                                            if (disableButton(car.lastNotificationDate)) {
+                                                                            if (!disableButton(car.lastNotificationDate)) {
                                                                                 sendSms(
-                                                                                    car?._id,
+                                                                                    car._id,
                                                                                     car.ownerPhoneNumber,
                                                                                     car.plateNumber,
                                                                                     renderTypeText(),

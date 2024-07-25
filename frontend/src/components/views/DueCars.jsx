@@ -4,7 +4,6 @@ import { useAuth } from '@clerk/clerk-react';
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
-    const [notificationButton, setNotificationButton] = useState('enabled');
     const { getToken } = useAuth();
 
     const fetchCarsData = async (range, type) => {
@@ -84,7 +83,6 @@ const DueCarsPage = () => {
                             : car
                     )
                 );
-                setNotificationButton('disabled');
             } else {
                 console.error('Error modifying car:', response.status);
             }
@@ -93,9 +91,19 @@ const DueCarsPage = () => {
         }
     };
 
+    const disableButton = (lastNotificationDate) => {
+        const now = new Date();
+        const todayDate = now.toLocaleDateString();
+
+        const notif = new Date(lastNotificationDate);
+        const notifDate = notif.toLocaleDateString();
+
+        return notifDate === todayDate;
+    };
+
     return (
         <div>
-            <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} sendSms={sendSms} notificationButton={notificationButton} />
+            <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} sendSms={sendSms} disableButton={disableButton} />
         </div>
     );
 };
