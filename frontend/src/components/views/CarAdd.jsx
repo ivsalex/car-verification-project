@@ -45,6 +45,11 @@ const CarAdd = () => {
             const responseData = await vignetteCheck.json();
             const dataStop = !responseData === null ? responseData[0].dataStop.split(' ')[0] : '';
 
+            console.log('dataStop ' + dataStop);
+            console.log('dataStop simple' + responseData[0].dataStop);
+            console.log('formateUtc ' + formatDateToUTC(dataStop))
+            console.log('formateUtc simple' + formatDateToUTC(responseData[0].dataStop))
+
             const formattedCarData = {
                 ...carData,
                 plateNumber: carData.plateNumber.toUpperCase(),
