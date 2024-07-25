@@ -178,7 +178,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                                                     {renderTypeText() === 'Rovinieta' ? formatTimestamp(car.vignetteExpirationDate) : formatTimestamp(car.checkUpExpirationDate)}
                                                                     <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
                                                                 </td>
-                                                                <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : formatTimestamp(car.lastNotificationDate)}</td>
+                                                                <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : <span className="text-green-500 font-bold">{formatTimestamp(car.lastNotificationDate)}</span>}</td>
                                                                 <td className="py-2 whitespace-nowrap space-x-1">
                                                                     <Button variant="blue" className="tiny" onClick={
                                                                         () => navigate(`/cars/${car._id}`)}>

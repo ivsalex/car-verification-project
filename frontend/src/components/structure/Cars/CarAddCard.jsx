@@ -15,11 +15,11 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     };
 
     const handleCheckUpDateChange = (date) => {
-        setCarData({ ...carData, checkUpExpirationDate: date });
+        setCarData({ ...carData, checkUpExpirationDate: date || null });
     };
 
     const handleVignetteDateChange = (date) => {
-        setCarData({ ...carData, vignetteExpirationDate: date });
+        setCarData({ ...carData, vignetteExpirationDate: date || null });
     };
 
     useEffect(() => {
