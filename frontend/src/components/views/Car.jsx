@@ -6,7 +6,6 @@ import { useUser, useAuth } from '@clerk/clerk-react';
 const Car = () => {
     const [car, setCar] = useState({});
     const { carId } = useParams();
-    const { user } = useUser();
     const { getToken } = useAuth();
 
     const fetchCarData = async () => {
@@ -55,16 +54,18 @@ const Car = () => {
 
     const modifyCar = async (carId, updatedCar) => {
         try {
-            // const formatDateToUTC = (date) => {
-            //     const d = new Date(date);
-            //     return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-            // };
+            const formatDateToUTC = (date) => {
+                const d = new Date(date);
+                if (date !== null) {
+                    return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                }
+            };
 
-            // const formattedCarData = {
-            //     ...updatedCar,
-            //     checkUpExpirationDate: formatDateToUTC(updatedCar.checkUpExpirationDate),
-            //     vignetteExpirationDate: formatDateToUTC(updatedCar.vignetteExpirationDate),
-            // };
+            const formattedCarData = {
+                ...updatedCar,
+                checkUpExpirationDate: formatDateToUTC(updatedCar.checkUpExpirationDate),
+                vignetteExpirationDate: formatDateToUTC(updatedCar.vignetteExpirationDate),
+            };
 
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'PATCH',
@@ -72,7 +73,7 @@ const Car = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${await getToken()}`
                 },
-                body: JSON.stringify(updatedCar),
+                body: JSON.stringify(formattedCarData),
             });
 
             if (response.ok) {
