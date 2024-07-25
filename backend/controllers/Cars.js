@@ -76,7 +76,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
     try {
         let { range, type } = req.query;
 
-        if (range !== 'week' && range !== '2weeks' && range !== 'month') {
+        if (range !== 'today' && range !== 'week' && range !== '2weeks' && range !== 'month') {
             range = 'week';
         }
 
@@ -87,7 +87,10 @@ exports.getAllExpiringCars = async (req, res, next) => {
         let startOfRange = new Date();
         let endOfRange = new Date();
 
-        if (range === 'week') {
+        if (range === 'today') {
+            startOfRange.setHours(0, 0, 0, 0);
+            endOfRange.setHours(23, 59, 59, 999);
+        } else if (range === 'week') {
             endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
         } else if (range === '2weeks') {
             endOfRange.setDate(endOfRange.getDate() + (14 - endOfRange.getDay()));
@@ -99,11 +102,11 @@ exports.getAllExpiringCars = async (req, res, next) => {
         if (type === 'checkup') {
             docs = await Car.find({
                 checkUpExpirationDate: { $gte: startOfRange, $lte: endOfRange }
-            }).select('_id carVin carCiv owner ownerPhoneNumber plateNumber vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
+            }).select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
         } else if (type === 'vignette') {
             docs = await Car.find({
                 vignetteExpirationDate: { $gte: startOfRange, $lte: endOfRange }
-            }).select('_id carVin carCiv owner ownerPhoneNumber plateNumber vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
+            }).select('_id carVin owner plateNumber vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
         }
 
         const dueCars = docs.map(doc => ({
@@ -111,7 +114,6 @@ exports.getAllExpiringCars = async (req, res, next) => {
             carVin: doc.carVin,
             carCiv: doc.carCiv,
             owner: doc.owner,
-            ownerPhoneNumber: doc.ownerPhoneNumber,
             plateNumber: doc.plateNumber,
             vignetteExpirationDate: doc.vignetteExpirationDate,
             checkUpExpirationDate: doc.checkUpExpirationDate,
