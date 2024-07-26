@@ -124,13 +124,13 @@ const Car = () => {
 
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 1500);
 
             } else {
                 setVgnCheckError('Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!');
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 1500);
             }
 
         } catch (error) {
