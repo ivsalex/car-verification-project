@@ -13,7 +13,8 @@ const ModifyModal = ({ car, modifyCar }) => {
         ownerPhoneNumber: car.ownerPhoneNumber,
         plateNumber: car.plateNumber,
         checkUpExpirationDate: car.checkUpExpirationDate,
-        vignetteExpirationDate: car.vignetteExpirationDate
+        vignetteExpirationDate: car.vignetteExpirationDate,
+        lastNotificationDate: car.lastNotificationDate
     });
 
     const handleChange = (e) => {
@@ -40,6 +41,9 @@ const ModifyModal = ({ car, modifyCar }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await modifyCar(car._id, modifiedCar);
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
         setShowModal(false);
     };
 
