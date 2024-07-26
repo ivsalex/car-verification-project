@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SingleCar from "../structure/Cars/SingleCar";
-import { useUser, useAuth } from '@clerk/clerk-react';
+import { useAuth } from '@clerk/clerk-react';
 
 const Car = () => {
     const [car, setCar] = useState({});
     const { carId } = useParams();
+    const [vgnCheckError, setVgnCheckError] = useState('');
     const { getToken } = useAuth();
 
     const fetchCarData = async () => {
@@ -100,16 +101,18 @@ const Car = () => {
 
             const data = await response.json();
 
-            const formattedCarData = {
-                ...car,
-                vignetteExpirationDate: data[0].dataStop.split(' ')[0]
-            };
-
             if (data.length > 0) {
+                const formattedCarData = {
+                    ...car,
+                    vignetteExpirationDate: data[0].dataStop.split(' ')[0]
+                };
+
                 setCar({ ...car, vignetteExpirationDate: data[0].dataStop.split(' ')[0] });
                 modifyCar(car._id, formattedCarData);
+                setVgnCheckError('Datele rovinietei au fost actualizate!')
+
             } else {
-                console.log('Error rechecking Vignette! The car has no vignette or the car data are wrong!');
+                setVgnCheckError('Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!')
             }
 
         } catch (error) {

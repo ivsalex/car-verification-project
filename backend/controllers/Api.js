@@ -22,8 +22,8 @@ exports.sendSms = async (req, res) => {
 exports.vignetteCheck = async (req, res, next) => {
   const { plateNumber, vin } = req.query;
 
-  if (!plateNumber || !vin) {
-    return res.status(400).send('Missing plateNumber or VIN');
+  if (!vin) {
+    return res.status(400).send('Missing Car VIN!');
   }
 
   const url = `https://www.erovinieta.ro/vgncheck/api/findVignettes?plateNumber=${plateNumber}&vin=${vin}`;
