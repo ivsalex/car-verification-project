@@ -79,7 +79,7 @@ const Car = () => {
 
             if (response.ok) {
                 setCar(updatedCar);
-                setVgnCheckError('Datele autovehiculului au fost actualizate!');
+                setUpdatedCarMessage('Datele autovehicului au fost actualizate!');
             } else {
                 console.error('Error modifying car:', response.status);
             }
