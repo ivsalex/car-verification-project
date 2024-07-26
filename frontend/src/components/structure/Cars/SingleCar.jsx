@@ -6,7 +6,7 @@ import Modal from "../../elements/Modal";
 import { TrashIcon, PencilIcon, ArrowCircleLeftIcon, RefreshIcon } from '@heroicons/react/outline';
 import ModifyModal from '../../elements/ModifyModal';
 
-function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError }) {
+function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, updatedCarMessage }) {
     const [loading, setLoading] = useState(true);
     const [selectedCarId, setSelectedCarId] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -46,7 +46,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError }
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 1500);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -83,9 +83,12 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError }
                             <p><span className="font-bold">Dată expirare ITP:</span> {car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)} {car?.checkUpExpirationDate === 'null' && <span className="text-gray-400">({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>}</p>
                             <p><span className="font-bold">Dată expirare Rovinietă:</span> {car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)} {car?.vignetteExpirationDate === 'null' && <span className="text-gray-400">({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>}</p>
                             <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimestamp(car.lastNotificationDate)}</p>
-                            {vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'
-                                ? <p className="text-red-500 text-lg font-bold text-center animate-shake">{vgnCheckError}</p>
-                                : <p className="text-green-500 text-lg font-bold text-center">{vgnCheckError}</p>}
+                            <div>
+                                {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'
+                                    ? <p className="text-red-500 text-lg font-bold text-center animate-shake">{vgnCheckError}</p>
+                                    : <p className="text-green-500 text-lg font-bold text-center">{vgnCheckError}</p>}
+                                {!vgnCheckError && updatedCarMessage && <p className="text-green-500 text-lg font-bold text-center">{updatedCarMessage}</p>}
+                            </div>
                             <div className="space-x-2 flex justify-center">
                                 <Button variant="gray" onClick={() => navigate("/cars")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
                                 <Button variant="blue" onClick={handleModify}><PencilIcon className="h-7 w-7" /></Button>

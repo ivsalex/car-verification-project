@@ -7,6 +7,7 @@ const Car = () => {
     const [car, setCar] = useState({});
     const { carId } = useParams();
     const [vgnCheckError, setVgnCheckError] = useState('');
+    const [updatedCarMessage, setUpdatedCarMessage] = useState('');
     const { getToken } = useAuth();
 
     const fetchCarData = async () => {
@@ -77,7 +78,8 @@ const Car = () => {
             });
 
             if (response.ok) {
-                window.location.reload();
+                setCar(updatedCar);
+                setVgnCheckError('Datele autovehiculului au fost actualizate!');
             } else {
                 console.error('Error modifying car:', response.status);
             }
@@ -108,7 +110,16 @@ const Car = () => {
                 };
 
                 setCar({ ...car, vignetteExpirationDate: data[0].dataStop.split(' ')[0] });
-                modifyCar(car._id, formattedCarData);
+
+                await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${await getToken()}`
+                    },
+                    body: JSON.stringify(formattedCarData),
+                });
+
                 setVgnCheckError('Datele rovinietei au fost actualizate!')
 
             } else {
@@ -126,7 +137,7 @@ const Car = () => {
 
     return (
         <div>
-            <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} vignetteRecheck={vignetteRecheck} />
+            <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} vignetteRecheck={vignetteRecheck} vgnCheckError={vgnCheckError} updatedCarMessage={updatedCarMessage} />
         </div>
     );
 };
