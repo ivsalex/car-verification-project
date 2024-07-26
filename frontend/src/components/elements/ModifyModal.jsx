@@ -43,7 +43,7 @@ const ModifyModal = ({ car, modifyCar }) => {
         await modifyCar(car._id, modifiedCar);
         setTimeout(() => {
             window.location.reload();
-        }, 1000);
+        }, 1500);
         setShowModal(false);
     };
 
