@@ -24,7 +24,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
 
     const renderDurationText = () => {
         if (selectedDuration === 'today') {
-            return "astăzi";
+            return "Astăzi";
         } else if (selectedDuration === '1week') {
             return "în 7 zile";
         } else if (selectedDuration === '2weeks') {
@@ -220,7 +220,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                         <>
                                             {showError && selectedDuration && selectedType && (
                                                 <div className="flex text-center justify-center text-lg text-red-500 font-bold">
-                                                    <h1>În următoarele {renderDurationText()} nu expiră {renderTypeText() === 'ITP-ul' ? "niciun ITP!" : "nicio Rovinietă!"}</h1>
+                                                    <h1>{selectedDuration === 'today' ? '' : 'În următoarele '}{renderDurationText()} nu expiră {renderTypeText() === 'ITP-ul' ? "niciun ITP!" : "nicio Rovinietă!"}</h1>
                                                 </div>
                                             )}
                                         </>
