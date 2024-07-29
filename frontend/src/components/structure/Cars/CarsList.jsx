@@ -29,7 +29,7 @@ function CarsList({ cars, deleteCar }) {
         return car.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
             car.plateNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
             car.carVin.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    }).sort((a, b) => a.owner.localeCompare(b.owner));
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -59,7 +59,7 @@ function CarsList({ cars, deleteCar }) {
                         <SearchInput onSearch={handleSearch} />
                         <Button variant="green" onClick={() => navigate("/adauga")}>Adaugă</Button>
                     </div>
-                    <div className="overflow-y-scroll justify-center flex-grow">
+                    <div className="justify-center flex-grow">
                         <table>
                             <thead className="bg-blue-500 sticky top-0">
                                 <tr>
