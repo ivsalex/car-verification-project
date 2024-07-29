@@ -5,7 +5,7 @@ import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import SearchInput from "../../elements/Search";
 import Modal from "../../elements/Modal";
-import moment from 'moment';
+import { formatTimeStamp, isExpired, formatLicensePlate } from "../../../utils/utils";
 
 function CarsList({ cars, deleteCar }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +13,7 @@ function CarsList({ cars, deleteCar }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const carsPerPage = 10;
+    const carsPerPage = 8;
     const navigate = useNavigate();
 
     const handleSearch = (term) => {
@@ -24,30 +24,6 @@ function CarsList({ cars, deleteCar }) {
         deleteCar(selectedCarId);
         setIsDeleteModalOpen(false);
     }
-
-    function formatTimestamp(timestamp) {
-        const date = new Date(timestamp);
-        const day = date.getUTCDate().toString().padStart(2, '0');
-        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-        const year = (date.getUTCFullYear()).toString().padStart(2, '0');
-
-        return `${day}.${month}.${year}`;
-    }
-
-    function formatLicensePlate(plateNumber) {
-        if (!plateNumber) return '';
-
-        plateNumber = plateNumber.replace(/\s/g, '');
-
-        return plateNumber.replace(/([A-Z]+)([0-9]+)/g, `$1 $2 `);
-    }
-
-    const isExpired = (date) => {
-        if (!date) return false;
-        const expirationDate = moment(date);
-        const today = moment().startOf('day');
-        return expirationDate.isBefore(today);
-    };
 
     const filteredCars = cars.filter(car => {
         return car.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,10 +78,10 @@ function CarsList({ cars, deleteCar }) {
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber).toUpperCase()}</td>
                                         <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
-                                            {car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)}
+                                            {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}
                                         </td>
                                         <td className={`border px-4 py-1 ${isExpired(car?.vignetteExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
-                                            {car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)}
+                                            {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}
                                         </td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">

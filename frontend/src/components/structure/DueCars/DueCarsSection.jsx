@@ -5,6 +5,7 @@ import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
 import { ChatIcon } from '@heroicons/react/outline';
+import { formatTimeStamp, countRemainingDays, formatLicensePlate } from "../../../utils/utils"
 
 function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
     const [selectedType, setSelectedType] = useState("");
@@ -44,34 +45,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
         } else {
             return "";
         }
-    };
-
-    function formatTimestamp(timestamp) {
-        const date = new Date(timestamp);
-        const day = date.getUTCDate().toString().padStart(2, '0');
-        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-        const year = (date.getUTCFullYear()).toString().padStart(2, '0');
-
-        return `${day}.${month}.${year}`;
-    }
-
-    function countRemainingDays(expirationDate) {
-        const expiration = new Date(expirationDate);
-        const today = new Date();
-
-        const differenceMs = expiration - today;
-
-        const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
-
-        return daysRemaining;
-    }
-
-    function formatLicensePlate(plateNumber) {
-        if (!plateNumber) return '';
-
-        plateNumber = plateNumber.replace(/\s/g, '');
-
-        return plateNumber.replace(/([A-Z]+)([0-9]+)/g, '$1 $2 ');
     };
 
     const sortDueCars = () => {
@@ -178,10 +151,10 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                                                 <td className="py-2 whitespace-nowrap">{car.owner}</td>
                                                                 <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber.toUpperCase())}</td>
                                                                 <td className="py-2 whitespace-nowrap">
-                                                                    {renderTypeText() === 'Rovinieta' ? formatTimestamp(car.vignetteExpirationDate) : formatTimestamp(car.checkUpExpirationDate)}
+                                                                    {renderTypeText() === 'Rovinieta' ? formatTimeStamp(car.vignetteExpirationDate) : formatTimeStamp(car.checkUpExpirationDate)}
                                                                     <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
                                                                 </td>
-                                                                <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : <span className="text-green-500 font-bold">{formatTimestamp(car.lastNotificationDate)}</span>}</td>
+                                                                <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : <span className="text-green-500 font-bold">{formatTimeStamp(car.lastNotificationDate)}</span>}</td>
                                                                 <td className="py-2 whitespace-nowrap space-x-1">
                                                                     <Button variant="blue" className="tiny" onClick={
                                                                         () => navigate(`/cars/${car._id}`)}>
@@ -196,8 +169,8 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                                                                     car.plateNumber,
                                                                                     renderTypeText(),
                                                                                     renderTypeText() === 'Rovinieta'
-                                                                                        ? formatTimestamp(car.vignetteExpirationDate)
-                                                                                        : formatTimestamp(car.checkUpExpirationDate),
+                                                                                        ? formatTimeStamp(car.vignetteExpirationDate)
+                                                                                        : formatTimeStamp(car.checkUpExpirationDate),
                                                                                     renderTypeText() === 'Rovinieta'
                                                                                         ? countRemainingDays(car.vignetteExpirationDate)
                                                                                         : countRemainingDays(car.checkUpExpirationDate),)
