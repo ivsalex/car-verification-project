@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../../elements/Modal";
 import { TrashIcon, PencilIcon, ArrowCircleLeftIcon, RefreshIcon } from '@heroicons/react/outline';
 import ModifyModal from '../../elements/ModifyModal';
+import moment from 'moment';
 
 function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, updatedCarMessage }) {
     const [loading, setLoading] = useState(true);
@@ -21,6 +22,13 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
 
         return `${day}.${month}.${year}`;
     }
+
+    const isExpired = (date) => {
+        if (!date) return false;
+        const expirationDate = moment(date);
+        const today = moment().startOf('day');
+        return expirationDate.isBefore(today);
+    };
 
     function countRemainingDays(expirationDate) {
         const expiration = new Date(expirationDate);
@@ -80,8 +88,8 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
                             <p><span className="font-bold">Număr de telefon:</span> {car?.ownerPhoneNumber || '-'}</p>
                             <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber?.toUpperCase()}</p>
-                            <p><span className="font-bold">Dată expirare ITP:</span> {car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)} {car?.checkUpExpirationDate === 'null' && <span className="text-gray-400">({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>}</p>
-                            <p><span className="font-bold">Dată expirare Rovinietă:</span> {car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)} {car?.vignetteExpirationDate === 'null' && <span className="text-gray-400">({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>}</p>
+                            <p><span className="font-bold">Dată expirare ITP:</span><span className={isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)}</span>{car?.checkUpExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>)}</p>
+                            <p><span className="font-bold">Dată expirare Rovinietă:</span><span className={isExpired(car?.vignetteExpirationDate) ? 'text-red-500' : ''}> {car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)}</span>{car?.vignetteExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>)}</p>
                             <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimestamp(car.lastNotificationDate)}</p>
                             <div>
                                 {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'

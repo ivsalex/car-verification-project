@@ -5,6 +5,7 @@ import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import SearchInput from "../../elements/Search";
 import Modal from "../../elements/Modal";
+import moment from 'moment';
 
 function CarsList({ cars, deleteCar }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -40,6 +41,13 @@ function CarsList({ cars, deleteCar }) {
 
         return plateNumber.replace(/([A-Z]+)([0-9]+)/g, `$1 $2 `);
     }
+
+    const isExpired = (date) => {
+        if (!date) return false;
+        const expirationDate = moment(date);
+        const today = moment().startOf('day');
+        return expirationDate.isBefore(today);
+    };
 
     const filteredCars = cars.filter(car => {
         return car.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -93,8 +101,12 @@ function CarsList({ cars, deleteCar }) {
                                         <td className="border px-4 py-1 w-52">{car?.carVin}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber).toUpperCase()}</td>
-                                        <td className="border px-4 py-1">{car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)}</td>
-                                        <td className="border px-4 py-1">{car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)}</td>
+                                        <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
+                                            {car?.checkUpExpirationDate === null ? '-' : formatTimestamp(car?.checkUpExpirationDate)}
+                                        </td>
+                                        <td className={`border px-4 py-1 ${isExpired(car?.vignetteExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
+                                            {car?.vignetteExpirationDate === null ? '-' : formatTimestamp(car?.vignetteExpirationDate)}
+                                        </td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">
                                                 <Button variant="blue"
