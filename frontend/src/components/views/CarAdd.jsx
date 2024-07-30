@@ -35,8 +35,8 @@ const CarAdd = () => {
                 return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
             };
 
-            if (!carData.carVin) {
-                throw new Error('Missing Car VIN at Vignette Check!');
+            if (!carData.carVin || !carData.plateNumber) {
+                throw new Error('Missing Car Vin and Plate Number at Vignette Check!');
             }
 
             const vignetteCheck = await fetch(`https://api.ivaiondan.ro/api/vgnCheck?plateNumber=${carData.plateNumber}&vin=${carData.carVin}`, {
