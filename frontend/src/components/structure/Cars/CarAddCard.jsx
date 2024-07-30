@@ -11,7 +11,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setCarData({ ...carData, [name]: value });
+        setCarData({ ...carData, [name]: value.toUpperCase() });
     };
 
     const handleCheckUpDateChange = (date) => {
@@ -44,8 +44,20 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                             <h1 className="font-bold text-xl">Adaugă autovehicul</h1>
                             <input
                                 type="text"
+                                name="plateNumber"
+                                value={carData.plateNumber || ''}
+                                onChange={handleChange}
+                                placeholder="Număr înmatriculare (ex: BV01TST)"
+                                pattern="^(B(0\d{1,2}|[1-9]\d{1,2}|1000)[A-Z]{3}|(?:AB|AR|AG|BC|BH|BN|BR|BT|BV|BZ|CS|CL|CJ|CT|CV|DB|DJ|GL|GR|GJ|HR|HD|IL|IS|IF|MM|MH|MS|NT|OT|PH|SM|SJ|SB|SV|TR|TM|TL|VS|VL|VN|XX)(0[1-9]|[1-9][0-9])[A-Z]{2,3})$"
+                                className="border border-gray-400 p-2 rounded-lg"
+                                title="Număr incorect! Verficați formatul acestuia."
+                                autoComplete="off"
+                                required
+                            />
+                            <input
+                                type="text"
                                 name="carVin"
-                                value={carData.carVin?.toUpperCase() || ''}
+                                value={carData.carVin || ''}
                                 onChange={handleChange}
                                 placeholder="Serie șasiu (ex: VF1EM0J0H31170664)"
                                 className="border border-gray-400 p-2 rounded-lg"
@@ -56,7 +68,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                             <input
                                 type="text"
                                 name="carCiv"
-                                value={carData.carCiv?.toUpperCase() || ''}
+                                value={carData.carCiv || ''}
                                 onChange={handleChange}
                                 placeholder="Serie C.I.V (ex: C-123456)"
                                 pattern="^[A-Za-z]-\d{6}$"
@@ -84,18 +96,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 autoComplete="off"
                                 pattern="07\d{8}"
                                 title="Verificați formatul numărului de telefon!"
-                            />
-                            <input
-                                type="text"
-                                name="plateNumber"
-                                value={carData.plateNumber?.toUpperCase() || ''}
-                                onChange={handleChange}
-                                placeholder="Număr înmatriculare (ex: BV01TST)"
-                                pattern="^(B(0\d{1,2}|[1-9]\d{1,2}|1000)[A-Z]{3}|(?:AB|AR|AG|BC|BH|BN|BR|BT|BV|BZ|CS|CL|CJ|CT|CV|DB|DJ|GL|GR|GJ|HR|HD|IL|IS|IF|MM|MH|MS|NT|OT|PH|SM|SJ|SB|SV|TR|TM|TL|VS|VL|VN|XX)(0[1-9]|[1-9][0-9])[A-Z]{2,3})$"
-                                className="border border-gray-400 p-2 rounded-lg"
-                                title="Număr incorect! Verficați formatul acestuia."
-                                autoComplete="off"
-                                required
                             />
                             <div className="flex justify-center space-x-2 text-center">
                                 <DatePicker
