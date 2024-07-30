@@ -52,7 +52,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 className="border border-gray-400 p-2 rounded-lg"
                                 title="Număr incorect! Verficați formatul acestuia."
                                 autoComplete="off"
-                                required
                             />
                             <input
                                 type="text"
@@ -63,7 +62,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 className="border border-gray-400 p-2 rounded-lg"
                                 title="Verificați formatul seriei de șasiu (17 caractere)"
                                 autoComplete="off"
-                                required
                             />
                             <input
                                 type="text"
