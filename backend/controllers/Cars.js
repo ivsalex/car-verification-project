@@ -44,6 +44,41 @@ exports.carCreate = async (req, res, next) => {
     }
 };
 
+exports.existingCarCheck = async (req, res, next) => {
+    try {
+        const { carVin, plateNumber } = req.query;
+
+        if (!carVin && !plateNumber) {
+            return res.status(400).json({
+                message: 'VIN or Plate Number is required for checking existence.'
+            });
+        }
+
+        const existingCarByVin = await Car.findOne({ carVin });
+        if (existingCarByVin) {
+            return res.status(409).json({
+                message: 'This VIN is already in use!'
+            });
+        }
+
+        const existingCarByPlate = await Car.findOne({ plateNumber });
+        if (existingCarByPlate) {
+            return res.status(409).json({
+                message: 'This Plate Number is already in use!'
+            });
+        }
+
+        res.status(200).json({
+            message: 'Car does not exist. Safe to proceed with creation.'
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: 'An error occurred while checking for existing car.'
+        });
+    }
+};
+
 exports.getAllCars = async (req, res, next) => {
     try {
         const docs = await Car.find()

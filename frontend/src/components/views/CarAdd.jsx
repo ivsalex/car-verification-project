@@ -35,6 +35,16 @@ const CarAdd = () => {
                 return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
             };
 
+            const existingCarCheck = await fetch(`https://api.ivaiondan.ro/cars/existing?plateNumber=${carData.plateNumber}&carVin=${carData.carVin}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${await getToken()}`
+                },
+            });
+
+            const existingCarResponseText = await existingCarCheck.text();
+            handleErrorResponse(existingCarResponseText);
+
             if (!carData.carVin || !carData.plateNumber) {
                 throw new Error('Missing Car Vin and Plate Number at Vignette Check!');
             }
@@ -75,8 +85,6 @@ const CarAdd = () => {
             });
 
             if (!response.ok) {
-                const responseText = await response.text();
-                handleErrorResponse(responseText);
                 throw new Error('Network response was not ok');
             }
 

@@ -10,6 +10,9 @@ router.get('/', ClerkExpressRequireAuth(), CarsController.getAllCars);
 //Get all Cars Route
 router.get('/expiring', ClerkExpressRequireAuth(), CarsController.getAllExpiringCars);
 
+//Check if a car already exists
+router.get('/existing', ClerkExpressRequireAuth(), CarsController.existingCarCheck);
+
 //Get Car by Id Route
 router.get('/:carId', ClerkExpressRequireAuth(), CarsController.getCarById);
 
