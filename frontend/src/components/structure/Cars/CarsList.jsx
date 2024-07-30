@@ -5,7 +5,7 @@ import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import SearchInput from "../../elements/Search";
 import Modal from "../../elements/Modal";
-import { formatTimeStamp, isExpired, formatLicensePlate } from "../../../utils/utils";
+import { formatTimeStamp, isExpired } from "../../../utils/utils";
 
 function CarsList({ cars, deleteCar }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -76,7 +76,7 @@ function CarsList({ cars, deleteCar }) {
                                     <tr key={car?._id}>
                                         <td className="border px-4 py-1 w-52">{car?.carVin}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
-                                        <td className="border px-4 py-1">{formatLicensePlate(car?.plateNumber).toUpperCase()}</td>
+                                        <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
                                         <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}
                                         </td>

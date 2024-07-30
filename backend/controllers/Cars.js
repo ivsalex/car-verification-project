@@ -7,14 +7,14 @@ exports.carCreate = async (req, res, next) => {
     try {
         const checkedCars = await Car.find({ carVin: req.body.carVin });
         if (checkedCars.length >= 1) {
-            return res.status(500).json({
+            return res.status(409).json({
                 message: 'This VIN is already in use!'
             })
         }
 
         const checkedCarsPlate = await Car.find({ plateNumber: req.body.plateNumber });
         if (checkedCarsPlate.length >= 1) {
-            return res.status(500).json({
+            return res.status(409).json({
                 message: 'This Plate Number is already in use!'
             });
         }
