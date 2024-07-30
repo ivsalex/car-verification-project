@@ -82,7 +82,6 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 placeholder="Proprietar (ex: Popescu Ion)"
                                 className="border border-gray-400 p-2 rounded-lg"
                                 autoComplete="off"
-                                required
                             />
                             <input
                                 type="text"
