@@ -64,6 +64,7 @@ function CarsList({ cars, deleteCar }) {
                             <thead className="bg-blue-500 sticky top-0">
                                 <tr>
                                     <th className="px-4 py-2">Serie șasiu</th>
+                                    <th className="px-4 py-2">Serie CIV</th>
                                     <th className="px-4 py-2">Proprietar</th>
                                     <th className="px-4 py-2">Număr înmatriculare</th>
                                     <th className="px-4 py-2">Dată expirare ITP</th>
@@ -75,6 +76,7 @@ function CarsList({ cars, deleteCar }) {
                                 {currentCars.map((car) => (
                                     <tr key={car?._id}>
                                         <td className="border px-4 py-1 w-52">{car?.carVin}</td>
+                                        <td className="border px-4 py-1 w-52">{car?.carCiv}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
                                         <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>

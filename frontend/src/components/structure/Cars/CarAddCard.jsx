@@ -9,6 +9,13 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const nextYear = currentYear + 3;
+
+    const minDate = new Date(currentYear, 0, 1);
+    const maxDate = new Date(nextYear, 11, 31);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCarData({ ...carData, [name]: value.toUpperCase() });
@@ -100,17 +107,18 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     placeholderText="Expirare ITP"
                                     selected={carData.checkUpExpirationDate}
                                     onChange={handleCheckUpDateChange}
-                                    minDate={new Date(Date.now() + 86400000)}
                                     dateFormat="dd-MM-yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
+                                    minDate={minDate}
+                                    maxDate={maxDate}
+                                    showYearDropdown
                                 />
                                 <DatePicker
                                     name="vignetteExpirationDate"
                                     placeholderText="Expirare Rovinietă"
                                     selected={carData.vignetteExpirationDate}
                                     onChange={handleVignetteDateChange}
-                                    minDate={new Date(Date.now() + 86400000)}
                                     dateFormat="dd-MM-yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
