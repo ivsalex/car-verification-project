@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DotsHorizontalIcon, TrashIcon } from '@heroicons/react/outline';
+import { DotsHorizontalIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -18,6 +18,7 @@ function CarsList({ cars, deleteCar }) {
 
     const handleSearch = (term) => {
         setSearchTerm(term);
+        setCurrentPage(1);
     };
 
     const handleDelete = () => {
@@ -44,6 +45,42 @@ function CarsList({ cars, deleteCar }) {
     const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const getPageNumbers = () => {
+        const totalPages = Math.ceil(filteredCars.length / carsPerPage);
+        const pageNumbers = [];
+        const maxPageNumbersToShow = 5;
+
+        if (totalPages <= maxPageNumbersToShow) {
+            for (let i = 1; i <= totalPages; i++) {
+                pageNumbers.push(i);
+            }
+        } else {
+            if (currentPage <= 4) {
+                for (let i = 1; i <= 5; i++) {
+                    pageNumbers.push(i);
+                }
+                pageNumbers.push('...');
+                pageNumbers.push(totalPages);
+            } else if (currentPage + 1 >= totalPages) {
+                pageNumbers.push(1);
+                pageNumbers.push('...');
+                for (let i = totalPages - 4; i <= totalPages; i++) {
+                    pageNumbers.push(i);
+                }
+            } else {
+                pageNumbers.push(1);
+                pageNumbers.push('...');
+                pageNumbers.push(currentPage - 1);
+                pageNumbers.push(currentPage);
+                pageNumbers.push(currentPage + 1);
+                pageNumbers.push('...');
+                pageNumbers.push(totalPages);
+            }
+        }
+
+        return pageNumbers;
+    };
 
     return (
         <div className="flex flex-col justify-center align-center p-4 text-center space-y-4 mx-auto w-fit h-100">
@@ -76,7 +113,7 @@ function CarsList({ cars, deleteCar }) {
                                 {currentCars.map((car) => (
                                     <tr key={car?._id}>
                                         <td className="border px-4 py-1 w-52">{car?.carVin}</td>
-                                        <td className="border px-4 py-1 w-52">{car?.carCiv}</td>
+                                        <td className="border px-4 py-1 w-52">{car?.carCiv || '-'}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
                                         <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
@@ -113,16 +150,30 @@ function CarsList({ cars, deleteCar }) {
                         )}
                     </div>
                     <div className="flex justify-center my-4 space-x-1">
-                        {Array.from({ length: Math.ceil(filteredCars.length / carsPerPage) }, (_, i) => (
+                        <Button
+                            onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+                            size="tiny"
+                            variant="lightgray"
+                        >
+                            <ArrowLeftIcon className="h-5 w-5" />
+                        </Button>
+                        {getPageNumbers().map((number, index) => (
                             <Button
-                                key={i}
-                                onClick={() => paginate(i + 1)}
+                                key={index}
+                                onClick={() => number !== '...' && paginate(number)}
                                 size="tiny"
-                                variant={`${currentPage === i + 1 ? 'blue' : 'gray'}`}
+                                variant={`${currentPage === number ? 'blue' : 'gray'}`}
                             >
-                                {i + 1}
+                                {number}
                             </Button>
                         ))}
+                        <Button
+                            onClick={() => currentPage < Math.ceil(filteredCars.length / carsPerPage) && paginate(currentPage + 1)}
+                            size="tiny"
+                            variant="lightgray"
+                        >
+                            <ArrowRightIcon className="h-5 w-5" />
+                        </Button>
                     </div>
                 </>
             )}
