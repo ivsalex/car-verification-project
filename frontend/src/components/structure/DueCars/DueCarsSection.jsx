@@ -5,9 +5,9 @@ import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
 import { ChatIcon } from '@heroicons/react/outline';
-import { formatTimeStamp, countRemainingDays, formatLicensePlate } from "../../../utils/utils"
+import { formatTimeStamp, countRemainingDays, formatLicensePlate } from "../../../utils/utils";
 
-function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
+function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState();
@@ -47,6 +47,18 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
         }
     };
 
+    function disableButton(lastNotificationDate) {
+        const now = new Date();
+        const todayDate = now.toLocaleDateString();
+
+        const notif = new Date(lastNotificationDate);
+        const notifDate = notif.toLocaleDateString();
+
+        if (notifDate === todayDate) {
+            return true;
+        }
+    }
+
     const sortDueCars = () => {
         if (selectedType === "checkup") {
             dueCars.sort((a, b) => new Date(a.checkUpExpirationDate) - new Date(b.checkUpExpirationDate));
@@ -77,14 +89,14 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
         (user &&
             <>
                 <div className="container mx-auto p-4 overflow-hidden">
-                    <h1 className="text-3xl font-bold mb-2 text-center">Bază de date ITP / Rovinietă</h1>
-                    <div className="bg-gray-100 p-4 rounded-lg shadow-md mb-6 w-1/2 mx-auto">
-                        <h2 className="text-xl font-semibold mb-4 text-center">Alegeți tipul verificării și perioada:</h2>
+                    {/* <h1 className="text-3xl font-bold mb-2 text-center">Bază de date ITP / Rovinietă</h1> */}
+                    <div className="bg-gray-100 p-2 rounded-lg shadow-md mb-4 w-1/3 mx-auto">
+                        <h2 className="text-2xl font-bold mb-2 text-center">Alegeți tipul verificării și perioada:</h2>
                         <div className="flex justify-center space-x-2">
                             <div className="mb-2">
-                                <label htmlFor="typeSelect" className="block text-sm font-medium text-gray-700">
+                                {/* <label htmlFor="typeSelect" className="block text-sm font-medium text-gray-700">
                                     Tipul verificării:
-                                </label>
+                                </label> */}
                                 <select
                                     id="typeSelect"
                                     name="typeSelect"
@@ -98,9 +110,9 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                 </select>
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="durationSelect" className="block text-sm font-medium text-gray-700">
+                                {/* <label htmlFor="durationSelect" className="block text-sm font-medium text-gray-700">
                                     Perioadă:
-                                </label>
+                                </label> */}
                                 <select
                                     id="durationSelect"
                                     name="durationSelect"
@@ -126,14 +138,13 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                             <>
                                 {
                                     dueCars.length >= 1 ? (
-                                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+                                        <div className="rounded-lg">
                                             {selectedDuration && selectedType &&
-                                                <h2 className="text-xl font-semibold mb-4 text-center">
-                                                    <span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră <span className="text-red-600 font-bold">{renderDurationText()}!</span>
+                                                <h2 className="text-xl font-semibold my-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră <span className="text-red-600 font-bold">{renderDurationText()}!</span>
                                                 </h2>
                                             }
-                                            <div className="table-wrapper overflow-y-auto max-h-70 border-2">
-                                                <table className="min-w-full divide-y divide-blue-200 text-center">
+                                            <div className="table-wrapper overflow-y-auto max-h-70 overflow-y-auto h-86">
+                                                <table className="min-w-full divide-y border-2 divide-blue-200 text-center">
                                                     <thead className="bg-blue-500 sticky top-0">
                                                         <tr>
                                                             <th className="py-3 text-sm text-gray-800 uppercase text-center">Serie șasiu</th>
@@ -149,7 +160,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                                             <tr key={index}>
                                                                 <td className="py-2 whitespace-nowrap">{car.carVin}</td>
                                                                 <td className="py-2 whitespace-nowrap">{car.owner}</td>
-                                                                <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber.toUpperCase())}</td>
+                                                                <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber).toUpperCase()}</td>
                                                                 <td className="py-2 whitespace-nowrap">
                                                                     {renderTypeText() === 'Rovinieta' ? formatTimeStamp(car.vignetteExpirationDate) : formatTimeStamp(car.checkUpExpirationDate)}
                                                                     <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
@@ -160,25 +171,17 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms, disableButton }) {
                                                                         () => navigate(`/cars/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
-                                                                    <Button variant={!disableButton(car.lastNotificationDate) ? "blue" : "disabled"} className="tiny" onClick={
-                                                                        () => {
-                                                                            if (!disableButton(car.lastNotificationDate)) {
-                                                                                sendSms(
-                                                                                    car._id,
-                                                                                    car.ownerPhoneNumber,
-                                                                                    car.plateNumber,
-                                                                                    renderTypeText(),
-                                                                                    renderTypeText() === 'Rovinieta'
-                                                                                        ? formatTimeStamp(car.vignetteExpirationDate)
-                                                                                        : formatTimeStamp(car.checkUpExpirationDate),
-                                                                                    renderTypeText() === 'Rovinieta'
-                                                                                        ? countRemainingDays(car.vignetteExpirationDate)
-                                                                                        : countRemainingDays(car.checkUpExpirationDate),)
-                                                                            }
-                                                                        }
-                                                                    }
+                                                                    <Button
+                                                                        variant={"blue"}
+                                                                        className="tiny"
                                                                         disabled={disableButton(car.lastNotificationDate)}
                                                                         title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
+                                                                        onClick={
+                                                                            () => {
+                                                                                if (!disableButton(car.lastNotificationDate)) {
+                                                                                    sendSms(car?._id);
+                                                                                }
+                                                                            }}
                                                                     >
                                                                         <ChatIcon className="h-4 w-4" />
                                                                     </Button>
