@@ -100,6 +100,7 @@ function CarsList({ cars, deleteCar }) {
                         <table>
                             <thead className="bg-blue-500 sticky top-0">
                                 <tr>
+                                    <th className="px-4 py-2">#</th>
                                     <th className="px-4 py-2">Serie șasiu</th>
                                     <th className="px-4 py-2">Serie CIV</th>
                                     <th className="px-4 py-2">Proprietar</th>
@@ -110,8 +111,9 @@ function CarsList({ cars, deleteCar }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentCars.map((car) => (
+                                {currentCars.map((car, index) => (
                                     <tr key={car?._id}>
+                                        <td className="border px-4 py-1 w-12 text-gray-400">{(currentPage - 1) * carsPerPage + index + 1}</td>
                                         <td className="border px-4 py-1 w-52">{car?.carVin}</td>
                                         <td className="border px-4 py-1 w-52">{car?.carCiv || '-'}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
