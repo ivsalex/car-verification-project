@@ -79,7 +79,7 @@ const Car = () => {
             });
 
             if (response.ok) {
-                setCar(updatedCar);
+                setCar(formattedCarData);
                 setUpdatedCarMessage('Datele autovehicului au fost actualizate!');
             } else {
                 console.error('Error modifying car:', response.status);
