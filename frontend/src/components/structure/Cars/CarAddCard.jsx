@@ -4,6 +4,7 @@ import Spinner from "../../elements/Spinner";
 import { useNavigate } from "react-router-dom";
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from "react-datepicker";
+import { formatTimeStamp } from "../../../utils/utils";
 
 function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     const [loading, setLoading] = useState(true);
@@ -22,14 +23,17 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     };
 
     const handleInsuranceDateChange = (date) => {
-        setCarData({ ...carData, checkUpExpirationDate: date || null });
+        formatTimeStamp(date);
+        setCarData({ ...carData, insuranceExpirationDate: date || null });
     };
 
     const handleCheckUpDateChange = (date) => {
+        formatTimeStamp(date);
         setCarData({ ...carData, checkUpExpirationDate: date || null });
     };
 
     const handleVignetteDateChange = (date) => {
+        formatTimeStamp(date);
         setCarData({ ...carData, vignetteExpirationDate: date });
     };
 
