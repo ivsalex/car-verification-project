@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CarAddCard from "../structure/Cars/CarAddCard";
-import { useUser, useAuth } from '@clerk/clerk-react';
+import { useAuth } from '@clerk/clerk-react';
 
 const CarAdd = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -10,6 +10,7 @@ const CarAdd = () => {
         owner: '',
         ownerPhoneNumber: '',
         plateNumber: '',
+        insuranceExpirationDate: '',
         checkUpExpirationDate: '',
         vignetteExpirationDate: '',
     });
@@ -21,9 +22,6 @@ const CarAdd = () => {
                 break;
             case '{"message":"This Plate Number is already in use!"}':
                 setErrorMessage('Acest număr de înmatriculare există deja!');
-                break;
-            default:
-                setErrorMessage('A apărut o eroare!');
                 break;
         }
     };
@@ -70,6 +68,7 @@ const CarAdd = () => {
             const formattedCarData = {
                 ...carData,
                 plateNumber: carData.plateNumber.toUpperCase(),
+                insuranceExpirationDate: formatDateToUTC(carData.insuranceExpirationDate),
                 checkUpExpirationDate: formatDateToUTC(carData.checkUpExpirationDate),
                 vignetteExpirationDate: dataStop || null
             };

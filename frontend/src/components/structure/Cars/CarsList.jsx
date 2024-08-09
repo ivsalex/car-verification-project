@@ -105,8 +105,9 @@ function CarsList({ cars, deleteCar }) {
                                     <th className="px-4 py-2">Serie CIV</th>
                                     <th className="px-4 py-2">Proprietar</th>
                                     <th className="px-4 py-2">Număr înmatriculare</th>
-                                    <th className="px-4 py-2">Dată expirare ITP</th>
-                                    <th className="px-4 py-2">Dată expirare Rovinietă</th>
+                                    <th className="px-4 py-2">RCA</th>
+                                    <th className="px-4 py-2">ITP</th>
+                                    <th className="px-4 py-2">Rovinietă</th>
                                     <th className="px-4 py-2">Acțiuni</th>
                                 </tr>
                             </thead>
@@ -118,6 +119,9 @@ function CarsList({ cars, deleteCar }) {
                                         <td className="border px-4 py-1 w-52">{car?.carCiv || '-'}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
+                                        <td className={`border px-4 py-1 ${isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
+                                            {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}
+                                        </td>
                                         <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}
                                         </td>
