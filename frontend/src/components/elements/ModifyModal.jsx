@@ -12,6 +12,7 @@ const ModifyModal = ({ car, modifyCar }) => {
         owner: car.owner,
         ownerPhoneNumber: car.ownerPhoneNumber,
         plateNumber: car.plateNumber,
+        insuranceExpirationDate: car.insuranceExpirationDate,
         checkUpExpirationDate: car.checkUpExpirationDate,
         vignetteExpirationDate: car.vignetteExpirationDate,
         lastNotificationDate: car.lastNotificationDate
@@ -23,6 +24,10 @@ const ModifyModal = ({ car, modifyCar }) => {
             ...modifiedCar,
             [name]: value,
         });
+    };
+
+    const handleInsuranceDateChange = (date) => {
+        setModifiedCar({ ...car, insuranceExpirationDate: date || null });
     };
 
     const handleCheckUpDateChange = (date) => {
@@ -145,12 +150,13 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     />
                                 </div>
                                 <div>
-                                    <p>Rovinietă</p>
+                                    <p>RCA</p>
                                     <DatePicker
-                                        name="vignetteExpirationDate"
-                                        placeholderText="Expirare Rovinietă"
-                                        selected={modifiedCar.vignetteExpirationDate}
-                                        onChange={handleVignetteDateChange}
+                                        title="abc"
+                                        name="insuranceExpirationDate"
+                                        placeholderText="Expirare RCA"
+                                        selected={modifiedCar.insuranceExpirationDate}
+                                        onChange={handleInsuranceDateChange}
                                         minDate={new Date(Date.now() + 86400000)}
                                         dateFormat="dd.MM.yyyy"
                                         className="border border-gray-400 p-2 rounded w-full"

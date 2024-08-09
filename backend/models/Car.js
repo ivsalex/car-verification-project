@@ -6,9 +6,10 @@ const carSchema = new mongoose.Schema({
     carCiv: { type: String, default: null },
     owner: { type: String, required: true },
     plateNumber: { type: String, required: true },
-    ownerPhoneNumber: { type: String },
+    ownerPhoneNumber: { type: String, default: null },
+    insuranceExpirationDate: { type: Date, default: null },
     vignetteExpirationDate: { type: Date, default: null },
-    checkUpExpirationDate: { type: Date, default: null },
+    checkUpExpirationDate: { type: Date, dafault: null },
     lastNotificationDate: { type: Date, default: null }
 });
 

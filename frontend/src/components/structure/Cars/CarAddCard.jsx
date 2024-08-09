@@ -21,6 +21,10 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
         setCarData({ ...carData, [name]: value.toUpperCase() });
     };
 
+    const handleInsuranceDateChange = (date) => {
+        setCarData({ ...carData, checkUpExpirationDate: date || null });
+    };
+
     const handleCheckUpDateChange = (date) => {
         setCarData({ ...carData, checkUpExpirationDate: date || null });
     };
@@ -101,7 +105,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                 pattern="07\d{8}"
                                 title="Verificați formatul numărului de telefon!"
                             />
-                            <div className="flex justify-center space-x-2 text-center">
+                            <div className="flex justify-center space-x-2 relative">
                                 <DatePicker
                                     name="checkUpExpirationDate"
                                     placeholderText="Expirare ITP"
@@ -115,12 +119,21 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     showYearDropdown
                                 />
                                 <DatePicker
+                                    name="insuranceExpirationDate"
+                                    placeholderText="Expirare RCA"
+                                    selected={carData.insuranceExpirationDate}
+                                    onChange={handleInsuranceDateChange}
+                                    dateFormat="dd-MM-yyyy"
+                                    className="border border-gray-400 p-2 rounded w-full"
+                                    autoComplete="off"
+                                />
+                                <DatePicker
                                     name="vignetteExpirationDate"
                                     placeholderText="Expirare Rovinietă"
                                     selected={carData.vignetteExpirationDate}
                                     onChange={handleVignetteDateChange}
                                     dateFormat="dd-MM-yyyy"
-                                    className="border border-gray-400 p-2 rounded w-full"
+                                    className="border border-gray-400 p-2 rounded w-full hidden"
                                     autoComplete="off"
                                     disabled
                                 />
