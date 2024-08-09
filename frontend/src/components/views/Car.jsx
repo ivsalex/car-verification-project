@@ -64,6 +64,7 @@ const Car = () => {
 
             const formattedCarData = {
                 ...updatedCar,
+                insuranceExpirationDate: formatDateToUTC(updatedCar.checkUpExpirationDate),
                 checkUpExpirationDate: formatDateToUTC(updatedCar.checkUpExpirationDate),
                 vignetteExpirationDate: updatedCar.vignetteExpirationDate
             };
