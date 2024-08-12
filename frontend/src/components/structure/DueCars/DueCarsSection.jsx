@@ -89,14 +89,10 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         (user &&
             <>
                 <div className="container mx-auto p-4 overflow-hidden">
-                    {/* <h1 className="text-3xl font-bold mb-2 text-center">Bază de date ITP / Rovinietă</h1> */}
                     <div className="bg-gray-100 p-2 rounded-lg shadow-md mb-4 w-1/3 mx-auto">
                         <h2 className="text-2xl font-bold mb-2 text-center">Alegeți tipul verificării și perioada:</h2>
                         <div className="flex justify-center space-x-2">
                             <div className="mb-2">
-                                {/* <label htmlFor="typeSelect" className="block text-sm font-medium text-gray-700">
-                                    Tipul verificării:
-                                </label> */}
                                 <select
                                     id="typeSelect"
                                     name="typeSelect"
@@ -110,9 +106,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                 </select>
                             </div>
                             <div className="mb-2">
-                                {/* <label htmlFor="durationSelect" className="block text-sm font-medium text-gray-700">
-                                    Perioadă:
-                                </label> */}
                                 <select
                                     id="durationSelect"
                                     name="durationSelect"
@@ -121,6 +114,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 >
                                     <option value="" className="text-gray-400">Alegeți perioada</option>
+                                    <option value="expired">Expirate</option>
                                     <option value="today">Astăzi</option>
                                     <option value="1week">7 zile</option>
                                     <option value="2weeks">14 zile</option>
@@ -139,8 +133,11 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                 {
                                     dueCars.length >= 1 ? (
                                         <div className="rounded-lg">
-                                            {selectedDuration && selectedType &&
+                                            {selectedDuration && selectedType && selectedDuration !== 'expired' &&
                                                 <h2 className="text-xl font-semibold my-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră <span className="text-red-600 font-bold">{renderDurationText()}!</span>
+                                                </h2> || <h2 className="text-xl font-semibold my-4 text-center">
+                                                    Următoarele <span className="text-red-600 font-bold">{dueCars.length}</span> mașini au <span className="text-red-600 font-bold">{renderTypeText()}</span> {renderTypeText() === 'ITP-ul' ? <span>expirat</span> : <span>expirată</span>}!
+
                                                 </h2>
                                             }
                                             <div className="table-wrapper overflow-y-auto max-h-70 overflow-y-auto h-86">
@@ -171,20 +168,22 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         () => navigate(`/cars/${car._id}`)}>
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
-                                                                    <Button
-                                                                        variant={"blue"}
-                                                                        className="tiny"
-                                                                        disabled={disableButton(car.lastNotificationDate)}
-                                                                        title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
-                                                                        onClick={
-                                                                            () => {
-                                                                                if (!disableButton(car.lastNotificationDate)) {
-                                                                                    sendSms(car?._id);
-                                                                                }
-                                                                            }}
-                                                                    >
-                                                                        <ChatIcon className="h-4 w-4" />
-                                                                    </Button>
+                                                                    {selectedDuration !== 'expired' &&
+                                                                        <Button
+                                                                            variant={"blue"}
+                                                                            className="tiny"
+                                                                            disabled={disableButton(car.lastNotificationDate)}
+                                                                            title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
+                                                                            onClick={
+                                                                                () => {
+                                                                                    if (!disableButton(car.lastNotificationDate)) {
+                                                                                        sendSms(car?._id);
+                                                                                    }
+                                                                                }}
+                                                                        >
+                                                                            <ChatIcon className="h-4 w-4" />
+                                                                        </Button>
+                                                                    }
                                                                 </td>
                                                             </tr>
                                                         ))}
@@ -196,7 +195,16 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                         <>
                                             {showError && selectedDuration && selectedType && (
                                                 <div className="flex text-center justify-center text-lg text-red-500 font-bold">
-                                                    <h1>{selectedDuration === 'today' ? '' : 'În următoarele '}{renderDurationText()} nu expiră {renderTypeText() === 'ITP-ul' ? "niciun ITP!" : "nicio Rovinietă!"}</h1>
+                                                    <h1>
+                                                        {selectedDuration === 'expired' ? (
+                                                            renderTypeText() === 'ITP-ul' ? "Niciun ITP expirat!" : "Nicio Rovinietă expirată!"
+                                                        ) : (
+                                                            <>
+                                                                {selectedDuration === 'today' ? '' : 'În următoarele '}
+                                                                {renderDurationText()} nu expiră {renderTypeText() === 'ITP-ul' ? "niciun ITP!" : "nicio Rovinietă!"}
+                                                            </>
+                                                        )}
+                                                    </h1>
                                                 </div>
                                             )}
                                         </>

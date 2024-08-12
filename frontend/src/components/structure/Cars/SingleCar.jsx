@@ -54,8 +54,8 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                             modifyCar={modifyCar}
                         />
                     )}
-                    <div className="flex flex-col bg-gray-200 text-x space-y-4 p-6 text-center rounded-2xl w-auto">
-                        <div className="flex flex-col text-xl space-y-4 p-6 text-center rounded-2xl w-auto">
+                    <div className="flex flex-col bg-gray-200 text-x space-y-4 p-4 text-center rounded-2xl w-auto">
+                        <div className="flex flex-col text-xl space-y-4 p-4 text-center rounded-2xl w-auto">
                             <p><span className="font-bold">Serie șasiu: </span>{car?.carVin}</p>
                             <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
