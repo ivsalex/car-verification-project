@@ -111,7 +111,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
     try {
         let { range, type } = req.query;
 
-        if (range !== 'today' && range !== 'week' && range !== '2weeks' && range !== 'month') {
+        if (range !== 'expired' && range !== 'today' && range !== 'week' && range !== '2weeks' && range !== 'month') {
             range = 'week';
         }
 
@@ -122,15 +122,31 @@ exports.getAllExpiringCars = async (req, res, next) => {
         let startOfRange = new Date();
         let endOfRange = new Date();
 
-        if (range === 'today') {
-            startOfRange.setHours(0, 0, 0, 0);
-            endOfRange.setHours(23, 59, 59, 999);
-        } else if (range === 'week') {
-            endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
-        } else if (range === '2weeks') {
-            endOfRange.setDate(endOfRange.getDate() + (14 - endOfRange.getDay()));
-        } else if (range === 'month') {
-            endOfRange.setMonth(endOfRange.getMonth() + 1);
+        switch (range) {
+            case 'expired':
+                startOfRange = new Date(0);
+                endOfRange.setDate(endOfRange.getDate() - 1);
+                break;
+
+            case 'today':
+                startOfRange.setHours(0, 0, 0, 0);
+                endOfRange.setHours(23, 59, 59, 999);
+                break;
+
+            case 'week':
+                endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
+                break;
+
+            case '2weeks':
+                endOfRange.setDate(endOfRange.getDate() + (14 - endOfRange.getDay()));
+                break;
+
+            case 'month':
+                endOfRange.setMonth(endOfRange.getMonth() + 1);
+                break;
+
+            default:
+                break;
         }
 
         let docs;
