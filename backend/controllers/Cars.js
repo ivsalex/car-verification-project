@@ -125,7 +125,8 @@ exports.getAllExpiringCars = async (req, res, next) => {
         switch (range) {
             case 'expired':
                 startOfRange = new Date(0);
-                endOfRange.setDate(endOfRange.getDate() - 1);
+                endOfRange = new Date();
+                endOfRange.setHours(23, 59, 59, 999);
                 break;
 
             case 'today':
@@ -149,16 +150,24 @@ exports.getAllExpiringCars = async (req, res, next) => {
                 break;
         }
 
-        let docs;
-        if (type === 'checkup') {
-            docs = await Car.find({
-                checkUpExpirationDate: { $gte: startOfRange, $lte: endOfRange }
-            }).select('_id carVin owner plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
-        } else if (type === 'vignette') {
-            docs = await Car.find({
-                vignetteExpirationDate: { $gte: startOfRange, $lte: endOfRange }
-            }).select('_id carVin owner plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
+        const expirationField = type === 'checkup' ? 'checkUpExpirationDate' : 'vignetteExpirationDate';
+
+        let query;
+
+        if (range === 'expired') {
+            query = {
+                $or: [
+                    { [expirationField]: { $lt: new Date() } },
+                    { [expirationField]: null }
+                ]
+            };
+        } else {
+            query = {
+                [expirationField]: { $gte: startOfRange, $lte: endOfRange }
+            };
         }
+
+        const docs = await Car.find(query).select('_id carVin owner plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
 
         const dueCars = docs.map(doc => ({
             _id: doc._id,
