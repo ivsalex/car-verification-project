@@ -190,17 +190,39 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
                                                                     {selectedDuration !== 'expired' &&
-                                                                        <Button
-                                                                            variant={"blue"}
-                                                                            className="tiny"
+                                                                        // <Button
+                                                                        //     variant={"blue"}
+                                                                        //     className="tiny"
+                                                                        //     disabled={disableButton(car.lastNotificationDate)}
+                                                                        //     title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
+                                                                        //     onClick={
+                                                                        //         () => {
+                                                                        //             if (!disableButton(car.lastNotificationDate)) {
+                                                                        //                 sendSms(car?._id);
+                                                                        //             }
+                                                                        //         }}
+                                                                        // >
+                                                                        //     <ChatIcon className="h-4 w-4" />
+                                                                        // </Button>
+                                                                        <Button variant={!disableButton(car.lastNotificationDate) ? "blue" : "green"} className="tiny" onClick={
+                                                                            () => {
+                                                                                if (!disableButton(car.lastNotificationDate)) {
+                                                                                    sendSms(
+                                                                                        car._id,
+                                                                                        car.ownerPhoneNumber,
+                                                                                        car.plateNumber,
+                                                                                        renderTypeText(),
+                                                                                        renderTypeText() === 'Rovinieta'
+                                                                                            ? formatTimeStamp(car.vignetteExpirationDate)
+                                                                                            : formatTimeStamp(car.checkUpExpirationDate),
+                                                                                        renderTypeText() === 'Rovinieta'
+                                                                                            ? countRemainingDays(car.vignetteExpirationDate)
+                                                                                            : countRemainingDays(car.checkUpExpirationDate),)
+                                                                                }
+                                                                            }
+                                                                        }
                                                                             disabled={disableButton(car.lastNotificationDate)}
                                                                             title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
-                                                                            onClick={
-                                                                                () => {
-                                                                                    if (!disableButton(car.lastNotificationDate)) {
-                                                                                        sendSms(car?._id);
-                                                                                    }
-                                                                                }}
                                                                         >
                                                                             <ChatIcon className="h-4 w-4" />
                                                                         </Button>
