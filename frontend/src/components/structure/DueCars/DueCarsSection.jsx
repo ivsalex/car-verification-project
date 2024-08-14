@@ -159,8 +159,16 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                 <td className="py-2 whitespace-nowrap">{car.owner}</td>
                                                                 <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber).toUpperCase()}</td>
                                                                 <td className="py-2 whitespace-nowrap">
-                                                                    {renderTypeText() === 'Rovinieta' ? formatTimeStamp(car.vignetteExpirationDate) : formatTimeStamp(car.checkUpExpirationDate)}
-                                                                    <span className="text-gray-400"> ({renderTypeText() === 'Rovinieta' ? countRemainingDays(car.vignetteExpirationDate) : countRemainingDays(car.checkUpExpirationDate)} zile)</span>
+                                                                    {renderTypeText() === 'Rovinieta' ?
+                                                                        (car.vignetteExpirationDate !== null ? formatTimeStamp(car.vignetteExpirationDate) : '-') :
+                                                                        (car.checkUpExpirationDate !== null ? formatTimeStamp(car.checkUpExpirationDate) : '-')
+                                                                    }
+                                                                    <span className="text-gray-400">
+                                                                        {renderTypeText() === 'Rovinieta' ?
+                                                                            (car.vignetteExpirationDate !== null ? ` (${countRemainingDays(car.vignetteExpirationDate)} zile)` : '') :
+                                                                            (car.checkUpExpirationDate !== null ? ` (${countRemainingDays(car.checkUpExpirationDate)} zile)` : '')
+                                                                        }
+                                                                    </span>
                                                                 </td>
                                                                 <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : <span className="text-green-500 font-bold">{formatTimeStamp(car.lastNotificationDate)}</span>}</td>
                                                                 <td className="py-2 whitespace-nowrap space-x-1">
