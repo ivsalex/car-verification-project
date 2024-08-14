@@ -167,13 +167,14 @@ exports.getAllExpiringCars = async (req, res, next) => {
             };
         }
 
-        const docs = await Car.find(query).select('_id carVin owner plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
+        const docs = await Car.find(query).select('_id carVin owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate');
 
         const dueCars = docs.map(doc => ({
             _id: doc._id,
             carVin: doc.carVin,
             carCiv: doc.carCiv,
             owner: doc.owner,
+            ownerPhoneNumber: doc.ownerPhoneNumber,
             plateNumber: doc.plateNumber,
             insuranceExpirationDate: doc.insuranceExpirationDate,
             vignetteExpirationDate: doc.vignetteExpirationDate,
