@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import Spinner from "../../elements/Spinner";
 import Button from "../../elements/Button";
 import { useUser } from '@clerk/clerk-react';
-import { useNavigate } from "react-router-dom";
-import { DotsHorizontalIcon } from '@heroicons/react/outline';
-import { ChatIcon } from '@heroicons/react/outline';
+import { DotsHorizontalIcon, ChatIcon, RefreshIcon } from '@heroicons/react/outline';
 import { formatTimeStamp, countRemainingDays, formatLicensePlate } from "../../../utils/utils";
 
 function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
@@ -13,7 +11,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     const [loading, setLoading] = useState();
     const [showError, setShowError] = useState(false);
     const { user } = useUser();
-    const navigate = useNavigate();
 
     const handleTypeChange = (e) => {
         setSelectedType(e.target.value);
@@ -69,6 +66,18 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         }
     };
 
+    const refreshData = () => {
+        if (selectedType && selectedDuration) {
+            fetchCarsData(selectedDuration, selectedType);
+            setLoading(true);
+            setShowError(true);
+        }
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1500);
+        return () => clearTimeout(timer);
+    }
+
     useEffect(() => {
         if (selectedType && selectedDuration) {
             fetchCarsData(selectedDuration, selectedType);
@@ -121,6 +130,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     <option value="month">30 zile</option>
                                 </select>
                             </div>
+                            <Button size="tiny" className="mb-0.5 text-blue-600" onClick={refreshData}><RefreshIcon className="h-5 w-5" /></Button>
                         </div>
                     </div>
                     {
@@ -172,8 +182,11 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                 </td>
                                                                 <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : <span className="text-green-500 font-bold">{formatTimeStamp(car.lastNotificationDate)}</span>}</td>
                                                                 <td className="py-2 whitespace-nowrap space-x-1">
-                                                                    <Button variant="blue" className="tiny" onClick={
-                                                                        () => navigate(`/cars/${car._id}`)}>
+                                                                    <Button
+                                                                        variant="blue"
+                                                                        className="tiny"
+                                                                        onClick={() => window.open(`/cars/${car._id}`, '_blank')}
+                                                                    >
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
                                                                     {selectedDuration !== 'expired' &&
