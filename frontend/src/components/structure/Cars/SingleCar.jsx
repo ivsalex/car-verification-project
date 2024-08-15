@@ -35,7 +35,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     return (
         <div className="flex w-auto justify-center m-6 md:m-6 h-96">
             {loading && (
-                <div role="status" className="flex items-center justify-center h-[calc(100vh-150px)] md:h-[70vh]">
+                <div role="status" className="flex items-center justify-center h-[calc(100vh-200px)] md:h-[70vh]">
                     <Spinner />
                 </div>
             )}
