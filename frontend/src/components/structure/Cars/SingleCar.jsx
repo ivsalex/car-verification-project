@@ -33,7 +33,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     }, []);
 
     return (
-        <div className="flex flex-col justify-center align-center w-1/3 mx-auto h-100">
+        <div className="flex w-auto justify-center sm:justify-center m-6 md:m-6">
             {loading && (
                 <div role="status">
                     <Spinner />
@@ -54,8 +54,8 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                             modifyCar={modifyCar}
                         />
                     )}
-                    <div className="flex flex-col bg-gray-200 text-x space-y-4 p-4 text-center rounded-2xl w-auto">
-                        <div className="flex flex-col text-xl space-y-4 p-4 text-center rounded-2xl w-auto">
+                    <div className="bg-gray-200 rounded-2xl text-center md:p-6">
+                        <div className="flex flex-col sm:text-sm p-6 md:text-lg lg:text-xl space-y-4 p-6">
                             <p><span className="font-bold">Serie șasiu: </span>{car?.carVin}</p>
                             <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
                             <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
