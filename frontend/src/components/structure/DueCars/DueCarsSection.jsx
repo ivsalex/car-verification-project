@@ -97,9 +97,9 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     return (
         (user &&
             <>
-                <div className="container mx-auto p-4 overflow-hidden">
-                    <div className="bg-gray-100 p-2 rounded-lg shadow-md mb-4 w-1/3 mx-auto">
-                        <h2 className="text-2xl font-bold mb-2 text-center">Alegeți tipul verificării și perioada:</h2>
+                <div className="p-4 overflow-hidden">
+                    <div className="bg-gray-100 shadow-md rounded-lg p-2 md:mx-auto md:w-1/3 md:mb-4 md:p-2">
+                        <h2 className="font-bold text-center text-xl mb-2 md:text-2xl">Alegeți tipul verificării și perioada:</h2>
                         <div className="flex justify-center space-x-2">
                             <div className="mb-2">
                                 <select
@@ -107,11 +107,11 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     name="typeSelect"
                                     value={selectedType}
                                     onChange={handleTypeChange}
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 md:text-sm"
                                 >
-                                    <option value="" className="text-gray-400">Alegeți tipul</option>
-                                    <option value="checkup">ITP</option>
-                                    <option value="vignette">Rovinietă</option>
+                                    <option value="" className="text-gray-400 max-sm:text-xs">Alegeți tipul</option>
+                                    <option value="checkup" className="max-sm:text-xs">ITP</option>
+                                    <option value="vignette" className="max-sm:text-xs">Rovinietă</option>
                                 </select>
                             </div>
                             <div className="mb-2">
@@ -120,14 +120,14 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     name="durationSelect"
                                     value={selectedDuration}
                                     onChange={handleDurationChange}
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 md:text-sm"
                                 >
-                                    <option value="" className="text-gray-400">Alegeți perioada</option>
-                                    <option value="expired">Expirate</option>
-                                    <option value="today">Astăzi</option>
-                                    <option value="1week">7 zile</option>
-                                    <option value="2weeks">14 zile</option>
-                                    <option value="month">30 zile</option>
+                                    <option value="" className="text-gray-400 max-sm:text-xs">Alegeți perioada</option>
+                                    <option value="expired" className="max-sm:text-xs">Expirate</option>
+                                    <option value="today" className="max-sm:text-xs">Astăzi</option>
+                                    <option value="1week" className="max-sm:text-xs">7 zile</option>
+                                    <option value="2weeks" className="max-sm:text-xs">14 zile</option>
+                                    <option value="month" className="max-sm:text-xs">30 zile</option>
                                 </select>
                             </div>
                             <Button size="tiny" className="mb-0.5 text-blue-600" onClick={refreshData}><RefreshIcon className="h-5 w-5" /></Button>
@@ -135,7 +135,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                     </div>
                     {
                         loading ? (
-                            <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center h-[60vh] md:h-[40vh]">
                                 <Spinner />
                             </div>
                         ) : (
@@ -144,44 +144,61 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     dueCars.length >= 1 ? (
                                         <div className="rounded-lg">
                                             {selectedDuration && selectedType && selectedDuration !== 'expired' &&
-                                                <h2 className="text-xl font-semibold my-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră <span className="text-red-600 font-bold">{renderDurationText()}!</span>
-                                                </h2> || <h2 className="text-xl font-semibold my-4 text-center">
+                                                <h2 className="duration-300 text-lg md:text-xl font-semibold my-2 md:my-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră <span className="text-red-600 font-bold">{renderDurationText()}!</span>
+                                                </h2> || <h2 className="text-xl font-semibold my-2 md:my-4 text-center">
                                                     Următoarele <span className="text-red-600 font-bold">{dueCars.length}</span> mașini au <span className="text-red-600 font-bold">{renderTypeText()}</span> {renderTypeText() === 'ITP-ul' ? <span>expirat</span> : <span>expirată</span>}!
-
                                                 </h2>
                                             }
-                                            <div className="table-wrapper overflow-y-auto max-h-70 overflow-y-auto h-86">
-                                                <table className="min-w-full divide-y border-2 divide-blue-200 text-center">
-                                                    <thead className="bg-blue-500 sticky top-0">
-                                                        <tr>
-                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Serie șasiu</th>
-                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Proprietar</th>
-                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr Înmatriculare</th>
-                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Dată expirare</th>
-                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Ultima Notificare</th>
-                                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Acțiuni</th>
+                                            <div className="table-wrapper overflow-y-auto h-[calc(100vh-280px)] md:h-86">
+                                                <table className="min-w-full divide-y md:border-2 md:divide-blue-200 md:table text-center block">
+                                                    <thead className="bg-blue-500 sticky top-0 hidden md:table-header-group">
+                                                        <tr className="md:table-row hidden">
+                                                            <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">Serie șasiu</th>
+                                                            <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">Proprietar</th>
+                                                            <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">Număr Înmatriculare</th>
+                                                            <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">Dată expirare</th>
+                                                            <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">Ultima Notificare</th>
+                                                            <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">Acțiuni</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody className="bg-white divide-y divide-gray-200">
+                                                    <tbody className="bg-white md:divide-y md:divide-gray-200 block md:table-row-group">
                                                         {dueCars.map((car, index) => (
-                                                            <tr key={index}>
-                                                                <td className="py-2 whitespace-nowrap">{car.carVin}</td>
-                                                                <td className="py-2 whitespace-nowrap">{car.owner}</td>
-                                                                <td className="py-2 whitespace-nowrap">{formatLicensePlate(car.plateNumber).toUpperCase()}</td>
-                                                                <td className="py-2 whitespace-nowrap">
-                                                                    {renderTypeText() === 'Rovinieta' ?
-                                                                        (car.vignetteExpirationDate !== null ? formatTimeStamp(car.vignetteExpirationDate) : '-') :
-                                                                        (car.checkUpExpirationDate !== null ? formatTimeStamp(car.checkUpExpirationDate) : '-')
-                                                                    }
-                                                                    <span className="text-gray-400">
-                                                                        {renderTypeText() === 'Rovinieta' ?
-                                                                            (car.vignetteExpirationDate !== null ? ` (${countRemainingDays(car.vignetteExpirationDate)} zile)` : '') :
-                                                                            (car.checkUpExpirationDate !== null ? ` (${countRemainingDays(car.checkUpExpirationDate)} zile)` : '')
-                                                                        }
+                                                            <tr key={index} className="p-1 block border-b border-gray-300 md:table-row md:mb-0">
+                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
+                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Serie șasiu:</span>
+                                                                    {car.carVin}
+                                                                </td>
+                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
+                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Proprietar:</span>
+                                                                    {car.owner}
+                                                                </td>
+                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
+                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Număr Înmatriculare:</span>
+                                                                    {formatLicensePlate(car.plateNumber).toUpperCase()}
+                                                                </td>
+                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
+                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Dată expirare:</span>
+                                                                    {renderTypeText() === 'Rovinieta' ? (
+                                                                        car.vignetteExpirationDate !== null ? formatTimeStamp(car.vignetteExpirationDate) : '-'
+                                                                    ) : (
+                                                                        car.checkUpExpirationDate !== null ? formatTimeStamp(car.checkUpExpirationDate) : '-'
+                                                                    )}
+                                                                    <span className="text-gray-400 ml-1">
+                                                                        {renderTypeText() === 'Rovinieta' ? (
+                                                                            car.vignetteExpirationDate !== null ? ` (${countRemainingDays(car.vignetteExpirationDate)} zile)` : ''
+                                                                        ) : (
+                                                                            car.checkUpExpirationDate !== null ? ` (${countRemainingDays(car.checkUpExpirationDate)} zile)` : ''
+                                                                        )}
                                                                     </span>
                                                                 </td>
-                                                                <td className="py-2 whitespace-nowrap">{car.lastNotificationDate === null ? '-' : <span className="text-green-500 font-bold">{formatTimeStamp(car.lastNotificationDate)}</span>}</td>
-                                                                <td className="py-2 whitespace-nowrap space-x-1">
+                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
+                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Ultima Notificare:</span>
+                                                                    {car.lastNotificationDate === null ? '-' : (
+                                                                        <span className="text-green-500 font-bold">{formatTimeStamp(car.lastNotificationDate)}</span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="p-2 whitespace-nowrap flex md:table-cell space-x-1">
+                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Acțiuni:</span>
                                                                     <Button
                                                                         variant="blue"
                                                                         className="tiny"
@@ -189,9 +206,11 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                     >
                                                                         <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
-                                                                    {selectedDuration !== 'expired' &&
-                                                                        <Button variant={!disableButton(car.lastNotificationDate) ? "blue" : "green"} className="tiny" onClick={
-                                                                            () => {
+                                                                    {selectedDuration !== 'expired' && (
+                                                                        <Button
+                                                                            variant={!disableButton(car.lastNotificationDate) ? "blue" : "green"}
+                                                                            className="tiny"
+                                                                            onClick={() => {
                                                                                 if (!disableButton(car.lastNotificationDate)) {
                                                                                     sendSms(
                                                                                         car._id,
@@ -203,16 +222,16 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                                             : formatTimeStamp(car.checkUpExpirationDate),
                                                                                         renderTypeText() === 'Rovinieta'
                                                                                             ? countRemainingDays(car.vignetteExpirationDate)
-                                                                                            : countRemainingDays(car.checkUpExpirationDate),)
+                                                                                            : countRemainingDays(car.checkUpExpirationDate),
+                                                                                    )
                                                                                 }
-                                                                            }
-                                                                        }
+                                                                            }}
                                                                             disabled={disableButton(car.lastNotificationDate)}
                                                                             title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
                                                                         >
                                                                             <ChatIcon className="h-4 w-4" />
                                                                         </Button>
-                                                                    }
+                                                                    )}
                                                                 </td>
                                                             </tr>
                                                         ))}
@@ -223,7 +242,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     ) : (
                                         <>
                                             {showError && selectedDuration && selectedType && (
-                                                <div className="flex text-center justify-center text-lg text-red-500 font-bold">
+                                                <div className="flex text-center justify-center text-lg text-red-500 font-bold max-sm:p-2">
                                                     <h1>
                                                         {selectedDuration === 'expired' ? (
                                                             renderTypeText() === 'ITP-ul' ? "Niciun ITP expirat!" : "Nicio Rovinietă expirată!"
@@ -242,7 +261,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                             </>
                         )
                     }
-                </div>
+                </div >
             </>
         )
     );
