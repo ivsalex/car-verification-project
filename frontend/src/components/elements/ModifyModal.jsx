@@ -55,9 +55,9 @@ const ModifyModal = ({ car, modifyCar }) => {
     return (
         <>
             {showModal &&
-                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
-                    <div className="bg-white p-8 rounded-lg shadow-md w-96">
-                        <h2 className="text-lg font-semibold mb-4">Modifică proprietățile mașinii</h2>
+                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-800 bg-opacity-50 p-4 sm:p-8">
+                    <div className="bg-white p-4 sm:p-8 rounded-lg shadow-md w-full max-w-md mx-0 sm:mx-0">
+                        <h2 className="text-lg font-semibold mb-4 text-center">Modifică proprietățile mașinii</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="carVin" className="block text-sm font-medium text-gray-700">
