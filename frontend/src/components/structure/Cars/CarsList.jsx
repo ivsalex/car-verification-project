@@ -114,18 +114,18 @@ function CarsList({ cars, deleteCar }) {
                             <tbody>
                                 {currentCars.map((car, index) => (
                                     <tr key={car?._id}>
-                                        <td className="border px-4 py-1 w-12 text-gray-400">{(currentPage - 1) * carsPerPage + index + 1}</td>
-                                        <td className="border px-4 py-1 w-52">{car?.carVin}</td>
-                                        <td className="border px-4 py-1 w-52">{car?.carCiv || '-'}</td>
+                                        <td className="border px-4 py-1 w-16 text-gray-400">{(currentPage - 1) * carsPerPage + index + 1}</td>
+                                        <td className="border px-4 py-1 w-60">{car?.carVin}</td>
+                                        <td className="border px-4 py-1 w-32">{car?.carCiv || '-'}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
-                                        <td className={`border px-4 py-1 ${isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
+                                        <td className={`w-28 border px-4 py-1 ${isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}
                                         </td>
-                                        <td className={`border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
+                                        <td className={`w-28 border px-4 py-1 ${isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}
                                         </td>
-                                        <td className={`border px-4 py-1 ${isExpired(car?.vignetteExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
+                                        <td className={`w-28 border px-4 py-1 ${isExpired(car?.vignetteExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}
                                         </td>
                                         <td className="border px-4 py-1">
@@ -169,6 +169,7 @@ function CarsList({ cars, deleteCar }) {
                                 onClick={() => number !== '...' && paginate(number)}
                                 size="tiny"
                                 variant={`${currentPage === number ? 'blue' : 'gray'}`}
+                                className="w-7 h-7 flex items-center justify-center"
                             >
                                 {number}
                             </Button>
