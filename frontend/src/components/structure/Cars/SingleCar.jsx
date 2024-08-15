@@ -70,7 +70,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                                     {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'
                                         ? <p className="text-red-500 mb-4 text-md md:text-lg font-bold text-center animate-shake">{vgnCheckError}</p>
                                         : <p className="text-green-500 mb-4 text-md md:text-lg font-bold text-center">{vgnCheckError}</p>}
-                                    {!vgnCheckError && updatedCarMessage && <p className="text-green-500 text-lg font-bold text-center">{updatedCarMessage}</p>}
+                                    {!vgnCheckError && updatedCarMessage && <p className="text-green-500 mb-4 text-md md:text-lg font-bold text-center">{updatedCarMessage}</p>}
                                 </div>
                             </div>
                             <div className="space-x-2 flex justify-center">
