@@ -9,7 +9,7 @@ function getClassName({ className }) {
 
 const sizes = {
     tiny: 'px-2',
-    small: 'px-4 py-3',
+    small: 'p-2 md:px-4 md:py-3',
     medium: 'px-6 py-4',
     large: 'w-full px-4 py-3'
 }

@@ -33,9 +33,9 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     }, []);
 
     return (
-        <div className="flex w-auto justify-center sm:justify-center m-6 md:m-6">
+        <div className="flex w-auto justify-center m-6 md:m-6 h-96">
             {loading && (
-                <div role="status">
+                <div role="status" className="flex items-center justify-center h-[80vh] md:h-[70vh]">
                     <Spinner />
                 </div>
             )}
@@ -55,21 +55,23 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                         />
                     )}
                     <div className="bg-gray-200 rounded-2xl text-center md:p-6">
-                        <div className="flex flex-col sm:text-sm p-6 md:text-lg lg:text-xl space-y-4 p-6">
-                            <p><span className="font-bold">Serie șasiu: </span>{car?.carVin}</p>
-                            <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
-                            <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
-                            <p><span className="font-bold">Număr de telefon:</span> {car?.ownerPhoneNumber || '-'}</p>
-                            <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber?.toUpperCase()}</p>
-                            <p><span className="font-bold">Dată expirare RCA:</span><span className={isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}</span>{car?.insuranceExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.insuranceExpirationDate)} zile)</span>)}</p>
-                            <p><span className="font-bold">Dată expirare ITP:</span><span className={isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}</span>{car?.checkUpExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>)}</p>
-                            <p><span className="font-bold">Dată expirare Rovinietă:</span><span className={isExpired(car?.vignetteExpirationDate) ? 'text-red-500' : ''}> {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}</span>{car?.vignetteExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>)}</p>
-                            <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimeStamp(car.lastNotificationDate)}</p>
-                            <div>
-                                {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'
-                                    ? <p className="text-red-500 text-lg font-bold text-center animate-shake">{vgnCheckError}</p>
-                                    : <p className="text-green-500 text-lg font-bold text-center">{vgnCheckError}</p>}
-                                {!vgnCheckError && updatedCarMessage && <p className="text-green-500 text-lg font-bold text-center">{updatedCarMessage}</p>}
+                        <div className="flex flex-col sm:text-sm p-6 md:text-lg lg:text-xl p-6">
+                            <div className="space-y-4">
+                                <p><span className="font-bold">Serie șasiu: </span>{car?.carVin}</p>
+                                <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
+                                <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
+                                <p><span className="font-bold">Număr de telefon:</span> {car?.ownerPhoneNumber || '-'}</p>
+                                <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber?.toUpperCase()}</p>
+                                <p><span className="font-bold">Expirare RCA:</span><span className={isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}</span>{car?.insuranceExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.insuranceExpirationDate)} zile)</span>)}</p>
+                                <p><span className="font-bold">Expirare ITP:</span><span className={isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}</span>{car?.checkUpExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>)}</p>
+                                <p><span className="font-bold">Expirare Rovinietă:</span><span className={isExpired(car?.vignetteExpirationDate) ? 'text-red-500' : ''}> {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}</span>{car?.vignetteExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>)}</p>
+                                <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimeStamp(car.lastNotificationDate)}</p>
+                                <div>
+                                    {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'
+                                        ? <p className="text-red-500 text-md md:text-lg font-bold text-center animate-shake">{vgnCheckError}</p>
+                                        : <p className="text-green-500 text-md md:text-lg font-bold text-center">{vgnCheckError}</p>}
+                                    {!vgnCheckError && updatedCarMessage && <p className="text-green-500 text-lg font-bold text-center">{updatedCarMessage}</p>}
+                                </div>
                             </div>
                             <div className="space-x-2 flex justify-center">
                                 <Button variant="gray" onClick={() => navigate("/cars")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
