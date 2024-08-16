@@ -60,7 +60,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                         />
                     )}
                     <div className="bg-gray-200 rounded-2xl text-center md:p-2">
-                        <div className="flex flex-col sm:text-sm p-6 md:text-lg lg:text-xl p-6">
+                        <div className="flex flex-col sm:text-sm p-6 md:text-lg lg:text-xl mx-4">
                             <div className="space-y-3">
                                 <p><span className="font-bold">Serie șasiu: </span>{car?.carVin}</p>
                                 <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
@@ -86,7 +86,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                                 </div>
                                 <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimeStamp(car.lastNotificationDate)}</p>
                                 <div>
-                                    {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'
+                                    {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei!'
                                         ? <p className="text-red-500 mb-4 text-md md:text-lg font-bold text-center animate-shake">{vgnCheckError}</p>
                                         : <p className="text-green-500 mb-4 text-md md:text-lg font-bold text-center">{vgnCheckError}</p>}
                                     {!vgnCheckError && updatedCarMessage && <p className="text-green-500 mb-4 text-md md:text-lg font-bold text-center">{updatedCarMessage}</p>}
