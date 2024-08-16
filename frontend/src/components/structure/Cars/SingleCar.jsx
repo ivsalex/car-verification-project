@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Modal from "../../elements/Modal";
 import { TrashIcon, PencilIcon, ArrowCircleLeftIcon, RefreshIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid';
@@ -14,6 +14,10 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page') || 1;
 
     const handleDelete = () => {
         deleteCar(selectedCarId);
@@ -89,7 +93,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                                 </div>
                             </div>
                             <div className="space-x-2 flex justify-center">
-                                <Button variant="gray" onClick={() => navigate("/cars")}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
+                                <Button variant="gray" onClick={() => navigate(`/cars?page=${page}`)}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
                                 <Button variant="blue" onClick={handleModify}><PencilIcon className="h-7 w-7" /></Button>
                                 <Button variant="red" onClick={() => {
                                     setSelectedCarId(car?._id)
