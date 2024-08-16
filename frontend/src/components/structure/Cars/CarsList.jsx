@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DotsHorizontalIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon, TruckIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid';
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -144,11 +145,11 @@ function CarsList({ cars, deleteCar }) {
                                             {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}
                                         </td>
                                         <td className="border px-8 py-1 text-center">
-                                            <input
-                                                type="checkbox"
-                                                checked={car.vignetteRequired}
-                                                disabled
-                                            />
+                                            {car.vignetteRequired ? (
+                                                <CheckCircleIcon className="h-5 w-5 text-green-500" />
+                                            ) : (
+                                                <XCircleIcon className="h-5 w-5 text-red-500" />
+                                            )}
                                         </td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">
