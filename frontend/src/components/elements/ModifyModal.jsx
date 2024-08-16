@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from "../elements/Button"
 import 'react-datepicker/dist/react-datepicker.css';
+import { TruckIcon } from '@heroicons/react/outline';
 import DatePicker from "react-datepicker";
 
 const ModifyModal = ({ car, modifyCar }) => {
@@ -15,32 +16,34 @@ const ModifyModal = ({ car, modifyCar }) => {
         insuranceExpirationDate: car.insuranceExpirationDate,
         checkUpExpirationDate: car.checkUpExpirationDate,
         vignetteExpirationDate: car.vignetteExpirationDate,
-        lastNotificationDate: car.lastNotificationDate
+        lastNotificationDate: car.lastNotificationDate,
+        vignetteRequired: car.vignetteRequired
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setModifiedCar({
-            ...modifiedCar,
-            [name]: value,
-        });
+        const { name, type, checked, value } = e.target;
+        setModifiedCar(prevState => ({
+            ...prevState,
+            [name]: type === 'checkbox' ? checked : value,
+        }));
     };
 
     const handleInsuranceDateChange = (date) => {
-        setModifiedCar({ ...car, insuranceExpirationDate: date || null });
+        setModifiedCar(prevState => ({ ...prevState, insuranceExpirationDate: date || null }));
     };
 
     const handleCheckUpDateChange = (date) => {
-        setModifiedCar({ ...car, checkUpExpirationDate: date || null });
+        setModifiedCar(prevState => ({ ...prevState, checkUpExpirationDate: date || null }));
     };
 
     const handleVignetteDateChange = (date) => {
-        setModifiedCar({ ...car, vignetteExpirationDate: date });
+        setModifiedCar(prevState => ({ ...prevState, vignetteExpirationDate: date }));
     };
 
     const handleCancel = () => {
         setShowModal(false);
         window.location.reload();
+        setModifiedCar(car);
     }
 
     const handleSubmit = async (e) => {
@@ -134,34 +137,47 @@ const ModifyModal = ({ car, modifyCar }) => {
                                     required
                                 />
                             </div>
-                            <div className="flex flex-row space-x-1 text-center">
-                                <div>
-                                    <p>ITP</p>
-                                    <DatePicker
-                                        title="abc"
-                                        name="checkUpExpirationDate"
-                                        placeholderText="Expirare ITP"
-                                        selected={modifiedCar.checkUpExpirationDate}
-                                        onChange={handleCheckUpDateChange}
-                                        minDate={new Date(Date.now() + 86400000)}
-                                        dateFormat="dd.MM.yyyy"
-                                        className="border border-gray-400 p-2 rounded w-full"
-                                        autoComplete="off"
-                                    />
+                            <div className="flex flex-row space-x-1">
+                                <div className="flex flex-row space-x-1 text-center">
+                                    <div>
+                                        <p>ITP</p>
+                                        <DatePicker
+                                            title="abc"
+                                            name="checkUpExpirationDate"
+                                            placeholderText="Expirare ITP"
+                                            selected={modifiedCar.checkUpExpirationDate}
+                                            onChange={handleCheckUpDateChange}
+                                            dateFormat="dd.MM.yyyy"
+                                            className="border border-gray-400 p-2 rounded w-full"
+                                            autoComplete="off"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>RCA</p>
+                                        <DatePicker
+                                            title="abc"
+                                            name="insuranceExpirationDate"
+                                            placeholderText="Expirare RCA"
+                                            selected={modifiedCar.insuranceExpirationDate}
+                                            onChange={handleInsuranceDateChange}
+                                            minDate={new Date(Date.now() + 86400000)}
+                                            dateFormat="dd.MM.yyyy"
+                                            className="border border-gray-400 p-2 rounded w-full"
+                                            autoComplete="off"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <p>RCA</p>
-                                    <DatePicker
-                                        title="abc"
-                                        name="insuranceExpirationDate"
-                                        placeholderText="Expirare RCA"
-                                        selected={modifiedCar.insuranceExpirationDate}
-                                        onChange={handleInsuranceDateChange}
-                                        minDate={new Date(Date.now() + 86400000)}
-                                        dateFormat="dd.MM.yyyy"
-                                        className="border border-gray-400 p-2 rounded w-full"
-                                        autoComplete="off"
-                                    />
+                                <div className="flex justify-center align-center items-center">
+                                    <div className="flex flex-col space-y-1">
+                                        <p><TruckIcon className="h-6 w-6" /></p>
+                                        <input
+                                            title="Debifați la adăugarea unei remorci sau moto!"
+                                            type="checkbox"
+                                            name="vignetteRequired"
+                                            checked={modifiedCar.vignetteRequired}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex justify-center mt-6">

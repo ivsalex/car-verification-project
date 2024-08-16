@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DotsHorizontalIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
+import { DotsHorizontalIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon, TruckIcon } from '@heroicons/react/outline';
 import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -108,6 +108,7 @@ function CarsList({ cars, deleteCar }) {
                                     <th className="px-4 py-2">RCA</th>
                                     <th className="px-4 py-2">ITP</th>
                                     <th className="px-4 py-2">Rovinietă</th>
+                                    <th className="px-4 py-2 flex items-center justify-center text-center"><TruckIcon className="h-6 w-6" /></th>
                                     <th className="px-4 py-2">Acțiuni</th>
                                 </tr>
                             </thead>
@@ -127,6 +128,13 @@ function CarsList({ cars, deleteCar }) {
                                         </td>
                                         <td className={`w-28 border px-4 py-1 ${isExpired(car?.vignetteExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}
+                                        </td>
+                                        <td className="border px-8 py-1 text-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={car?.vignetteRequired}
+                                                disabled
+                                            />
                                         </td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">
