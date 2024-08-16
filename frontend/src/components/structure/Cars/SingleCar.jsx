@@ -4,6 +4,7 @@ import Spinner from "../../elements/Spinner";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../elements/Modal";
 import { TrashIcon, PencilIcon, ArrowCircleLeftIcon, RefreshIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid';
 import ModifyModal from '../../elements/ModifyModal';
 import { formatTimeStamp, isExpired, countRemainingDays } from "../../../utils/utils";
 
@@ -54,9 +55,9 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                             modifyCar={modifyCar}
                         />
                     )}
-                    <div className="bg-gray-200 rounded-2xl text-center md:p-6">
+                    <div className="bg-gray-200 rounded-2xl text-center md:p-2">
                         <div className="flex flex-col sm:text-sm p-6 md:text-lg lg:text-xl p-6">
-                            <div className="space-y-4">
+                            <div className="space-y-3">
                                 <p><span className="font-bold">Serie șasiu: </span>{car?.carVin}</p>
                                 <p><span className="font-bold">Serie C.I.V: </span>{car?.carCiv || '-'}</p>
                                 <p><span className="font-bold">Proprietar:</span> {car?.owner}</p>
@@ -65,6 +66,20 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                                 <p><span className="font-bold">Expirare RCA:</span><span className={isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}</span>{car?.insuranceExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.insuranceExpirationDate)} zile)</span>)}</p>
                                 <p><span className="font-bold">Expirare ITP:</span><span className={isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}</span>{car?.checkUpExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>)}</p>
                                 <p><span className="font-bold">Expirare Rovinietă:</span><span className={isExpired(car?.vignetteExpirationDate) ? 'text-red-500' : ''}> {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}</span>{car?.vignetteExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>)}</p>
+                                <div className="flex justify-center">
+                                    <p className="flex items-center space-x-1 space-y-1">
+                                        <span className="font-bold">Rovinietă obligatorie:</span>
+                                        {car?.vignetteRequired ? (
+                                            <>
+                                                <CheckCircleIcon className="h-6 w-6 text-green-500" />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <XCircleIcon className="h-6 w-6 text-red-500" />
+                                            </>
+                                        )}
+                                    </p>
+                                </div>
                                 <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimeStamp(car.lastNotificationDate)}</p>
                                 <div>
                                     {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei! Nu există sau datele sunt incorecte!'

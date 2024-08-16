@@ -10,7 +10,8 @@ const carSchema = new mongoose.Schema({
     insuranceExpirationDate: { type: Date, default: null },
     vignetteExpirationDate: { type: Date, default: null },
     checkUpExpirationDate: { type: Date, dafault: null },
-    lastNotificationDate: { type: Date, default: null }
+    lastNotificationDate: { type: Date, default: null },
+    vignetteRequired: { type: Boolean },
 });
 
 const Car = mongoose.model('Car', carSchema);

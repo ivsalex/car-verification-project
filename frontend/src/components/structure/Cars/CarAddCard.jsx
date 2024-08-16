@@ -4,10 +4,12 @@ import Spinner from "../../elements/Spinner";
 import { useNavigate } from "react-router-dom";
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from "react-datepicker";
+import { TruckIcon } from '@heroicons/react/outline';
 import { formatTimeStamp } from "../../../utils/utils";
 
 function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     const [loading, setLoading] = useState(true);
+    const [vignetteRequired, setVignetteRequired] = useState(true);
     const navigate = useNavigate();
 
     const today = new Date();
@@ -37,7 +39,14 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
         setCarData({ ...carData, vignetteExpirationDate: date });
     };
 
+    const handleVignetteRequiredChange = (e) => {
+        const checked = e.target.checked;
+        setVignetteRequired(checked);
+        setCarData({ ...carData, vignetteRequired: checked });
+    };
+
     useEffect(() => {
+        setVignetteRequired(carData.vignetteRequired !== false);
         const timer = setTimeout(() => {
             setLoading(false);
         }, 1500);
@@ -141,6 +150,15 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     autoComplete="off"
                                     disabled
                                 />
+                                <div>
+                                    <div className="flex items-center justify-center text-center"><TruckIcon className="h-6 w-6" /></div>
+                                    <input
+                                        title="Debifați la adăugarea unei remorci sau moto!"
+                                        type="checkbox"
+                                        checked={vignetteRequired}
+                                        onChange={handleVignetteRequiredChange}
+                                    />
+                                </div>
                             </div>
                             {errorMessage && <p className="text-red-500 text-lg font-bold text-center animate-shake">{errorMessage}</p>}
                             <div className="space-x-2 flex justify-center">
