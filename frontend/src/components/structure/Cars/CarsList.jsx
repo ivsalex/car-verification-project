@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DotsHorizontalIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon, TruckIcon } from '@heroicons/react/outline';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import SearchInput from "../../elements/Search";
@@ -15,16 +15,27 @@ function CarsList({ cars, deleteCar }) {
     const [currentPage, setCurrentPage] = useState(1);
     const carsPerPage = 8;
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        const page = parseInt(searchParams.get('page'), 10);
+        if (page && !isNaN(page)) {
+            setCurrentPage(page);
+        } else {
+            setCurrentPage(1);
+        }
+    }, [searchParams]);
 
     const handleSearch = (term) => {
         setSearchTerm(term);
         setCurrentPage(1);
+        setSearchParams({ page: 1 });
     };
 
     const handleDelete = () => {
         deleteCar(selectedCarId);
         setIsDeleteModalOpen(false);
-    }
+    };
 
     const filteredCars = cars.filter(car => {
         return car.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -44,7 +55,10 @@ function CarsList({ cars, deleteCar }) {
     const indexOfFirstCar = indexOfLastCar - carsPerPage;
     const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setSearchParams({ page: pageNumber });
+    };
 
     const getPageNumbers = () => {
         const totalPages = Math.ceil(filteredCars.length / carsPerPage);
@@ -97,7 +111,7 @@ function CarsList({ cars, deleteCar }) {
                         <Button variant="green" onClick={() => navigate("/adauga")}>Adaugă</Button>
                     </div>
                     <div className="justify-center flex-grow">
-                        <table>
+                        <table className="w-full table-auto">
                             <thead className="bg-blue-500 sticky top-0">
                                 <tr>
                                     <th className="px-4 py-2">#</th>
@@ -116,7 +130,7 @@ function CarsList({ cars, deleteCar }) {
                                 {currentCars.map((car, index) => (
                                     <tr key={car?._id}>
                                         <td className="border px-4 py-1 w-16 text-gray-400">{(currentPage - 1) * carsPerPage + index + 1}</td>
-                                        <td className="border px-4 py-1 w-60">{car?.carVin}</td>
+                                        <td className="border px-4 py-1 w-56">{car?.carVin}</td>
                                         <td className="border px-4 py-1 w-32">{car?.carCiv || '-'}</td>
                                         <td className="border px-4 py-1 w-72">{car?.owner}</td>
                                         <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
@@ -132,21 +146,19 @@ function CarsList({ cars, deleteCar }) {
                                         <td className="border px-8 py-1 text-center">
                                             <input
                                                 type="checkbox"
-                                                checked={car?.vignetteRequired}
+                                                checked={car.vignetteRequired}
                                                 disabled
                                             />
                                         </td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">
                                                 <Button variant="blue"
-                                                    onClick={() => {
-                                                        navigate(`/cars/${car._id}`);
-                                                    }}
+                                                    onClick={() => navigate(`/cars/${car._id}?page=${currentPage}`)}
                                                 ><DotsHorizontalIcon className="h-5 w-5" /></Button>
                                                 <Button variant="red"
                                                     onClick={() => {
-                                                        setIsDeleteModalOpen(true)
-                                                        setSelectedCarId(car?._id)
+                                                        setIsDeleteModalOpen(true);
+                                                        setSelectedCarId(car?._id);
                                                     }}
                                                 ><TrashIcon className="h-5 w-5" /></Button>
                                             </div>
