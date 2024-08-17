@@ -136,7 +136,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
                 endOfRange.setHours(23, 59, 59, 999);
                 break;
 
-            case 'week':
+            case '1week':
                 endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
                 break;
 
