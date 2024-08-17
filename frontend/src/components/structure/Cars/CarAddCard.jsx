@@ -55,7 +55,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     }, []);
 
     return (
-        <div className="flex flex-col justify-center align-center w-1/3 mx-auto h-100">
+        <div className="flex flex-col justify-center align-center px-4 md:w-1/3 mx-auto h-100">
             {loading && (
                 <div role="status">
                     <Spinner />
