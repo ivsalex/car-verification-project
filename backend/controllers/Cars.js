@@ -113,7 +113,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
     try {
         let { range, type } = req.query;
 
-        if (range !== 'expired' && range !== 'today' && range !== '1week' && range !== '2weeks' && range !== 'month') {
+        if (range !== 'expired' && range !== 'today' && range !== 'week' && range !== '2weeks' && range !== 'month') {
             range = 'week';
         }
 
@@ -136,7 +136,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
                 endOfRange.setHours(23, 59, 59, 999);
                 break;
 
-            case '1week':
+            case 'week':
                 endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
                 break;
 
