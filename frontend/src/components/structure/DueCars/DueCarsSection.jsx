@@ -164,20 +164,20 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                     <tbody className="bg-white md:divide-y md:divide-gray-200 block md:table-row-group">
                                                         {dueCars.map((car, index) => (
                                                             <tr key={index} className="p-1 block border-b border-gray-300 md:table-row md:mb-0">
-                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
-                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Serie șasiu:</span>
+                                                                <td className="p-1 whitespace-nowrap flex justify-center md:table-cell">
+                                                                    <span className="block font-bold max-sm:mr-1 md:hidden">Serie șasiu:</span>
                                                                     {car.carVin}
                                                                 </td>
-                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
-                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Proprietar:</span>
+                                                                <td className="p-1 whitespace-nowrap flex justify-center md:table-cell">
+                                                                    <span className="block font-bold max-sm:mr-1 md:hidden">Proprietar:</span>
                                                                     {car.owner}
                                                                 </td>
-                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
-                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Număr Înmatriculare:</span>
+                                                                <td className="p-1 whitespace-nowrap flex justify-center md:table-cell">
+                                                                    <span className="block font-bold max-sm:mr-1 md:hidden">Număr Înmatriculare:</span>
                                                                     {formatLicensePlate(car.plateNumber).toUpperCase()}
                                                                 </td>
-                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
-                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Dată expirare:</span>
+                                                                <td className="p-1 whitespace-nowrap flex justify-center md:table-cell">
+                                                                    <span className="block font-bold max-sm:mr-1 md:hidden">Dată expirare:</span>
                                                                     {renderTypeText() === 'Rovinieta' ? (
                                                                         car.vignetteExpirationDate !== null ? formatTimeStamp(car.vignetteExpirationDate) : '-'
                                                                     ) : (
@@ -191,20 +191,19 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         )}
                                                                     </span>
                                                                 </td>
-                                                                <td className="p-2 whitespace-nowrap flex md:table-cell">
-                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Ultima Notificare:</span>
+                                                                <td className="p-1 whitespace-nowrap flex justify-center md:table-cell">
+                                                                    <span className="block font-bold max-sm:mr-1 md:hidden">Ultima Notificare:</span>
                                                                     {car.lastNotificationDate === null ? '-' : (
                                                                         <span className="text-green-500 font-bold">{formatTimeStamp(car.lastNotificationDate)}</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="p-2 whitespace-nowrap flex md:table-cell space-x-1">
-                                                                    <span className="block text-gray-500 font-bold max-sm:mr-1 md:hidden">Acțiuni:</span>
+                                                                <td className="p-2 whitespace-nowrap flex justify-center md:table-cell space-x-2">
                                                                     <Button
                                                                         variant="blue"
                                                                         className="tiny"
                                                                         onClick={() => window.open(`/cars/${car._id}`, '_blank')}
                                                                     >
-                                                                        <DotsHorizontalIcon className="h-4 w-4" />
+                                                                        <DotsHorizontalIcon className="h-5 w-5" />
                                                                     </Button>
                                                                     {selectedDuration !== 'expired' && (
                                                                         <Button
@@ -229,7 +228,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                             disabled={disableButton(car.lastNotificationDate)}
                                                                             title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
                                                                         >
-                                                                            <ChatIcon className="h-4 w-4" />
+                                                                            <ChatIcon className="h-5 w-5" />
                                                                         </Button>
                                                                     )}
                                                                 </td>
