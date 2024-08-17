@@ -24,11 +24,11 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         if (selectedDuration === 'today') {
             return "Astăzi";
         } else if (selectedDuration === '1week') {
-            return "în 7 zile";
+            return "7 zile";
         } else if (selectedDuration === '2weeks') {
-            return "în 14 zile";
+            return "14 zile";
         } else if (selectedDuration === 'month') {
-            return "în 30 zile";
+            return "30 zile";
         } else {
             return "";
         }
