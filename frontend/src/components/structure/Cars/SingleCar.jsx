@@ -48,7 +48,11 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                 <div className="flex flex-col">
                     {isDeleteModalOpen && (
                         <Modal
-                            title="Dorești să ștergi autovehiculul?"
+                            title={
+                                <>
+                                    Dorești să ștergi autovehiculul <span className="text-blue-600 font-bold">{car?.plateNumber?.toUpperCase()}</span>?
+                                </>
+                            }
                             onConfirm={handleDelete}
                             onCancel={() => setIsDeleteModalOpen(false)}
                         />
