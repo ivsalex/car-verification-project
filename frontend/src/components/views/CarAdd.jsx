@@ -13,6 +13,7 @@ const CarAdd = () => {
         insuranceExpirationDate: '',
         checkUpExpirationDate: '',
         vignetteExpirationDate: '',
+        vignetteRequired: true
     });
 
     const handleErrorResponse = (responseText) => {
@@ -47,22 +48,25 @@ const CarAdd = () => {
                 throw new Error('Missing Car Vin and Plate Number at Vignette Check!');
             }
 
-            const vignetteCheck = await fetch(`https://api.ivaiondan.ro/api/vgnCheck?plateNumber=${carData.plateNumber}&vin=${carData.carVin}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${await getToken()}`
-                },
-            });
-
-            if (!vignetteCheck.ok) {
-                throw new Error(`HTTP error! status: ${vignetteCheck.status}`);
-            }
-
-            const responseData = await vignetteCheck.json();
-
             let dataStop = null;
-            if (responseData.length > 0) {
-                dataStop = responseData[0].dataStop.split(' ')[0];
+
+            if (carData.vignetteRequired) {
+                const vignetteCheck = await fetch(`https://api.ivaiondan.ro/api/vgnCheck?plateNumber=${carData.plateNumber}&vin=${carData.carVin}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${await getToken()}`
+                    },
+                });
+
+                if (!vignetteCheck.ok) {
+                    throw new Error(`HTTP error! status: ${vignetteCheck.status}`);
+                }
+
+                const responseData = await vignetteCheck.json();
+
+                if (responseData.length > 0) {
+                    dataStop = responseData[0].dataStop.split(' ')[0];
+                }
             }
 
             const formattedCarData = {
