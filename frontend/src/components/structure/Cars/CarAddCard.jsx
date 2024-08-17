@@ -157,6 +157,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                         type="checkbox"
                                         checked={vignetteRequired}
                                         onChange={handleVignetteRequiredChange}
+                                        value={vignetteRequired ? "true" : "false"}
                                     />
                                 </div>
                             </div>
