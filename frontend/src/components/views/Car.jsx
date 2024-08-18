@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SingleCar from "../structure/Cars/SingleCar";
 import { useAuth } from '@clerk/clerk-react';
+import { Navbar } from '../elements/Navbar';
 
 const Car = () => {
     const [car, setCar] = useState({});
@@ -145,6 +146,7 @@ const Car = () => {
 
     return (
         <div>
+            <Navbar />
             <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} vignetteRecheck={vignetteRecheck} vgnCheckError={vgnCheckError} updatedCarMessage={updatedCarMessage} />
         </div>
     );

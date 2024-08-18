@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CarsList from '../structure/Cars/CarsList';
 import { useUser, useAuth } from '@clerk/clerk-react';
+import { Navbar } from '../elements/Navbar';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
@@ -57,6 +58,7 @@ const Cars = () => {
 
     return (
         <div>
+            <Navbar />
             <CarsList cars={cars} deleteCar={deleteCar} />
         </div>
     );
