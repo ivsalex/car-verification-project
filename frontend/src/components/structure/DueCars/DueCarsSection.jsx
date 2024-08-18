@@ -144,7 +144,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                     dueCars.length >= 1 ? (
                                         <div className="rounded-lg">
                                             {selectedDuration && selectedType && selectedDuration !== 'expired' &&
-                                                <h2 className="duration-300 text-lg md:text-xl font-semibold my-2 md:my-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră în<span className="text-red-600 font-bold">{renderDurationText()}!</span>
+                                                <h2 className="duration-300 text-lg md:text-xl font-semibold my-2 md:my-4 text-center"><span className="text-red-600 font-bold">{renderTypeText()}</span> următoarelor <span className="text-red-600 font-bold">{dueCars.length}</span> mașini expiră în <span className="text-red-600 font-bold">{renderDurationText()}!</span>
                                                 </h2> || <h2 className="text-xl font-semibold my-2 md:my-4 text-center">
                                                     Următoarele <span className="text-red-600 font-bold">{dueCars.length}</span> mașini au <span className="text-red-600 font-bold">{renderTypeText()}</span> {renderTypeText() === 'ITP-ul' ? <span>expirat</span> : <span>expirată</span>}!
                                                 </h2>
