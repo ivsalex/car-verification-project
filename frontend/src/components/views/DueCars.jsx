@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DueCarsSection from "../structure/DueCars/DueCarsSection";
 import { useAuth } from '@clerk/clerk-react';
+import { Navbar } from '../elements/Navbar';
 
 const DueCarsPage = () => {
     const [dueCars, setDueCars] = useState([]);
@@ -103,6 +104,7 @@ const DueCarsPage = () => {
 
     return (
         <div>
+            <Navbar />
             <DueCarsSection fetchCarsData={fetchCarsData} dueCars={dueCars} sendSms={sendSms} disableButton={disableButton} />
         </div>
     );

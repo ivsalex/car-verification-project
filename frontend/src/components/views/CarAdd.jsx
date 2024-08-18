@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CarAddCard from "../structure/Cars/CarAddCard";
 import { useAuth } from '@clerk/clerk-react';
+import { Navbar } from '../elements/Navbar';
 
 const CarAdd = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -110,6 +111,7 @@ const CarAdd = () => {
 
     return (
         <div>
+            <Navbar />
             <CarAddCard handleSubmit={handleSubmit} setCarData={setCarData} carData={carData} errorMessage={errorMessage} />
         </div>
     );

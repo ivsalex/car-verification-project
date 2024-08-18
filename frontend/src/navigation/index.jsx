@@ -9,7 +9,6 @@ import DueCarsPage from "../components/views/DueCars";
 const Navigation = () => {
     return (
         <BrowserRouter>
-            <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/expirari" element={<DueCarsPage />} />
