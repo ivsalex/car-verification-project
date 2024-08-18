@@ -203,7 +203,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                         className="tiny"
                                                                         onClick={() => window.open(`/cars/${car._id}`, '_blank')}
                                                                     >
-                                                                        <DotsHorizontalIcon className="h-5 w-5" />
+                                                                        <DotsHorizontalIcon className="h-4 w-4" />
                                                                     </Button>
                                                                     {selectedDuration !== 'expired' && (
                                                                         <Button
@@ -228,7 +228,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                                                                             disabled={disableButton(car.lastNotificationDate)}
                                                                             title={disableButton(car.lastNotificationDate) ? 'Notificare deja trimisă!' : 'Trimiteți notificare!'}
                                                                         >
-                                                                            <ChatIcon className="h-5 w-5" />
+                                                                            <ChatIcon className="h-4 w-4" />
                                                                         </Button>
                                                                     )}
                                                                 </td>
