@@ -19,14 +19,21 @@ Key Features
 
 ## Authors
 
-- [Ivașcu Alexandru](https://www.github.com/ivsalex)
+- [Ivașcu Alexandru](https://www.linkedin.com/in/ivsalex/)
 
+
+## Screenshots
+
+<img src="https://i.imgur.com/NPC2xLr.png" width="210" height="430">  <img src="https://i.imgur.com/aJcodvI.png" width="210" height="430">
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
+## Tech Stack
 
-## Screenshots
+**Client:** React, TailwindCSS
 
-<img src="https://i.imgur.com/NPC2xLr.png" width="210" height="430"> <img src="https://i.imgur.com/aJcodvI.png" width="210" height="430">
+**Server:** Node.js, Express.js
+
+**Database:** MongoDB
