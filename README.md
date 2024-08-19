@@ -22,7 +22,7 @@ A full-stack web application designed to help you keep track of your vehicles es
 
 ## Screenshots
 
-<img src="https://i.imgur.com/NPC2xLr.png" width="210" height="430">  <img src="https://i.imgur.com/aJcodvI.png" width="210" height="430"> <img src="[https://i.imgur.com/aJcodvI.png](https://i.imgur.com/jPrxUTk.png)" width="210" height="430">
+<img src="https://i.imgur.com/NPC2xLr.png" width="210" height="430">  <img src="https://i.imgur.com/aJcodvI.png" width="210" height="430"> <img src="https://i.imgur.com/jPrxUTk.png" width="210" height="430">
 
 ## License
 
