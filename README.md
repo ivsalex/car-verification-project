@@ -29,4 +29,4 @@ Key Features
 
 ## Screenshots
 
-![App Screenshot](https://i.imgur.com/aJcodvI.png) ![App Screenshot](https://i.imgur.com/aJcodvI.png)
+<img src="https://i.imgur.com/aJcodvI.png" width="100" height="100">
