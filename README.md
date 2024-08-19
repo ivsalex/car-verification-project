@@ -29,4 +29,5 @@ Key Features
 
 ## Screenshots
 
+<img src="https://i.imgur.com/NPC2xLr.png" width="210" height="430">
 <img src="https://i.imgur.com/aJcodvI.png" width="210" height="430">
