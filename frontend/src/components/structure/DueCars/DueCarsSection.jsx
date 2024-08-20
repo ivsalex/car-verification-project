@@ -188,18 +188,18 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         car.ownerPhoneNumber,
         car.plateNumber,
         renderTypeText(selectedType),
-        renderTypeText() === 'Rovinieta'
+        selectedType === 'vignette'
           ? formatTimeStamp(car.vignetteExpirationDate)
-          : renderTypeText() === 'RCA-ul'
+          : selectedType === 'insurance'
             ? formatTimeStamp(car.insuranceExpirationDate)
-            : renderTypeText() === 'ITP-ul'
+            : selectedType === 'checkup'
               ? formatTimeStamp(car.checkUpExpirationDate)
               : null,
-        renderTypeText() === 'Rovinieta'
+        selectedType === 'vignette'
           ? countRemainingDays(car.vignetteExpirationDate)
-          : renderTypeText() === 'RCA-ul'
+          : selectedType === 'insurance'
             ? countRemainingDays(car.insuranceExpirationDate)
-            : renderTypeText() === 'ITP-ul'
+            : selectedType === 'checkup'
               ? countRemainingDays(car.checkUpExpirationDate)
               : null
       );
