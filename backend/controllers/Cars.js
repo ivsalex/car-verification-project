@@ -117,7 +117,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
             range = 'week';
         }
 
-        if (type !== 'checkup' && type !== 'vignette') {
+        if (type !== 'checkup' && type !== 'vignette' && type !== 'insurance') {
             type = 'checkup';
         }
 
@@ -152,7 +152,21 @@ exports.getAllExpiringCars = async (req, res, next) => {
                 break;
         }
 
-        const expirationField = type === 'checkup' ? 'checkUpExpirationDate' : 'vignetteExpirationDate';
+        let expirationField;
+
+        switch (type) {
+            case 'checkup':
+                expirationField = 'checkUpExpirationDate';
+                break;
+            case 'vignette':
+                expirationField = 'vignetteExpirationDate';
+                break;
+            case 'insurance':
+                expirationField = 'insuranceExpirationDate';
+                break;
+            default:
+                expirationField = null;
+        }
 
         let query;
 
@@ -168,6 +182,10 @@ exports.getAllExpiringCars = async (req, res, next) => {
                         },
                         { vignetteRequired: true }
                     ]
+                };
+            } else if (type === 'insurance') {
+                query = {
+                    [expirationField]: { $lt: new Date() }
                 };
             } else {
                 query = {
@@ -193,14 +211,13 @@ exports.getAllExpiringCars = async (req, res, next) => {
             }
         }
 
-        const docs = await Car.find(query).select('_id carVin owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate vignetteRequired');
+        const docs = await Car.find(query).select('_id carVin owner plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate vignetteRequired');
 
         const dueCars = docs.map(doc => ({
             _id: doc._id,
             carVin: doc.carVin,
             carCiv: doc.carCiv,
             owner: doc.owner,
-            ownerPhoneNumber: doc.ownerPhoneNumber,
             plateNumber: doc.plateNumber,
             insuranceExpirationDate: doc.insuranceExpirationDate,
             vignetteExpirationDate: doc.vignetteExpirationDate,
