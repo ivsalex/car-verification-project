@@ -65,7 +65,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
       fetchCarsData(selectedDuration, selectedType);
       setLoading(true);
       setShowError(true);
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 1500);
     }
   };
 
@@ -133,7 +133,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
           "-"
         )}
       </td>
-      <td className="p-2 whitespace-nowrap flex justify-center md:table-cell space-x-2">
+      <td className="p-2 whitespace-nowrap flex justify-center md:table-cell space-x-1">
         <Button
           variant="blue"
           className="tiny"
@@ -188,16 +188,20 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         car.ownerPhoneNumber,
         car.plateNumber,
         renderTypeText(selectedType),
-        renderTypeText() === "Rovinieta"
+        renderTypeText() === 'Rovinieta'
           ? formatTimeStamp(car.vignetteExpirationDate)
-          : renderTypeText() === "insurance"
-          ? formatTimeStamp(car.insuranceExpirationDate)
-          : formatTimeStamp(car.checkUpExpirationDate),
-        renderTypeText() === "Rovinieta"
+          : renderTypeText() === 'RCA-ul'
+            ? formatTimeStamp(car.insuranceExpirationDate)
+            : renderTypeText() === 'ITP-ul'
+              ? formatTimeStamp(car.checkUpExpirationDate)
+              : null,
+        renderTypeText() === 'Rovinieta'
           ? countRemainingDays(car.vignetteExpirationDate)
-          : renderTypeText() === "insurance"
-          ? countRemainingDays(car.insuranceExpirationDate)
-          : countRemainingDays(car.checkUpExpirationDate)
+          : renderTypeText() === 'RCA-ul'
+            ? countRemainingDays(car.insuranceExpirationDate)
+            : renderTypeText() === 'ITP-ul'
+              ? countRemainingDays(car.checkUpExpirationDate)
+              : null
       );
     }
   };
@@ -205,7 +209,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
   return (
     user && (
       <>
-        <div className="p-4 overflow-hidden h-[calc(100vh-70px)]">
+        <div className="p-4 overflow-hidden">
           <div className="bg-gray-100 shadow-md rounded-lg p-2 md:mx-auto md:w-1/3 md:mb-4 md:p-2">
             <h2 className="font-bold text-center text-xl mb-2 md:text-2xl">
               Alegeți tipul verificării și perioada:
@@ -268,8 +272,8 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                 <div className="rounded-lg">
                   <h2 className="duration-300 text-lg md:text-xl font-semibold my-2 md:my-4 text-center">
                     {selectedDuration &&
-                    selectedType &&
-                    selectedDuration !== "expired" ? (
+                      selectedType &&
+                      selectedDuration !== "expired" ? (
                       <>
                         <span className="text-red-600 font-bold">
                           {renderTypeText(selectedType)}
@@ -300,7 +304,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                       </>
                     )}
                   </h2>
-                  <div className="table-wrapper overflow-y-auto max-h-[calc(100vh-280px)] md:max-h-[calc(100vh-280px)]">
+                  <div className="table-wrapper overflow-y-auto max-h-[calc(100vh-280px)] md:h-86">
                     <table className="min-w-full divide-y md:border-2 divide-blue-200 table text-center block">
                       <thead className="bg-blue-500 sticky top-0 hidden md:table-header-group">
                         <tr className="md:table-row hidden">
@@ -355,10 +359,10 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                           {renderTypeText(selectedType) === "ITP-ul"
                             ? " niciun ITP!"
                             : renderTypeText(selectedType) === "Rovinieta"
-                            ? " nicio Rovinietă!"
-                            : renderTypeText(selectedType) === "RCA-ul"
-                            ? " niciun RCA!"
-                            : ""}
+                              ? " nicio Rovinietă!"
+                              : renderTypeText(selectedType) === "RCA-ul"
+                                ? " niciun RCA!"
+                                : ""}
                         </>
                       )}
                     </h1>
