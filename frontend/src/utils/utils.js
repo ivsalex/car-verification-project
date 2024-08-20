@@ -34,3 +34,41 @@ export function formatLicensePlate(plateNumber) {
 
     return plateNumber.replace(/([A-Z]+)([0-9]+)/g, '$1 $2 ');
 }
+
+export function renderDurationText(selectedDuration) {
+    if (selectedDuration === 'today') {
+        return "Astăzi";
+    } else if (selectedDuration === '1week') {
+        return "7 zile";
+    } else if (selectedDuration === '2weeks') {
+        return "14 zile";
+    } else if (selectedDuration === 'month') {
+        return "30 zile";
+    } else {
+        return "";
+    }
+};
+
+export function renderTypeText(selectedType) {
+    if (selectedType === 'checkup') {
+        return "ITP-ul";
+    } else if (selectedType === 'vignette') {
+        return "Rovinieta";
+    } else if (selectedType === 'insurance') {
+        return "RCA-ul";
+    } else {
+        return "";
+    }
+};
+
+export function disableButton(lastNotificationDate) {
+    const now = new Date();
+    const todayDate = now.toLocaleDateString();
+
+    const notif = new Date(lastNotificationDate);
+    const notifDate = notif.toLocaleDateString();
+
+    if (notifDate === todayDate) {
+        return true;
+    }
+}

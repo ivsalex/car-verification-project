@@ -160,7 +160,6 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             placeholderText="Expirare RCA"
                                             selected={modifiedCar.insuranceExpirationDate}
                                             onChange={handleInsuranceDateChange}
-                                            minDate={new Date(Date.now() + 86400000)}
                                             dateFormat="dd.MM.yyyy"
                                             className="border border-gray-400 p-2 rounded w-full"
                                             autoComplete="off"
