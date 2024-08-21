@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { ClerkExpressRequireAuth } = require('@clerk/clerk-sdk-node')
 
 const NotificationsController = require('../controllers/Notifications');
 
