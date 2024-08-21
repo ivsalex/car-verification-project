@@ -33,9 +33,9 @@ const NotificationsPage = () => {
         }
     };
 
-    const getAllNotifications = async () => {
+    const getAllNotifications = async (startDate, endDate) => {
         try {
-            const response = await fetch('https://api.ivaiondan.ro/notifications', {
+            const response = await fetch(`https://api.ivaiondan.ro/notifications?startDate=${startDate}&endDate=${endDate}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,8 +50,7 @@ const NotificationsPage = () => {
             const data = await response.json();
 
             if (response.status === 200) {
-                console.log(data);
-                setNotifications(data);
+                setNotifications(data.notifications);
             }
 
         } catch (error) {

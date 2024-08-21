@@ -5,7 +5,29 @@ const Notification = require('../models/Notification');
 
 exports.getAllNotifications = async (req, res, next) => {
     try {
-        const docs = await Notification.find()
+        const { startDate, endDate } = req.query;
+
+        const query = {};
+
+        if (startDate) {
+            const start = new Date(startDate);
+            if (!isNaN(start.getTime())) {
+                query.date = { ...query.date, $gte: start };
+            } else {
+                return res.status(400).json({ error: 'Invalid startDate format' });
+            }
+        }
+
+        if (endDate) {
+            const end = new Date(endDate);
+            if (!isNaN(end.getTime())) {
+                query.date = { ...query.date, $lte: end };
+            } else {
+                return res.status(400).json({ error: 'Invalid endDate format' });
+            }
+        }
+
+        const docs = await Notification.find(query)
             .select('_id date owner plateNumber ownerPhoneNumber smsBody');
 
         const notifications = docs.map(doc => ({

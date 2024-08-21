@@ -30,7 +30,7 @@ const DueCarsPage = () => {
         }
     }
 
-    const sendSms = async (carId, owner, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
+    const sendSms = async (carId, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining, owner) => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/api/v1/send', {
                 method: 'POST',

@@ -185,7 +185,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     if (!disableButton(car.lastNotificationDate)) {
       sendSms(
         car._id,
-        car.owner,
         car.ownerPhoneNumber,
         car.plateNumber,
         renderTypeText(selectedType),
@@ -202,7 +201,8 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
             ? countRemainingDays(car.insuranceExpirationDate)
             : selectedType === 'checkup'
               ? countRemainingDays(car.checkUpExpirationDate)
-              : null
+              : null,
+        car.owner
       );
     }
   };

@@ -17,6 +17,9 @@ function HomePage() {
                     <Button variant="blue" size="small" onClick={() => navigate('/cars')}>
                         <p>MAȘINI</p>
                     </Button>
+                    <Button variant="blue" size="small" onClick={() => navigate('/notificari')}>
+                        <p>NOTIFICĂRI</p>
+                    </Button>
                 </div>
                 <p className="mt-6 text-gray-600 max-sm:text-xs">
                     © 2024 IVAIONDAN SRL. Toate drepturile rezervate.
