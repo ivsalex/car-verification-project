@@ -283,10 +283,23 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                         <span className="text-red-600 font-bold">
                           {dueCars.length}
                         </span>{" "}
-                        mașini expiră în{" "}
-                        <span className="text-red-600 font-bold">
-                          {renderDurationText(selectedDuration)}!
-                        </span>
+                        {
+                          selectedDuration !== 'today' ? (
+                            <>
+                              mașini expiră în{' '}
+                              <span className="text-red-600 font-bold">
+                                {renderDurationText(selectedDuration)}!
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              mașini expiră{' '}
+                              <span className="text-red-600 font-bold">
+                                {renderDurationText(selectedDuration)}!
+                              </span>
+                            </>
+                          )
+                        }
                       </>
                     ) : (
                       <>
