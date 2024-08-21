@@ -11,6 +11,7 @@ const cron = require('node-cron');
 //Routes
 const carsRoutes = require('./routes/Cars');
 const apiRoutes = require('./routes/Api');
+const NotificationsRoutes = require('./routes/Notifications');
 
 //MongoDB Connection
 require('dotenv').config();
@@ -62,6 +63,7 @@ app.use(cookieParser());
 
 app.use('/cars', ClerkExpressWithAuth(), carsRoutes);
 app.use('/api', ClerkExpressWithAuth(), apiRoutes);
+app.use('/notifications', ClerkExpressRequireAuth(), NotificationsRoutes);
 
 app.get('/', (req, res) => {
     res.json('There is nothing here :)');
