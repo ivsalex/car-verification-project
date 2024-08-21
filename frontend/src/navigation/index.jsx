@@ -5,6 +5,7 @@ import Car from "../components/views/Car";
 import { Navbar } from "../components/elements/Navbar";
 import CarAdd from "../components/views/CarAdd";
 import DueCarsPage from "../components/views/DueCars";
+import NotificationsPage from "../components/views/Notifications";
 
 const Navigation = () => {
     return (
@@ -17,6 +18,7 @@ const Navigation = () => {
                 <Route path="/cars/:carId" element={<Car />} />
                 <Route path="https://accounts.ivaiondan.ro/user" />
                 <Route path="/adauga" element={<CarAdd />} />
+                <Route path="/notificari" element={<NotificationsPage />} />
             </Routes>
         </BrowserRouter>
     );

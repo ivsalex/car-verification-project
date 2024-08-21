@@ -185,6 +185,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     if (!disableButton(car.lastNotificationDate)) {
       sendSms(
         car._id,
+        car.owner,
         car.ownerPhoneNumber,
         car.plateNumber,
         renderTypeText(selectedType),
