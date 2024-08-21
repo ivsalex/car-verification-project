@@ -73,21 +73,9 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                                 <p><span className="font-bold">Număr înmatriculare:</span> {car?.plateNumber?.toUpperCase()}</p>
                                 <p><span className="font-bold">RCA:</span><span className={isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}</span>{car?.insuranceExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.insuranceExpirationDate)} zile)</span>)}</p>
                                 <p><span className="font-bold">ITP:</span><span className={isExpired(car?.checkUpExpirationDate) ? 'text-red-500 font-bold' : ''}> {car?.checkUpExpirationDate === null ? '-' : formatTimeStamp(car?.checkUpExpirationDate)}</span>{car?.checkUpExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.checkUpExpirationDate)} zile)</span>)}</p>
-                                <p><span className="font-bold">Rovinietă:</span><span className={isExpired(car?.vignetteExpirationDate) ? 'text-red-500' : ''}> {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}</span>{car?.vignetteExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>)}</p>
-                                <div className="flex justify-center">
-                                    <p className="flex items-center space-x-1 space-y-1">
-                                        <span className="font-bold">Rovinietă obligatorie:</span>
-                                        {car?.vignetteRequired ? (
-                                            <>
-                                                <CheckCircleIcon className="h-6 w-6 text-green-500" />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <XCircleIcon className="h-6 w-6 text-red-500" />
-                                            </>
-                                        )}
-                                    </p>
-                                </div>
+                                {car?.vignetteRequired &&
+                                    <p><span className="font-bold">Rovinietă:</span><span className={isExpired(car?.vignetteExpirationDate) ? 'text-red-500' : ''}> {car?.vignetteExpirationDate === null ? '-' : formatTimeStamp(car?.vignetteExpirationDate)}</span>{car?.vignetteExpirationDate && (<span className="text-gray-400"> ({countRemainingDays(car?.vignetteExpirationDate)} zile)</span>)}</p>
+                                }
                                 <p><span className="font-bold">Ultima notificare trimisă: </span> {car.lastNotificationDate === null ? '-' : formatTimeStamp(car.lastNotificationDate)}</p>
                                 <div>
                                     {!updatedCarMessage && vgnCheckError === 'Eroare la verificarea rovinietei!'
