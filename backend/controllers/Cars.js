@@ -137,6 +137,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
       case "expired":
         startOfRange = new Date(0);
         endOfRange = new Date();
+        endOfRange.setDate(endOfRange.getDate() - 1);
         endOfRange.setHours(23, 59, 59, 999);
         break;
 
@@ -185,7 +186,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
           $and: [
             {
               $or: [
-                { [expirationField]: { $lt: new Date() } },
+                { [expirationField]: { $gte: startOfRange, $lte: endOfRange } },
                 { [expirationField]: null },
               ],
             },
