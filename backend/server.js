@@ -63,7 +63,7 @@ app.use(cookieParser());
 
 app.use('/cars', ClerkExpressWithAuth(), carsRoutes);
 app.use('/api', ClerkExpressWithAuth(), apiRoutes);
-app.use('/notifications', ClerkExpressRequireAuth(), NotificationsRoutes);
+app.use('/notifications', ClerkExpressWithAuth(), NotificationsRoutes);
 
 app.get('/', (req, res) => {
     res.json('There is nothing here :)');
