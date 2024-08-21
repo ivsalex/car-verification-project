@@ -55,6 +55,11 @@ export const Navbar = () => {
                                     MAȘINI
                                 </a>
                             </li>
+                            <li className="font-bold transition duration-300 ease-in-out">
+                                <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2" href="/notificari">
+                                    NOTIFICĂRI
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div className="ml-auto border rounded-full p-1 border-white border-opacity-70 hover:border-opacity-100 cursor-pointer hover:bg-blue-700">
@@ -78,6 +83,11 @@ export const Navbar = () => {
                         <li className="font-bold transition duration-300 ease-in-out">
                             <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2" href="/cars">
                                 MAȘINI
+                            </a>
+                        </li>
+                        <li className="font-bold transition duration-300 ease-in-out">
+                            <a className="hover:text-blue-200 transition-all duration-200 ease-in-out px-2" href="/notificari">
+                                NOTIFICĂRI
                             </a>
                         </li>
                     </ul>

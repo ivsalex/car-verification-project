@@ -30,7 +30,7 @@ const DueCarsPage = () => {
         }
     }
 
-    const sendSms = async (carId, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
+    const sendSms = async (carId, owner, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining) => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/api/v1/send', {
                 method: 'POST',
@@ -51,6 +51,20 @@ const DueCarsPage = () => {
 
             if (response.status === 200) {
                 modifyNotifications(carId);
+                await fetch(`https://api.ivaiondan.ro/notifications/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${await getToken()}`
+                    },
+                    body: JSON.stringify({
+                        date: Date.now(),
+                        owner: owner,
+                        plateNumber: plateNumber,
+                        ownerPhoneNumber: ownerPhoneNumber,
+                        smsBody: `${expirationType} dvs. la autovehiculul ${plateNumber.toUpperCase()} expira la data de: ${expirationDate} (${daysRemaining > 0 ? `${daysRemaining} zile` : 'astazi'}). Daniel Ivascu - Asigurari`
+                    }),
+                });
             }
 
         } catch (error) {
