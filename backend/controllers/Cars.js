@@ -220,9 +220,11 @@ exports.getAllExpiringCars = async (req, res, next) => {
       }
     }
 
+    const sortOptions = type === "vignette" && range === "expired" ? { owner: 1 } : {};
+
     const docs = await Car.find(query).select(
       "_id carVin owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate vignetteRequired"
-    );
+    ).sort(sortOptions);
 
     const dueCars = docs.map((doc) => ({
       _id: doc._id,
