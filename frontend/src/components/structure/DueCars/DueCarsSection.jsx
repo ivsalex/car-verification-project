@@ -137,7 +137,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         <Button
           variant="blue"
           className="tiny"
-          onClick={() => window.open(`/cars/${car._id}`, "_blank")}
+          onClick={() => navigate(`/cars/${car._id}`, { state: { from: location.pathname + location.search } })}
         >
           <DotsHorizontalIcon className="h-4 w-4" />
         </Button>
