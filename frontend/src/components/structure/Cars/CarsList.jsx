@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DotsHorizontalIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon, TruckIcon, PlusIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import SearchInput from "../../elements/Search";
@@ -17,6 +17,7 @@ function CarsList({ cars, deleteCar }) {
     const carsPerPage = 8;
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
 
     useEffect(() => {
         const page = parseInt(searchParams.get('page'), 10);
@@ -143,7 +144,18 @@ function CarsList({ cars, deleteCar }) {
                                         <td className="border px-4 py-1 w-16 text-gray-400">{(currentPage - 1) * carsPerPage + index + 1}</td>
                                         <td className="border px-4 py-1 w-56">{car?.carVin}</td>
                                         <td className="border px-4 py-1 w-32">{car?.carCiv || '-'}</td>
-                                        <td className="border px-4 py-1 w-72">{car?.owner}</td>
+                                        <td className="border px-4 py-1">
+                                            <div className="relative group">
+                                                <p className="w-60 truncate">
+                                                    {car.owner}
+                                                </p>
+                                                {car.owner.length >= 24 &&
+                                                    <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-100 text-black text-md rounded-lg py-1 px-4">
+                                                        {car.owner}
+                                                    </div>
+                                                }
+                                            </div>
+                                        </td>
                                         <td className="border px-4 py-1">{car?.plateNumber?.toUpperCase()}</td>
                                         <td className={`w-28 border px-4 py-1 ${isExpired(car?.insuranceExpirationDate) ? 'text-red-500 font-semibold' : ''}`}>
                                             {car?.insuranceExpirationDate === null ? '-' : formatTimeStamp(car?.insuranceExpirationDate)}
@@ -163,7 +175,7 @@ function CarsList({ cars, deleteCar }) {
                                         </td>
                                         <td className="border px-4 py-1">
                                             <div className="space-x-2">
-                                                <Button variant="blue" onClick={() => navigate(`/cars/${car._id}?page=${currentPage}`)}>
+                                                <Button variant="blue" onClick={() => navigate(`/cars/${car._id}`, { state: { from: location.pathname + location.search } })}>
                                                     <DotsHorizontalIcon className="h-5 w-5" />
                                                 </Button>
                                                 <Button variant="red" onClick={() => { setIsDeleteModalOpen(true); setSelectedCarId(car?._id); }}>
@@ -205,7 +217,7 @@ function CarsList({ cars, deleteCar }) {
                                         )}
                                     </div>
                                     <div className="flex justify-center space-x-2 mt-2">
-                                        <Button variant="blue" onClick={() => navigate(`/cars/${car._id}?page=${currentPage}`)}>
+                                        <Button variant="blue" onClick={() => navigate(`/cars/${car._id}`, { state: { from: location.pathname + location.search } })}>
                                             <DotsHorizontalIcon className="h-5 w-5" />
                                         </Button>
                                         <Button variant="red" onClick={() => { setIsDeleteModalOpen(true); setSelectedCarId(car?._id); }}>

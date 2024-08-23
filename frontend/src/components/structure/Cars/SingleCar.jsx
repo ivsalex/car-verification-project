@@ -13,6 +13,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     const [selectedCarId, setSelectedCarId] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
+    const [previousUrl, setPreviousUrl] = useState();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -22,7 +23,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     const handleDelete = () => {
         deleteCar(selectedCarId);
         setIsDeleteModalOpen(false);
-        navigate("/cars");
+        navigate(previousUrl);
     }
 
     const handleModify = () => {
@@ -34,8 +35,13 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
             setLoading(false);
         }, 2000);
 
+        if (location.state?.from) {
+            console.log(location.state?.from)
+            setPreviousUrl(location.state.from);
+        }
+
         return () => clearTimeout(timer);
-    }, []);
+    }, [location.state]);
 
     return (
         <div className="flex w-auto justify-center m-6 md:m-6 h-96">
@@ -85,7 +91,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                                 </div>
                             </div>
                             <div className="space-x-2 flex justify-center">
-                                <Button variant="gray" onClick={() => navigate(`/cars?page=${page}`)}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
+                                <Button variant="gray" onClick={() => navigate(previousUrl)}><ArrowCircleLeftIcon className="h-7 w-7" /></Button>
                                 <Button variant="blue" onClick={handleModify}><PencilIcon className="h-7 w-7" /></Button>
                                 <Button variant="red" onClick={() => {
                                     setSelectedCarId(car?._id)
