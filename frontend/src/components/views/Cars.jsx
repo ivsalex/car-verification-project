@@ -1,42 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
 import CarsList from '../structure/Cars/CarsList';
-import { useUser, useAuth } from '@clerk/clerk-react';
+import CarsListSkeleton from '../structure/Cars/CarsListSkeleton';
+import { useAuth } from '@clerk/clerk-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Navbar } from '../elements/Navbar';
 
-const Cars = () => {
-    const [cars, setCars] = useState([]);
-    const { getToken } = useAuth();
+const fetchCarsData = async (token) => {
+    const response = await fetch('https://api.ivaiondan.ro/cars', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        mode: 'cors'
+    });
 
-    const fetchCarsData = async () => {
-        try {
-            const response = await fetch('https://api.ivaiondan.ro/cars', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${await getToken()}`
-                },
-                mode: 'cors'
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            setCars(data?.cars);
-
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
     }
+
+    const data = await response.json();
+    return data.cars;
+};
+
+const Cars = () => {
+    const { getToken } = useAuth();
+    const queryClient = useQueryClient();
+
+    const { data: cars, error, isLoading } = useQuery({
+        queryKey: ['cars'],
+        queryFn: async () => {
+            const token = await getToken();
+            return fetchCarsData(token);
+        },
+    });
 
     const deleteCar = async (carId) => {
         try {
+            const token = await getToken();
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${await getToken()}`
+                    'Authorization': `Bearer ${token}`
                 },
                 credentials: 'include',
             });
@@ -45,16 +51,24 @@ const Cars = () => {
                 throw new Error('Network response was not ok');
             }
 
-            window.location.reload();
-
+            queryClient.invalidateQueries(['cars']);
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error deleting car:', error);
         }
     };
 
-    useEffect(() => {
-        fetchCarsData();
-    }, []);
+    if (isLoading) {
+        return (
+            <div>
+                <Navbar />
+                <CarsListSkeleton />
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div>Error fetching data: {error.message}</div>;
+    }
 
     return (
         <div>
