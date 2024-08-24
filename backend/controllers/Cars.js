@@ -86,7 +86,7 @@ exports.getAllCars = async (req, res, next) => {
   try {
     const docs = await Car.find().select(
       "_id carVin carCiv owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate vignetteRequired"
-    );
+    ).sort({ owner: 1 });
 
     const cars = docs.map((doc) => ({
       _id: doc._id,
