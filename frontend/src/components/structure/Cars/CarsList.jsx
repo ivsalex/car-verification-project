@@ -89,7 +89,7 @@ function CarsList({ cars, deleteCar }) {
     };
 
     return (
-        <div className="lg:flex flex-col justify-center align-center text-center p-4 space-y-4 mx-auto max-xl:w-full xl:h-100 w-fit">
+        <div className="xl:flex flex-col justify-center align-center text-center p-4 space-y-4 mx-auto max-2xl:w-full 2xl:h-100 w-fit">
             <div className="flex items-center justify-between gap-2">
                 <Button variant="gray" onClick={() => navigate("/")} className="flex items-center lg:text-xl lg:py-3 lg:px-4">
                     <ArrowLeftIcon className="h-5 w-5 lg:hidden block" />
@@ -104,7 +104,7 @@ function CarsList({ cars, deleteCar }) {
 
             <div className="justify-center flex-grow">
                 {/* Table Layout - visible only on large screens */}
-                <table className="w-full table-auto hidden xl:table">
+                <table className="w-full table-auto hidden 2xl:table">
                     <thead className="bg-blue-500 sticky top-0">
                         <tr>
                             <th className="px-4 py-2">#</th>
@@ -172,7 +172,7 @@ function CarsList({ cars, deleteCar }) {
                 </table>
 
                 {/* Card Layout - visible on mobile and tablet */}
-                <div className="block lg:block xl:hidden">
+                <div className="block xl:block 2xl:hidden">
                     {currentCars.map((car, index) => (
                         <div key={car?._id} className="border rounded-lg mb-4 p-4">
                             <div className="">

@@ -3,6 +3,7 @@ import Button from "../elements/Button"
 import 'react-datepicker/dist/react-datepicker.css';
 import { TruckIcon } from '@heroicons/react/outline';
 import DatePicker from "react-datepicker";
+import "../../utils/datepicker.css"
 
 const ModifyModal = ({ car, modifyCar }) => {
     const [showModal, setShowModal] = useState(true);
@@ -150,6 +151,13 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             dateFormat="dd.MM.yyyy"
                                             className="border border-gray-400 p-2 rounded w-full"
                                             autoComplete="off"
+                                            withPortal
+                                            fixedHeight
+                                            showYearDropdown
+                                            showMonthDropdown
+                                            dropdownMode="select"
+                                            minDate={new Date("2024-01-01")}
+                                            maxDate={new Date("2027-12-31")}
                                         />
                                     </div>
                                     <div>
@@ -163,6 +171,13 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             dateFormat="dd.MM.yyyy"
                                             className="border border-gray-400 p-2 rounded w-full"
                                             autoComplete="off"
+                                            withPortal
+                                            fixedHeight
+                                            showYearDropdown
+                                            showMonthDropdown
+                                            dropdownMode="select"
+                                            minDate={new Date("2024-01-01")}
+                                            maxDate={new Date("2025-12-31")}
                                         />
                                     </div>
                                 </div>
