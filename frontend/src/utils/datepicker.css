@@ -1,0 +1,19 @@
+.react-datepicker__current-month {
+    display: none; 
+}
+
+.react-datepicker__year-dropdown,
+.react-datepicker__month-dropdown {
+    font-size: 1rem; 
+    padding: 0.75rem;   
+    border-radius: 1rem;
+    background-color: inherit;
+}
+
+.react-datepicker__year-dropdown-container select,
+.react-datepicker__month-dropdown-container select {
+    font-size: 1rem; 
+    padding: 0.75rem;
+    border-radius: 1rem;
+    background-color: inherit;
+}

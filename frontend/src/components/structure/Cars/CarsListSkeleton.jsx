@@ -11,14 +11,14 @@ function CarsListSkeleton() {
     const pageNumbers = [1, 2, 3, 4, 5, '...', 99]; // Example page numbers
 
     return (
-        <div className="md:flex flex-col justify-center align-center text-center p-4 space-y-4 mx-auto max-lg:w-full lg:h-100 w-fit">
+        <div className="lg:flex flex-col justify-center align-center text-center p-4 space-y-4 mx-auto max-xl:w-full xl:h-100 w-fit">
             <div className="flex items-center justify-between gap-2">
-                <Button variant="gray" className="flex items-center md:text-lg md:py-3 md:px-4">
+                <Button variant="gray" className="flex items-center lg:text-xl lg:py-3 lg:px-4">
                     <ArrowLeftIcon className="h-5 w-5 md:hidden block" />
                     <span className="md:block hidden">Înapoi</span>
                 </Button>
                 <SearchInput disabled />
-                <Button variant="green" className="flex items-center md:text-lg md:py-3 md:px-4">
+                <Button variant="green" className="flex items-center lg:text-xl lg:py-3 lg:px-4">
                     <PlusIcon className="h-5 w-5 md:hidden block" />
                     <span className="md:block hidden">Adaugă</span>
                 </Button>
@@ -51,17 +51,19 @@ function CarsListSkeleton() {
                                 <td className="border px-4 py-1 w-32"><Skeleton width={80} height={8} /></td>
                                 <td className="border px-4 py-1"><Skeleton width={240} height={8} /></td>
                                 <td className="border px-4 py-1"><Skeleton width={110} height={8} /></td>
-                                <td className="border px-4 py-1"><Skeleton width={80} height={8} /></td>
-                                <td className="border px-4 py-1"><Skeleton width={80} height={8} /></td>
-                                <td className="border px-4 py-1"><Skeleton width={80} height={8} /></td>
+                                <td className="border px-4 py-1"><Skeleton width={82} height={8} /></td>
+                                <td className="border px-4 py-1"><Skeleton width={82} height={8} /></td>
+                                <td className="border px-4 py-1"><Skeleton width={82} height={8} /></td>
                                 <td className="border px-8 py-1 text-center"><Skeleton width={15} height={15} /></td>
-                                <td className="border px-4 py-1 flex space-x-2 justify-center">
-                                    <Button variant="blue">
-                                        <DotsHorizontalIcon className="h-5 w-5" />
-                                    </Button>
-                                    <Button variant="red">
-                                        <TrashIcon className="h-5 w-5" />
-                                    </Button>
+                                <td className="border px-4 py-1">
+                                    <div className="space-x-2">
+                                        <Button variant="blue">
+                                            <DotsHorizontalIcon className="h-5 w-5" />
+                                        </Button>
+                                        <Button variant="red">
+                                            <TrashIcon className="h-5 w-5" />
+                                        </Button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -111,6 +113,7 @@ function CarsListSkeleton() {
                         key={index}
                         size="tiny"
                         variant={'gray'}
+                        className="w-7 h-7 flex items-center justify-center"
                     >
                         {number}
                     </Button>
