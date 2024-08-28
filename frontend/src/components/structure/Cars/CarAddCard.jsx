@@ -129,23 +129,32 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     autoComplete="off"
                                     minDate={minDate}
                                     maxDate={maxDate}
+                                    withPortal
+                                    fixedHeight
                                     showYearDropdown
+                                    showMonthDropdown
+                                    dropdownMode="select"
                                 />
                                 <DatePicker
                                     name="insuranceExpirationDate"
                                     placeholderText="Expirare RCA"
                                     selected={carData.insuranceExpirationDate}
                                     onChange={handleInsuranceDateChange}
-                                    dateFormat="dd-MM-yyyy"
+                                    dateFormat="dd.MM.yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
+                                    withPortal
+                                    fixedHeight
+                                    showYearDropdown
+                                    showMonthDropdown
+                                    dropdownMode="select"
                                 />
                                 <DatePicker
                                     name="vignetteExpirationDate"
                                     placeholderText="Expirare Rovinietă"
                                     selected={carData.vignetteExpirationDate}
                                     onChange={handleVignetteDateChange}
-                                    dateFormat="dd-MM-yyyy"
+                                    dateFormat="dd.MM.yyyy"
                                     className="border border-gray-400 p-2 rounded w-full hidden"
                                     autoComplete="off"
                                     disabled
