@@ -137,6 +137,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     showYearDropdown
                                     showMonthDropdown
                                     dropdownMode="select"
+                                    customInput={<input inputMode='none' />}
                                 />
                                 <DatePicker
                                     name="insuranceExpirationDate"
@@ -153,6 +154,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     showYearDropdown
                                     showMonthDropdown
                                     dropdownMode="select"
+                                    customInput={<input inputMode='none' />}
                                 />
                                 <DatePicker
                                     name="vignetteExpirationDate"
