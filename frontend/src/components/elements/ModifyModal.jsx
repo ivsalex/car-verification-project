@@ -168,6 +168,7 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             dropdownMode="select"
                                             minDate={itpMinDate}
                                             maxDate={itpMaxDate}
+                                            customInput={<input inputMode='none' />}
                                         />
                                     </div>
                                     <div>
@@ -188,6 +189,7 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             dropdownMode="select"
                                             minDate={rcaMinDate}
                                             maxDate={rcaMaxDate}
+                                            customInput={<input inputMode='none' />}
                                         />
                                     </div>
                                 </div>
