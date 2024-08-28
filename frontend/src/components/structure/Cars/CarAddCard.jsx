@@ -12,12 +12,15 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
     const [vignetteRequired, setVignetteRequired] = useState(true);
     const navigate = useNavigate();
 
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const nextYear = currentYear + 3;
+    const currentYear = new Date().getFullYear();
 
-    const minDate = new Date(currentYear, 0, 1);
-    const maxDate = new Date(nextYear, 11, 31);
+    // ITP DatePicker: 3 years max date
+    const itpMinDate = new Date(`${currentYear}-01-01`);
+    const itpMaxDate = new Date(`${currentYear + 3}-12-31`);
+
+    // RCA DatePicker: 1 year max date
+    const rcaMinDate = new Date(`${currentYear}-01-01`);
+    const rcaMaxDate = new Date(`${currentYear + 1}-12-31`);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -127,8 +130,8 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     dateFormat="dd-MM-yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
-                                    minDate={minDate}
-                                    maxDate={maxDate}
+                                    minDate={itpMinDate}
+                                    maxDate={itpMaxDate}
                                     withPortal
                                     fixedHeight
                                     showYearDropdown
@@ -143,6 +146,8 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     dateFormat="dd.MM.yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
+                                    minDate={rcaMinDate}
+                                    maxDate={rcaMaxDate}
                                     withPortal
                                     fixedHeight
                                     showYearDropdown

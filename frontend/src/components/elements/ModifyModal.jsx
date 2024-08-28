@@ -8,6 +8,16 @@ import "../../utils/datepicker.css"
 const ModifyModal = ({ car, modifyCar }) => {
     const [showModal, setShowModal] = useState(true);
 
+    const currentYear = new Date().getFullYear();
+
+    // ITP DatePicker: 3 years max date
+    const itpMinDate = new Date(`${currentYear}-01-01`);
+    const itpMaxDate = new Date(`${currentYear + 3}-12-31`);
+
+    // RCA DatePicker: 1 year max date
+    const rcaMinDate = new Date(`${currentYear}-01-01`);
+    const rcaMaxDate = new Date(`${currentYear + 1}-12-31`);
+
     const [modifiedCar, setModifiedCar] = useState({
         carVin: car.carVin,
         carCiv: car.carCiv,
@@ -156,8 +166,8 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             showYearDropdown
                                             showMonthDropdown
                                             dropdownMode="select"
-                                            minDate={new Date("2024-01-01")}
-                                            maxDate={new Date("2027-12-31")}
+                                            minDate={itpMinDate}
+                                            maxDate={itpMaxDate}
                                         />
                                     </div>
                                     <div>
@@ -176,8 +186,8 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             showYearDropdown
                                             showMonthDropdown
                                             dropdownMode="select"
-                                            minDate={new Date("2024-01-01")}
-                                            maxDate={new Date("2025-12-31")}
+                                            minDate={rcaMinDate}
+                                            maxDate={rcaMaxDate}
                                         />
                                     </div>
                                 </div>
