@@ -127,7 +127,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     placeholderText="Expirare ITP"
                                     selected={carData.checkUpExpirationDate}
                                     onChange={handleCheckUpDateChange}
-                                    dateFormat="dd-MM-yyyy"
+                                    dateFormat="dd.MM.yyyy"
                                     className="border border-gray-400 p-2 rounded w-full"
                                     autoComplete="off"
                                     minDate={itpMinDate}
