@@ -82,7 +82,16 @@ const Car = () => {
             if (response.ok) {
                 setCar(formattedCarData);
                 setUpdatedCarMessage('Datele autovehicului au fost actualizate!');
+
+                setTimeout(() => {
+                    setUpdatedCarMessage('');
+                }, 2000);
             } else {
+                setUpdatedCarMessage('Eroare la modificarea autovehicului!');
+
+                setTimeout(() => {
+                    setUpdatedCarMessage('');
+                }, 2000);
                 console.error('Error modifying car:', response.status);
             }
         } catch (error) {
@@ -125,14 +134,14 @@ const Car = () => {
                 setVgnCheckError('Datele rovinietei au fost actualizate!')
 
                 setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
+                    setVgnCheckError('');
+                }, 2000);
 
             } else {
                 setVgnCheckError('Eroare la verificarea rovinietei!');
                 setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
+                    setVgnCheckError('');
+                }, 2000);
             }
 
         } catch (error) {
