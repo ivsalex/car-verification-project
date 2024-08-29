@@ -5,7 +5,7 @@ import { TruckIcon } from '@heroicons/react/outline';
 import DatePicker from "react-datepicker";
 import "../../utils/datepicker.css"
 
-const ModifyModal = ({ car, modifyCar }) => {
+const ModifyModal = ({ car, carId, modifyCar, onClose }) => {
     const [showModal, setShowModal] = useState(true);
 
     const currentYear = new Date().getFullYear();
@@ -53,17 +53,14 @@ const ModifyModal = ({ car, modifyCar }) => {
 
     const handleCancel = () => {
         setShowModal(false);
-        window.location.reload();
+        onClose();
         setModifiedCar(car);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await modifyCar(car._id, modifiedCar);
-        setTimeout(() => {
-            window.location.reload();
-        }, 1500);
-        setShowModal(false);
+        onClose();
+        await modifyCar(carId, modifiedCar);
     };
 
     return (
@@ -159,7 +156,7 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             selected={modifiedCar.checkUpExpirationDate}
                                             onChange={handleCheckUpDateChange}
                                             dateFormat="dd.MM.yyyy"
-                                            className="border border-gray-400 p-2 rounded w-full"
+                                            className="border border-gray-400 p-2 rounded w-full caret-transparent"
                                             autoComplete="off"
                                             withPortal
                                             fixedHeight
@@ -180,7 +177,7 @@ const ModifyModal = ({ car, modifyCar }) => {
                                             selected={modifiedCar.insuranceExpirationDate}
                                             onChange={handleInsuranceDateChange}
                                             dateFormat="dd.MM.yyyy"
-                                            className="border border-gray-400 p-2 rounded w-full"
+                                            className="border border-gray-400 p-2 rounded w-full caret-transparent"
                                             autoComplete="off"
                                             withPortal
                                             fixedHeight

@@ -128,7 +128,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     selected={carData.checkUpExpirationDate}
                                     onChange={handleCheckUpDateChange}
                                     dateFormat="dd.MM.yyyy"
-                                    className="border border-gray-400 p-2 rounded w-full"
+                                    className="border border-gray-400 p-2 rounded w-full caret-transparent"
                                     autoComplete="off"
                                     minDate={itpMinDate}
                                     maxDate={itpMaxDate}
@@ -145,7 +145,7 @@ function CarAddCard({ handleSubmit, setCarData, carData, errorMessage }) {
                                     selected={carData.insuranceExpirationDate}
                                     onChange={handleInsuranceDateChange}
                                     dateFormat="dd.MM.yyyy"
-                                    className="border border-gray-400 p-2 rounded w-full"
+                                    className="border border-gray-400 p-2 rounded w-full caret-transparent"
                                     autoComplete="off"
                                     minDate={rcaMinDate}
                                     maxDate={rcaMaxDate}

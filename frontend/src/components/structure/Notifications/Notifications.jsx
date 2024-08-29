@@ -140,64 +140,78 @@ function NotificationsSection({ checkCredit, getAllNotifications, credit, notifi
                     <div className="overflow-hidden">
                         {/* Table - visible on large screens and above */}
                         <div className="hidden xl:block overflow-y-auto md:h-[calc(100vh-195px)]">
-                            <table className="min-w-full divide-y border-2 divide-blue-200 text-center">
-                                <thead className="bg-blue-500 sticky top-0">
-                                    <tr>
-                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Dată</th>
-                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Proprietar</th>
-                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr de înmatriculare</th>
-                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr de telefon</th>
-                                        <th className="py-3 text-sm text-gray-800 uppercase text-center">Mesaj</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {notifications?.map((notification, index) => (
-                                        <tr key={index}>
-                                            <td className="py-2 whitespace-nowrap">
-                                                {new Date(notification.date).toLocaleString('ro-RO', {
-                                                    day: '2-digit',
-                                                    month: '2-digit',
-                                                    year: 'numeric',
-                                                    hour: '2-digit',
-                                                    minute: '2-digit',
-                                                    second: '2-digit',
-                                                })}
-                                            </td>
-                                            <td className="py-2 whitespace-nowrap">{notification.owner}</td>
-                                            <td className="py-2 whitespace-nowrap">{notification.plateNumber}</td>
-                                            <td className="py-2 whitespace-nowrap">{notification.ownerPhoneNumber}</td>
-                                            <td className="py-2 whitespace-nowrap">
-                                                <div className='w-[550px] whitespace-normal break-words mx-auto text-center'>
-                                                    {notification.smsBody}
-                                                </div>
-                                            </td>
+                            {notifications.length > 0
+                                ?
+                                <table className="min-w-full divide-y border-2 divide-blue-200 text-center">
+                                    <thead className="bg-blue-500 sticky top-0">
+                                        <tr>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Dată</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Proprietar</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr de înmatriculare</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Număr de telefon</th>
+                                            <th className="py-3 text-sm text-gray-800 uppercase text-center">Mesaj</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        {notifications?.map((notification, index) => (
+                                            <tr key={index}>
+                                                <td className="py-2 whitespace-nowrap">
+                                                    {new Date(notification.date).toLocaleString('ro-RO', {
+                                                        day: '2-digit',
+                                                        month: '2-digit',
+                                                        year: 'numeric',
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                        second: '2-digit',
+                                                    })}
+                                                </td>
+                                                <td className="py-2 whitespace-nowrap">{notification.owner}</td>
+                                                <td className="py-2 whitespace-nowrap">{notification.plateNumber}</td>
+                                                <td className="py-2 whitespace-nowrap">{notification.ownerPhoneNumber}</td>
+                                                <td className="py-2 whitespace-nowrap">
+                                                    <div className='w-[550px] whitespace-normal break-words mx-auto text-center'>
+                                                        {notification.smsBody}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                :
+                                <div className="flex justify-center text-red-500 text-xl font-bold">
+                                    <h1>Nicio notificare trimisă în intervalul selectat.</h1>
+                                </div>
+                            }
                         </div>
 
                         {/* List view - visible on screens smaller than large */}
-                        <div className="block p-0 m-0 overflow-y-auto h-[calc(100vh-182px)] xl:hidden">
-                            {notifications?.map((notification, index) => (
-                                <div key={index} className="border border-gray-300 text-center rounded-lg p-4 mb-4">
-                                    <div className="text-md font-medium text-gray-800">
-                                        <div><strong>Dată:</strong> {new Date(notification.date).toLocaleString('ro-RO', {
-                                            day: '2-digit',
-                                            month: '2-digit',
-                                            year: 'numeric',
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                            second: '2-digit',
-                                        })}</div>
-                                        <div><strong>Proprietar:</strong> {notification.owner}</div>
-                                        <div><strong>Număr de înmatriculare:</strong> {notification.plateNumber}</div>
-                                        <div><strong>Număr de telefon:</strong> {notification.ownerPhoneNumber}</div>
-                                        <div><strong>Mesaj:</strong> {notification.smsBody}</div>
+                        {notifications.length > 0
+                            ?
+                            <div className="block p-0 m-0 overflow-y-auto h-[calc(100vh-182px)] xl:hidden">
+                                {notifications?.map((notification, index) => (
+                                    <div key={index} className="border border-gray-300 text-center rounded-lg p-4 mb-4">
+                                        <div className="text-md font-medium text-gray-800">
+                                            <div><strong>Dată:</strong> {new Date(notification.date).toLocaleString('ro-RO', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                second: '2-digit',
+                                            })}</div>
+                                            <div><strong>Proprietar:</strong> {notification.owner}</div>
+                                            <div><strong>Număr de înmatriculare:</strong> {notification.plateNumber}</div>
+                                            <div><strong>Număr de telefon:</strong> {notification.ownerPhoneNumber}</div>
+                                            <div><strong>Mesaj:</strong> {notification.smsBody}</div>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                            :
+                            <div className="flex justify-center text-red-500 text-sm font-bold">
+                                <h1>Nicio notificare trimisă în intervalul selectat.</h1>
+                            </div>
+                        }
                     </div>
                 </>
             )}
