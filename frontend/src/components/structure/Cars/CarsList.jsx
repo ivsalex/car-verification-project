@@ -10,6 +10,7 @@ import { formatTimeStamp, isExpired } from "../../../utils/utils";
 function CarsList({ cars, deleteCar }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCarId, setSelectedCarId] = useState('');
+    const [carPlateNumber, setCarPlateNumber] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const carsPerPage = 8;
@@ -161,7 +162,7 @@ function CarsList({ cars, deleteCar }) {
                                         <Button variant="blue" onClick={() => navigate(`/cars/${car._id}`, { state: { from: location.pathname + location.search } })}>
                                             <DotsHorizontalIcon className="h-5 w-5" />
                                         </Button>
-                                        <Button variant="red" onClick={() => { setIsDeleteModalOpen(true); setSelectedCarId(car?._id); }}>
+                                        <Button variant="red" onClick={() => { setIsDeleteModalOpen(true); setSelectedCarId(car?._id); setCarPlateNumber(car?.plateNumber) }}>
                                             <TrashIcon className="h-5 w-5" />
                                         </Button>
                                     </div>
@@ -203,7 +204,7 @@ function CarsList({ cars, deleteCar }) {
                                 <Button variant="blue" onClick={() => navigate(`/cars/${car._id}`, { state: { from: location.pathname + location.search } })}>
                                     <DotsHorizontalIcon className="h-5 w-5" />
                                 </Button>
-                                <Button variant="red" onClick={() => { setIsDeleteModalOpen(true); setSelectedCarId(car?._id); }}>
+                                <Button variant="red" onClick={() => { setIsDeleteModalOpen(true); setSelectedCarId(car?._id); setCarPlateNumber(car?.plateNumber) }}>
                                     <TrashIcon className="h-5 w-5" />
                                 </Button>
                             </div>
@@ -242,7 +243,11 @@ function CarsList({ cars, deleteCar }) {
 
             {isDeleteModalOpen && (
                 <Modal
-                    title="Dorești să ștergi autovehiculul?"
+                    title={
+                        <>
+                            Dorești să ștergi autovehiculul <span className="text-blue-600 font-bold">{carPlateNumber.toUpperCase()}</span>?
+                        </>
+                    }
                     onConfirm={handleDelete}
                     onCancel={() => setIsDeleteModalOpen(false)}
                 />
