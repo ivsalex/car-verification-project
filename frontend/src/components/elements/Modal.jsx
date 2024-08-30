@@ -16,7 +16,7 @@ const Modal = ({ title, onConfirm, onCancel }) => {
     return (
         <>
             {showModal && (
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-50 backdrop-blur-sm">
+                <div className="absolute top-0 left-0 w-full h-[calc(100vh-20px)] flex items-center justify-center z-50 backdrop-blur-sm">
                     <div className="absolute bg-white border border-gray-300 p-4 rounded shadow">
                         <button
                             className="absolute top-0 right-0 m-1 text-gray-600 hover:text-gray-800"

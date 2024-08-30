@@ -208,7 +208,7 @@ function NotificationsSection({ checkCredit, getAllNotifications, credit, notifi
                                 ))}
                             </div>
                             :
-                            <div className="flex justify-center text-red-500 text-sm font-bold">
+                            <div className="flex justify-center text-red-500 text-sm font-bold xl:hidden">
                                 <h1>Nicio notificare trimisă în intervalul selectat.</h1>
                             </div>
                         }

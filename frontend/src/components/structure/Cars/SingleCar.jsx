@@ -18,9 +18,6 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const queryParams = new URLSearchParams(location.search);
-    const page = queryParams.get('page') || 1;
-
     const handleDelete = () => {
         deleteCar(selectedCarId);
         setIsDeleteModalOpen(false);

@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import CarAddCard from "../structure/Cars/CarAddCard";
 import { useAuth } from '@clerk/clerk-react';
 import { Navbar } from '../elements/Navbar';
+import { useNavigate } from "react-router-dom";
 
 const CarAdd = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const { getToken } = useAuth();
+    const navigate = useNavigate();
     const [carData, setCarData] = useState({
         carVin: '',
         owner: '',
@@ -96,7 +98,7 @@ const CarAdd = () => {
             setCarData(data);
             setErrorMessage('');
 
-            window.location.href = `cars/${data?.car._id}`;
+            navigate(`/cars/${data?.car._id}`, { state: { from: '/adauga' } });
 
         } catch (error) {
             console.error('Error fetching data:', error);
