@@ -27,8 +27,8 @@ const ModifyModal = ({ car, carId, modifyCar, onClose }) => {
         insuranceExpirationDate: car.insuranceExpirationDate,
         checkUpExpirationDate: car.checkUpExpirationDate,
         vignetteExpirationDate: car.vignetteExpirationDate,
-        lastNotificationDate: car.lastNotificationDate,
-        vignetteRequired: car.vignetteRequired
+        vignetteRequired: car.vignetteRequired,
+        notifications: car.notifications
     });
 
     const handleChange = (e) => {
@@ -45,10 +45,6 @@ const ModifyModal = ({ car, carId, modifyCar, onClose }) => {
 
     const handleCheckUpDateChange = (date) => {
         setModifiedCar(prevState => ({ ...prevState, checkUpExpirationDate: date || null }));
-    };
-
-    const handleVignetteDateChange = (date) => {
-        setModifiedCar(prevState => ({ ...prevState, vignetteExpirationDate: date }));
     };
 
     const handleCancel = () => {
