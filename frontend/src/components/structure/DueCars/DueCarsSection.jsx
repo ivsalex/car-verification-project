@@ -126,7 +126,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
           Ultima notificare:
         </span>
         {car.lastNotificationDate ? (
-          <span className="text-green-500 font-bold">
+          <span className="font-bold">
             {formatTimeStamp(car.lastNotificationDate)}
           </span>
         ) : (
