@@ -14,6 +14,7 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
     const { carId } = useParams();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
     const [previousUrl, setPreviousUrl] = useState();
     const navigate = useNavigate();
     const location = useLocation();
@@ -86,7 +87,10 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                     )}
                     <PopupMessage
                         message={vgnCheckError || updatedCarMessage}
-                        type={vgnCheckError}
+                        duration={4000}
+                        onClose={() => setShowPopup(false)}
+                        bgColor={vgnCheckError ? 'bg-red-500' : 'bg-green-500'}
+                        disableAnimation={true}
                     />
                     <div className="flex flex-col h-full bg-white shadow-md border-2 border-gray-100 rounded-2xl overflow-hidden">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-4 flex-1">

@@ -4,9 +4,12 @@ import Button from "../../elements/Button";
 import { useUser } from "@clerk/clerk-react";
 import {
   DotsHorizontalIcon,
-  ChatIcon,
   RefreshIcon,
 } from "@heroicons/react/outline";
+import {
+  MailIcon,
+} from "@heroicons/react/solid";
+import PopupMessage from "../../elements/PopupMessage";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   formatTimeStamp,
@@ -38,6 +41,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
   const [selectedDuration, setSelectedDuration] = useState("");
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
@@ -126,7 +130,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
           Ultima notificare:
         </span>
         {car.lastNotificationDate ? (
-          <span className="font-bold">
+          <span>
             {formatTimeStamp(car.lastNotificationDate)}
           </span>
         ) : (
@@ -146,7 +150,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
             variant={
               !disableButton(car.lastNotificationDate) ? "blue" : "green"
             }
-            className="tiny"
+            className={`tiny ${disableButton(car.lastNotificationDate) ? 'cursor-not-allowed' : ''}`}
             onClick={() => sendNotification(car)}
             disabled={disableButton(car.lastNotificationDate)}
             title={
@@ -155,10 +159,19 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
                 : "Trimiteți notificare!"
             }
           >
-            <ChatIcon className="h-4 w-4" />
+            <MailIcon className="h-4 w-4" />
           </Button>
         )}
       </td>
+      {showPopup && (
+        <PopupMessage
+          message={`Notificare trimisă pentru ${car.plateNumber}!`}
+          position={"bottom-right"}
+          duration={'4000'}
+          bgColor={'bg-green-500'}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </tr>
   );
 
@@ -205,6 +218,10 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         car.owner,
         selectedType
       );
+      setShowPopup(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
     }
   };
 
