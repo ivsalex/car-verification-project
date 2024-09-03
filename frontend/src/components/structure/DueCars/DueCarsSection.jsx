@@ -202,7 +202,8 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
             : selectedType === 'checkup'
               ? countRemainingDays(car.checkUpExpirationDate)
               : null,
-        car.owner
+        car.owner,
+        selectedType
       );
     }
   };

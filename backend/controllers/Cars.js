@@ -85,7 +85,7 @@ exports.existingCarCheck = async (req, res, next) => {
 exports.getAllCars = async (req, res, next) => {
   try {
     const docs = await Car.find().select(
-      "_id carVin carCiv owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate vignetteRequired"
+      "_id carVin carCiv owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate vignetteRequired"
     ).sort({ owner: 1 });
 
     const cars = docs.map((doc) => ({
@@ -98,7 +98,6 @@ exports.getAllCars = async (req, res, next) => {
       insuranceExpirationDate: doc.insuranceExpirationDate,
       vignetteExpirationDate: doc.vignetteExpirationDate,
       checkUpExpirationDate: doc.checkUpExpirationDate,
-      lastNotificationDate: doc.lastNotificationDate,
       vignetteRequired: doc.vignetteRequired,
     }));
     res.status(200).json({
@@ -223,22 +222,27 @@ exports.getAllExpiringCars = async (req, res, next) => {
     const sortOptions = type === "vignette" && range === "expired" ? { owner: 1 } : {};
 
     const docs = await Car.find(query).select(
-      "_id carVin owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate lastNotificationDate vignetteRequired"
+      "_id carVin owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate vignetteRequired lastNotificationDate notifications"
     ).sort(sortOptions);
 
-    const dueCars = docs.map((doc) => ({
-      _id: doc._id,
-      carVin: doc.carVin,
-      carCiv: doc.carCiv,
-      owner: doc.owner,
-      ownerPhoneNumber: doc.ownerPhoneNumber,
-      plateNumber: doc.plateNumber,
-      insuranceExpirationDate: doc.insuranceExpirationDate,
-      vignetteExpirationDate: doc.vignetteExpirationDate,
-      checkUpExpirationDate: doc.checkUpExpirationDate,
-      lastNotificationDate: doc.lastNotificationDate,
-      vignetteRequired: doc.vignetteRequired,
-    }));
+    const dueCars = docs.map((doc) => {
+      const notification = doc.notifications.find(n => n.type === type);
+
+      return {
+        _id: doc._id,
+        carVin: doc.carVin,
+        carCiv: doc.carCiv,
+        owner: doc.owner,
+        ownerPhoneNumber: doc.ownerPhoneNumber,
+        plateNumber: doc.plateNumber,
+        insuranceExpirationDate: doc.insuranceExpirationDate,
+        vignetteExpirationDate: doc.vignetteExpirationDate,
+        checkUpExpirationDate: doc.checkUpExpirationDate,
+        lastNotificationDate: notification ? notification.sentDate : null,
+        vignetteRequired: doc.vignetteRequired,
+        notifications: doc.notifications
+      };
+    });
 
     res.status(200).json({
       count: dueCars.length,
@@ -293,29 +297,43 @@ exports.carModify = async (req, res, next) => {
       insuranceExpirationDate,
       checkUpExpirationDate,
       vignetteExpirationDate,
-      lastNotificationDate,
       vignetteRequired,
+      notifications,
     } = req.body;
 
-    const result = await Car.updateOne(
-      { _id: carId },
-      {
-        carVin,
-        carCiv,
-        owner,
-        plateNumber,
-        ownerPhoneNumber,
-        insuranceExpirationDate,
-        checkUpExpirationDate,
-        vignetteExpirationDate,
-        lastNotificationDate,
-        vignetteRequired,
-      }
-    );
-
-    if (result.nModified === 0) {
+    const car = await Car.findById(carId);
+    if (!car) {
       return res.status(404).json({ error: "Car not found" });
     }
+
+    car.carVin = carVin !== undefined ? carVin : car.carVin;
+    car.carCiv = carCiv !== undefined ? carCiv : car.carCiv;
+    car.owner = owner !== undefined ? owner : car.owner;
+    car.plateNumber = plateNumber !== undefined ? plateNumber : car.plateNumber;
+    car.ownerPhoneNumber = ownerPhoneNumber !== undefined ? ownerPhoneNumber : car.ownerPhoneNumber;
+    car.insuranceExpirationDate = insuranceExpirationDate !== undefined ? insuranceExpirationDate : car.insuranceExpirationDate;
+    car.checkUpExpirationDate = checkUpExpirationDate !== undefined ? checkUpExpirationDate : car.checkUpExpirationDate;
+    car.vignetteExpirationDate = vignetteExpirationDate !== undefined ? vignetteExpirationDate : car.vignetteExpirationDate;
+    car.vignetteRequired = vignetteRequired !== undefined ? vignetteRequired : car.vignetteRequired;
+
+    if (Array.isArray(notifications)) {
+      notifications.forEach((newNotification) => {
+        const index = car.notifications.findIndex(
+          (n) => n.type === newNotification.type
+        );
+
+        if (index !== -1) {
+          car.notifications[index] = {
+            ...car.notifications[index],
+            ...newNotification,
+          };
+        } else {
+          car.notifications.push(newNotification);
+        }
+      });
+    }
+
+    await car.save();
 
     res.status(200).json({ message: "Car modified successfully" });
   } catch (err) {

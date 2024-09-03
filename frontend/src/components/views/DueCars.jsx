@@ -30,7 +30,7 @@ const DueCarsPage = () => {
         }
     }
 
-    const sendSms = async (carId, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining, owner) => {
+    const sendSms = async (carId, ownerPhoneNumber, plateNumber, expirationType, expirationDate, daysRemaining, owner, selectedType) => {
         try {
             const response = await fetch('https://api.ivaiondan.ro/api/v1/send', {
                 method: 'POST',
@@ -50,7 +50,7 @@ const DueCarsPage = () => {
             }
 
             if (response.status === 200) {
-                modifyNotifications(carId);
+                modifyNotifications(carId, selectedType);
                 await fetch(`https://api.ivaiondan.ro/notifications/`, {
                     method: 'POST',
                     headers: {
@@ -72,10 +72,20 @@ const DueCarsPage = () => {
         }
     };
 
-    const modifyNotifications = async (carId) => {
+    const modifyNotifications = async (carId, selectedType) => {
         try {
             const now = new Date();
-            const todayDate = now.toLocaleDateString();
+            const todayDate = now.toLocaleString();
+
+            const notificationBody = {
+                notifications: [
+                    {
+                        type: selectedType,
+                        sentDate: todayDate,
+                        notified: true
+                    }
+                ]
+            };
 
             const response = await fetch(`https://api.ivaiondan.ro/cars/${carId}`, {
                 method: 'PATCH',
@@ -83,9 +93,7 @@ const DueCarsPage = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${await getToken()}`
                 },
-                body: JSON.stringify({
-                    lastNotificationDate: todayDate
-                }),
+                body: JSON.stringify(notificationBody)
             });
 
             if (response.ok) {
@@ -93,11 +101,10 @@ const DueCarsPage = () => {
                 setDueCars(prevCars =>
                     prevCars.map(car =>
                         car._id === carId
-                            ? { ...car, lastNotificationDate: todayDate }
+                            ? { ...car, notifications: notificationBody, lastNotificationDate: todayDate }
                             : car
                     )
                 );
-                window.location.reload();
             } else {
                 console.error('Error modifying car:', response.status);
             }
