@@ -6,9 +6,9 @@ import Modal from "../../elements/Modal";
 import { TrashIcon, PencilIcon, ArrowCircleLeftIcon, RefreshIcon } from '@heroicons/react/outline';
 import ModifyModal from '../../elements/ModifyModal';
 import PopupMessage from '../../elements/PopupMessage';
-import { formatTimeStamp, isExpired, countRemainingDays } from "../../../utils/utils";
+import { formatTimeStamp, isExpired, countRemainingDays, getPopupMessageColor } from "../../../utils/utils";
 
-function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, updatedCarMessage }) {
+function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, popupMessage }) {
     const [loading, setLoading] = useState(true);
     const [selectedCarId, setSelectedCarId] = useState('');
     const { carId } = useParams();
@@ -86,10 +86,10 @@ function SingleCar({ car, deleteCar, modifyCar, vignetteRecheck, vgnCheckError, 
                         />
                     )}
                     <PopupMessage
-                        message={vgnCheckError || updatedCarMessage}
-                        duration={4000}
+                        message={popupMessage}
+                        duration={3000}
                         onClose={() => setShowPopup(false)}
-                        bgColor={vgnCheckError ? 'bg-red-500' : 'bg-green-500'}
+                        bgColor={getPopupMessageColor(popupMessage)}
                         disableAnimation={true}
                     />
                     <div className="flex flex-col h-full bg-white shadow-md border-2 border-gray-100 rounded-2xl overflow-hidden">

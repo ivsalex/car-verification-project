@@ -72,3 +72,17 @@ export function disableButton(lastNotificationDate) {
         return true;
     }
 }
+
+export function getPopupMessageColor(popupMessage) {
+    switch (popupMessage) {
+        case 'Datele autovehicului au fost actualizate!':
+        case 'Datele rovinietei au fost actualizate!':
+            return 'bg-green-500';
+
+        case 'Eroare la modificarea autovehicului!':
+            return 'bg-red-500';
+
+        default:
+            return 'bg-red-500';
+    }
+};
