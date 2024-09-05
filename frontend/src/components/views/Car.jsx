@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SingleCar from "../structure/Cars/SingleCar";
+import SingleCarSkeleton from "../structure/Cars/SingleCarSkeleton";
 import { useAuth } from '@clerk/clerk-react';
 import { Navbar } from '../elements/Navbar';
 
 const Car = () => {
     const [car, setCar] = useState({});
     const { carId } = useParams();
-    const [vgnCheckError, setVgnCheckError] = useState('');
-    const [updatedCarMessage, setUpdatedCarMessage] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [popupMessage, setPopupMessage] = useState('');
     const { getToken } = useAuth();
 
     const fetchCarData = async () => {
@@ -28,9 +29,11 @@ const Car = () => {
 
             const data = await response.json();
             setCar(data);
+            setLoading(false);
 
         } catch (error) {
             console.error('Error fetching data:', error);
+            setLoading(false);
         }
     }
 
@@ -81,17 +84,9 @@ const Car = () => {
 
             if (response.ok) {
                 setCar(formattedCarData);
-                setUpdatedCarMessage('Datele autovehicului au fost actualizate!');
-
-                setTimeout(() => {
-                    setUpdatedCarMessage('');
-                }, 2000);
+                setPopupMessage('Datele autovehicului au fost actualizate!');
             } else {
-                setUpdatedCarMessage('Eroare la modificarea autovehicului!');
-
-                setTimeout(() => {
-                    setUpdatedCarMessage('');
-                }, 2000);
+                setPopupMessage('Eroare la modificarea autovehicului!');
                 console.error('Error modifying car:', response.status);
             }
         } catch (error) {
@@ -131,17 +126,14 @@ const Car = () => {
                     body: JSON.stringify(formattedCarData),
                 });
 
-                setVgnCheckError('Datele rovinietei au fost actualizate!')
-
-                setTimeout(() => {
-                    setVgnCheckError('');
-                }, 2000);
+                setPopupMessage('Datele rovinietei au fost actualizate!');
 
             } else {
-                setVgnCheckError('Eroare la verificarea rovinietei!');
-                setTimeout(() => {
-                    setVgnCheckError('');
-                }, 2000);
+                setPopupMessage(
+                    <>
+                        Rovinieta pentru <span className="font-bold">{car.plateNumber}</span> nu a fost găsită.
+                    </>
+                );
             }
 
         } catch (error) {
@@ -156,7 +148,17 @@ const Car = () => {
     return (
         <div>
             <Navbar />
-            <SingleCar car={car} deleteCar={deleteCar} modifyCar={modifyCar} vignetteRecheck={vignetteRecheck} vgnCheckError={vgnCheckError} updatedCarMessage={updatedCarMessage} />
+            {loading ? (
+                <SingleCarSkeleton />
+            ) : (
+                <SingleCar
+                    car={car}
+                    deleteCar={deleteCar}
+                    modifyCar={modifyCar}
+                    vignetteRecheck={vignetteRecheck}
+                    popupMessage={popupMessage}
+                />
+            )}
         </div>
     );
 };

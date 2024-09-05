@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const PopupMessage = ({ message, position = 'center', duration = 3000, bgColor = 'bg-red-500', onClose, disableAnimation }) => {
+const PopupMessage = ({ message, position, duration, bgColor, onClose, disableAnimation }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [isSlidingOut, setIsSlidingOut] = useState(false);
 
