@@ -43,7 +43,7 @@ export function renderDurationText(selectedDuration) {
     } else if (selectedDuration === '2weeks') {
         return "14 zile";
     } else if (selectedDuration === 'month') {
-        return "30 zile";
+        return "următoarea lună";
     } else {
         return "";
     }

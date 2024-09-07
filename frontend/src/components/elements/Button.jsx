@@ -19,7 +19,7 @@ const variants = {
     blue: 'bg-blue-500 text-gray-100 hover:bg-blue-600',
     gray: 'bg-gray-200 text-gray-500 hover:bg-gray-300',
     lightgray: 'bg-gray-50 text-gray-500 hover:bg-gray-100',
-    disabled: 'bg-green-500 text-gray-200 cursor-not-allowed',
+    disabled: 'bg-green-500 text-gray-100 text-gray-100 hover:cursor-not-allowed',
     green: 'bg-green-500 text-white hover:bg-green-600 focus:bg-green-600',
 }
 
