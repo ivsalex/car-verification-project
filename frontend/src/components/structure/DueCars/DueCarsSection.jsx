@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Spinner from "../../elements/Spinner";
 import Button from "../../elements/Button";
 import { useUser } from "@clerk/clerk-react";
 import {
@@ -19,6 +18,7 @@ import {
   renderTypeText,
   disableButton,
 } from "../../../utils/utils";
+import DueCarsSkeleton from "./DueCarsSkeleton";
 
 const DURATION_OPTIONS = [
   { value: "", label: "Alegeți perioada" },
@@ -26,7 +26,7 @@ const DURATION_OPTIONS = [
   { value: "today", label: "Astăzi" },
   { value: "1week", label: "7 zile" },
   { value: "2weeks", label: "14 zile" },
-  { value: "month", label: "30 zile" },
+  { value: "month", label: "31 zile" },
 ];
 
 const TYPE_OPTIONS = [
@@ -42,6 +42,7 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [headerText, setHeaderText] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
@@ -54,6 +55,12 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     if (type) setSelectedType(type);
     if (duration) setSelectedDuration(duration);
   }, [location.search]);
+
+  useEffect(() => {
+    if (selectedType && selectedDuration) {
+      setHeaderText(renderDueCarsHeader());
+    }
+  }, [selectedType, selectedDuration, dueCars]);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -76,25 +83,9 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
   const handleTypeChange = (e) => setSelectedType(e.target.value);
   const handleDurationChange = (e) => setSelectedDuration(e.target.value);
 
-  const sortDueCars = () => {
-    const dateFields = {
-      checkup: "checkUpExpirationDate",
-      vignette: "vignetteExpirationDate",
-      insurance: "insuranceExpirationDate",
-    };
-    const field = dateFields[selectedType];
-    if (field) {
-      dueCars.sort((a, b) => new Date(a[field]) - new Date(b[field]));
-    }
-  };
-
   const refreshData = () => {
     fetchAndSetLoading();
   };
-
-  useEffect(() => {
-    sortDueCars();
-  }, [dueCars]);
 
   const renderTableRow = (car, index) => (
     <tr
@@ -148,9 +139,9 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         {selectedDuration !== "expired" && (
           <Button
             variant={
-              !disableButton(car.lastNotificationDate) ? "blue" : "green"
+              !disableButton(car.lastNotificationDate) ? "blue" : "disabled"
             }
-            className={`tiny ${disableButton(car.lastNotificationDate) ? 'cursor-not-allowed' : ''}`}
+            className="tiny"
             onClick={() => sendNotification(car)}
             disabled={disableButton(car.lastNotificationDate)}
             title={
@@ -225,6 +216,91 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
     }
   };
 
+  const renderDueCarsHeader = () => {
+    if (selectedDuration && selectedType) {
+      if (dueCars.length > 0) {
+        if (selectedDuration !== "expired") {
+          return (
+            <>
+              <span className="text-red-600 font-bold">
+                {renderTypeText(selectedType)}
+              </span>{" "}
+              următoarelor{" "}
+              <span className="text-red-600 font-bold">
+                {dueCars.length}
+              </span>{" "}
+              {selectedDuration !== "today" ? (
+                <>
+                  mașini expiră în{" "}
+                  <span className="text-red-600 font-bold">
+                    {renderDurationText(selectedDuration)}!
+                  </span>
+                </>
+              ) : (
+                <>
+                  mașini expiră{" "}
+                  <span className="text-red-600 font-bold">
+                    {renderDurationText(selectedDuration)}!
+                  </span>
+                </>
+              )}
+            </>
+          );
+        } else {
+          return (
+            <>
+              Următoarele{" "}
+              <span className="text-red-600 font-bold">
+                {dueCars.length}
+              </span>{" "}
+              mașini au{" "}
+              <span className="text-red-600 font-bold">
+                {renderTypeText(selectedType)}
+              </span>{" "}
+              {renderTypeText(selectedType) === "Rovinieta"
+                ? "expirată"
+                : "expirat"}
+              !
+            </>
+          );
+        }
+      } else {
+        return (
+          <div className="flex text-center justify-center text-lg text-red-500 font-bold max-sm:p-2">
+            <h1>
+              {selectedDuration === "expired" ? (
+                renderTypeText(selectedType) === "ITP-ul" ? (
+                  "Niciun ITP expirat!"
+                ) : renderTypeText(selectedType) === "Rovinieta" ? (
+                  "Nicio Rovinietă expirată!"
+                ) : renderTypeText(selectedType) === "RCA-ul" ? (
+                  "Niciun RCA expirat!"
+                ) : (
+                  ""
+                )
+              ) : (
+                <>
+                  {selectedDuration === "today"
+                    ? ""
+                    : "În următoarele "}
+                  {renderDurationText(selectedDuration)} nu expiră
+                  {renderTypeText(selectedType) === "ITP-ul"
+                    ? " niciun ITP!"
+                    : renderTypeText(selectedType) === "Rovinieta"
+                      ? " nicio Rovinietă!"
+                      : renderTypeText(selectedType) === "RCA-ul"
+                        ? " niciun RCA!"
+                        : ""}
+                </>
+              )}
+            </h1>
+          </div>
+        );
+      }
+    }
+    return null;
+  };
+
   return (
     user && (
       <>
@@ -282,125 +358,45 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
             </div>
           </div>
           {loading ? (
-            <div className="flex items-center justify-center h-[60vh] md:h-[40vh]">
-              <Spinner />
+            <DueCarsSkeleton selectedDuration={selectedDuration} />
+          ) : dueCars.length > 0 ? (
+            <div className="rounded-lg">
+              <h2 className="duration-300 text-lg md:text-xl font-semibold my-2 md:my-4 text-center">
+                {headerText}
+              </h2>
+              <div className="table-wrapper overflow-y-auto max-h-[calc(100vh-280px)] h-86 scrollbar-thin">
+                <table className="min-w-full divide-y md:border-2 divide-blue-200 table text-center block">
+                  <thead className="bg-blue-500 sticky top-0 hidden md:table-header-group">
+                    <tr className="md:table-row hidden">
+                      <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
+                        Serie șasiu
+                      </th>
+                      <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
+                        Proprietar
+                      </th>
+                      <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
+                        Număr Înmatriculare
+                      </th>
+                      <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
+                        Dată expirare
+                      </th>
+                      <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
+                        Ultima Notificare
+                      </th>
+                      <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
+                        Acțiuni
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white md:divide-y md:divide-gray-200 block md:table-row-group">
+                    {dueCars.map(renderTableRow)}
+                  </tbody>
+                </table>
+              </div>
             </div>
           ) : (
             <>
-              {dueCars.length ? (
-                <div className="rounded-lg">
-                  <h2 className="duration-300 text-lg md:text-xl font-semibold my-2 md:my-4 text-center">
-                    {selectedDuration &&
-                      selectedType &&
-                      selectedDuration !== "expired" ? (
-                      <>
-                        <span className="text-red-600 font-bold">
-                          {renderTypeText(selectedType)}
-                        </span>{" "}
-                        următoarelor{" "}
-                        <span className="text-red-600 font-bold">
-                          {dueCars.length}
-                        </span>{" "}
-                        {
-                          selectedDuration !== 'today' ? (
-                            <>
-                              mașini expiră în{' '}
-                              <span className="text-red-600 font-bold">
-                                {renderDurationText(selectedDuration)}!
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              mașini expiră{' '}
-                              <span className="text-red-600 font-bold">
-                                {renderDurationText(selectedDuration)}!
-                              </span>
-                            </>
-                          )
-                        }
-                      </>
-                    ) : (
-                      <>
-                        Următoarele{" "}
-                        <span className="text-red-600 font-bold">
-                          {dueCars.length}
-                        </span>{" "}
-                        mașini au{" "}
-                        <span className="text-red-600 font-bold">
-                          {renderTypeText(selectedType)}
-                        </span>{" "}
-                        {renderTypeText(selectedType) === "Rovinieta"
-                          ? "expirată"
-                          : "expirat"}
-                        !
-                      </>
-                    )}
-                  </h2>
-                  <div className="table-wrapper overflow-y-auto max-h-[calc(100vh-280px)] md:h-86">
-                    <table className="min-w-full divide-y md:border-2 divide-blue-200 table text-center block">
-                      <thead className="bg-blue-500 sticky top-0 hidden md:table-header-group">
-                        <tr className="md:table-row hidden">
-                          <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
-                            Serie șasiu
-                          </th>
-                          <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
-                            Proprietar
-                          </th>
-                          <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
-                            Număr Înmatriculare
-                          </th>
-                          <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
-                            Dată expirare
-                          </th>
-                          <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
-                            Ultima Notificare
-                          </th>
-                          <th className="py-3 text-sm text-gray-800 uppercase md:table-cell">
-                            Acțiuni
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white md:divide-y md:divide-gray-200 block md:table-row-group">
-                        {dueCars.map(renderTableRow)}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ) : (
-                showError &&
-                selectedDuration &&
-                selectedType && (
-                  <div className="flex text-center justify-center text-lg text-red-500 font-bold max-sm:p-2">
-                    <h1>
-                      {selectedDuration === "expired" ? (
-                        renderTypeText(selectedType) === "ITP-ul" ? (
-                          "Niciun ITP expirat!"
-                        ) : renderTypeText(selectedType) === "Rovinieta" ? (
-                          "Nicio Rovinietă expirată!"
-                        ) : renderTypeText(selectedType) === "RCA-ul" ? (
-                          "Niciun RCA expirat!"
-                        ) : (
-                          ""
-                        )
-                      ) : (
-                        <>
-                          {selectedDuration === "today"
-                            ? ""
-                            : "În următoarele "}
-                          {renderDurationText(selectedDuration)} nu expiră
-                          {renderTypeText(selectedType) === "ITP-ul"
-                            ? " niciun ITP!"
-                            : renderTypeText(selectedType) === "Rovinieta"
-                              ? " nicio Rovinietă!"
-                              : renderTypeText(selectedType) === "RCA-ul"
-                                ? " niciun RCA!"
-                                : ""}
-                        </>
-                      )}
-                    </h1>
-                  </div>
-                )
-              )}
+              {headerText}
             </>
           )}
         </div>

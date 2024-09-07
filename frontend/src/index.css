@@ -45,4 +45,28 @@
     .animate-shake {
         animation: shake 0.5s ease;
     }
+
+    .scrollbar-thin {
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: #d0d1d4 #edf2f7; /* Firefox */
+      }
+      
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 8px; /* For vertical scrollbar */
+        height: 8px; /* For horizontal scrollbar */
+      }
+      
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: #edf2f7; /* Track color */
+      }
+      
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: #4a5568; /* Thumb color */
+        border-radius: 8px; /* Roundness of the thumb */
+        border: 2px solid #edf2f7; /* Padding around the thumb */
+      }
+      
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background-color: #2d3748; /* Darker thumb color on hover */
+      }  
 }

@@ -143,7 +143,7 @@ exports.getAllExpiringCars = async (req, res, next) => {
 
       case "month":
         startOfRange.setDate(startOfRange.getDate() + 1);
-        endOfRange.setDate(startOfRange.getDate() + 31);;
+        endOfRange.setDate(startOfRange.getDate() + 30);
         break;
 
       default:
