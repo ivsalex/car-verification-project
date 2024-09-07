@@ -115,20 +115,6 @@ exports.getAllExpiringCars = async (req, res, next) => {
   try {
     let { range, type } = req.query;
 
-    if (
-      range !== "expired" &&
-      range !== "today" &&
-      range !== "week" &&
-      range !== "2weeks" &&
-      range !== "month"
-    ) {
-      range = "week";
-    }
-
-    if (type !== "checkup" && type !== "vignette" && type !== "insurance") {
-      type = "checkup";
-    }
-
     let startOfRange = new Date();
     let endOfRange = new Date();
 
@@ -145,16 +131,19 @@ exports.getAllExpiringCars = async (req, res, next) => {
         endOfRange.setHours(23, 59, 59, 999);
         break;
 
-      case "week":
-        endOfRange.setDate(endOfRange.getDate() + (8 - endOfRange.getDay()));
+      case "1week":
+        startOfRange.setDate(startOfRange.getDate() + 1);
+        endOfRange.setDate(startOfRange.getDate() + 7);
         break;
 
       case "2weeks":
-        endOfRange.setDate(endOfRange.getDate() + (14 - endOfRange.getDay()));
+        startOfRange.setDate(startOfRange.getDate() + 1);
+        endOfRange.setDate(startOfRange.getDate() + 14);
         break;
 
       case "month":
-        endOfRange.setMonth(endOfRange.getMonth() + 1);
+        startOfRange.setDate(startOfRange.getDate() + 1);
+        endOfRange.setDate(startOfRange.getDate() + 31);;
         break;
 
       default:
@@ -219,7 +208,19 @@ exports.getAllExpiringCars = async (req, res, next) => {
       }
     }
 
-    const sortOptions = type === "vignette" && range === "expired" ? { owner: 1 } : {};
+    const sortOptions = {};
+
+    if (type === "vignette") {
+      if (range === "expired") {
+        sortOptions.owner = 1;
+      } else {
+        sortOptions.vignetteExpirationDate = 1;
+      }
+    } else if (type === "insurance") {
+      sortOptions.insuranceExpirationDate = 1;
+    } else if (type === "checkup") {
+      sortOptions.checkUpExpirationDate = 1;
+    }
 
     const docs = await Car.find(query).select(
       "_id carVin owner ownerPhoneNumber plateNumber insuranceExpirationDate vignetteExpirationDate checkUpExpirationDate vignetteRequired lastNotificationDate notifications"
