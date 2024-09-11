@@ -132,17 +132,17 @@ exports.getAllExpiringCars = async (req, res, next) => {
         break;
 
       case "1week":
-        startOfRange.setDate(startOfRange.getDate() + 1);
+        startOfRange.setDate(startOfRange.getDate());
         endOfRange.setDate(startOfRange.getDate() + 7);
         break;
 
       case "2weeks":
-        startOfRange.setDate(startOfRange.getDate() + 1);
+        startOfRange.setDate(startOfRange.getDate());
         endOfRange.setDate(startOfRange.getDate() + 14);
         break;
 
       case "month":
-        startOfRange.setDate(startOfRange.getDate() + 1);
+        startOfRange.setDate(startOfRange.getDate());
         endOfRange.setDate(startOfRange.getDate() + 30);
         break;
 
