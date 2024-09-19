@@ -8,7 +8,6 @@ import {
 import {
   MailIcon,
 } from "@heroicons/react/solid";
-import PopupMessage from "../../elements/PopupMessage";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   formatTimeStamp,
@@ -41,7 +40,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
   const [selectedDuration, setSelectedDuration] = useState("");
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
   const [headerText, setHeaderText] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -154,15 +152,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
           </Button>
         )}
       </td>
-      {showPopup && (
-        <PopupMessage
-          message={`Notificare trimisă pentru ${car.plateNumber}!`}
-          position={"bottom-right"}
-          duration={'4000'}
-          bgColor={'bg-green-500'}
-          onClose={() => setShowPopup(false)}
-        />
-      )}
     </tr>
   );
 
@@ -209,10 +198,6 @@ function DueCarsSection({ dueCars, fetchCarsData, sendSms }) {
         car.owner,
         selectedType
       );
-      setShowPopup(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 4000);
     }
   };
 
